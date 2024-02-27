@@ -55,6 +55,16 @@ table {
 	border-spacing: 0;
 }
 
+hr {
+    display: block;
+    border-top: none;
+    border-right: none;
+    border-bottom: 1px solid #979797;
+    border-left: none;
+    width: 100%;
+    margin: 0;
+}
+
 
 
 
@@ -63,7 +73,6 @@ table {
 
 body {
     background-color: #f4f4f4;
-    line-height: 1.25;
     position: relative;
     margin: 0;
     min-height: 100vh;
@@ -75,13 +84,12 @@ body::after {
     height: 125px;
 }
 
-h1 {font-size: 2.5rem; line-height: 1.2; margin-bottom: 10px;}
-h2 {font-size: 2rem; line-height: 1.2; margin-bottom: 10px;}
-h3 {font-size: 1.5rem; line-height: 1.2; margin-bottom: 10px;}
-h4 {font-size: 1.2rem; line-height: 1.2; margin-bottom: 10px;}
-h5 {font-size: 1rem; line-height: 1.2; margin-bottom: 10px;}
-h6 {font-size: 0.8rem; line-height: 1.2; margin-bottom: 10px;
-}
+h1 {font-size: 2.5rem; line-height: 1.2;}
+h2 {font-size: 2rem; line-height: 1.2;}
+h3 {font-size: 1.5rem; line-height: 1.2;}
+h4 {font-size: 1.2rem; line-height: 1.2;}
+h5 {font-size: 1rem; line-height: 1.2;}
+h6 {font-size: 0.8rem; line-height: 1.2;}
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Oswald', sans-serif;
@@ -137,7 +145,7 @@ header {
     display: flex;
     position: relative;
     flex-direction: column;
-    background: linear-gradient(0deg, #111 0%, #444 100%);
+    background: linear-gradient(0deg, #111 0%, #333 100%);
     padding: 10px 20px;
     gap: 10px;
     box-shadow: 0 2px 5px #00000090;
@@ -146,13 +154,19 @@ header {
 .logo {
     position: relative;
     align-self: center;
-    color: #399c39;
+    color: #fff;
     font-family: 'Oswald', sans-serif;
     font-weight: 700;
-    font-size: 2.25rem;
+    font-size: 2.75rem;
     text-decoration: none;
     text-shadow: 1px 1px 5px #000;
     margin: 0;
+    padding: 0 5px 5px 5px;
+    line-height: 1;
+    border-top: 2px solid #fff;
+    border-bottom: 2px solid #399c39;
+    border-left: 2px solid #fff;
+    border-right: 2px solid #399c39;
 }
 
 
@@ -163,11 +177,13 @@ header {
     position: relative;
     flex-direction: row;
     justify-content: space-between;
+    flex-wrap: wrap;
     width: 1200px;
     max-width: 100%;
     gap: 10px;
     align-items: center;
     margin: auto;
+    padding: 10px 0;
 }
 
 .user_menu a {
@@ -175,7 +191,7 @@ header {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    font-size: 1rem;
+    font-size: 1.05rem;
     font-weight: 600;
     gap: 5px;
     color: #e6e6e6;
@@ -263,6 +279,7 @@ header {
     margin: auto;
     position: relative;
     gap: 10px;
+    padding: 10px 0;
 }
 
 .top_navi a {
@@ -278,7 +295,6 @@ header {
     font-size: 1rem;
     font-weight: 600;
     text-decoration: none;
-    padding: 10px;
     transition: 0.3s;
 }
 
@@ -290,29 +306,36 @@ header {
 .page_navbar {
     display: flex;
     flex-direction: row;
-    justify-content: right;
-    padding: 10px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: auto;
+    padding: 30px 20px;
     gap: 10px;
     position: relative;
     align-items: center;
 }
 
 .page_navbar a {
-    display: block;
-    color: #111;
-    font-size: 1rem;
-    font-weight: 600;
-    position: relative;
-    padding: 5px;
-    flex-direction: column;
+    display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: nowrap;
+    gap: 5px;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 400;
+    background: #3f803f;
+    border-radius: 5px;
+    position: relative;
+    padding: 10px 14px;
     width: -moz-fit-content;
     width: fit-content;
+    transform: all .3s ease-in-out;
 }
 
 .page_navbar a:hover, .page_navbar a.active {
-    color: #399c39;
+    background: #111;
+    color: #fff;
 }
 
 
@@ -329,7 +352,7 @@ main {
     flex-direction: column;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px 20px 125px 20px;
+    padding: 0px 20px 125px 20px;
     gap: 20px;
 }
 
@@ -414,15 +437,6 @@ main {
     box-shadow: 0 0 5px #399c39;
 }
 
-.required {
-    position: absolute;
-    top: 10px;
-    right: -15px;
-    color: #ff0000;
-    font-size: 1.2rem;
-    font-weight: 600;
-}
-
 .error_msg {
     color: #ff0000;
     font-family: 'Open Sans', sans-serif;
@@ -440,16 +454,6 @@ main {
     align-items: center;
 }
 
-.validation-error {
-    border: 1px solid #ff0000;
-    box-shadow: 0 0 5px #ff0000;
-}
-
-.success {
-    border: 1px solid #399c39;
-    box-shadow: 0 0 5px #399c39;
-}
-
 .hidden {
     display: none;
 }
@@ -462,7 +466,7 @@ main {
 
 
 footer {
-    background: linear-gradient(180deg, #111 0%, #333 100%);
+    background: #111;
     color: #fff;
     font-family: 'Open Sans', sans-serif;
     font-weight: 600;
@@ -494,12 +498,15 @@ footer {
 @media screen and (max-width: 480px) {
     .inline {
         flex-direction: column;
-        gap: 0px;
+        gap: 2px;
         align-items: stretch;
     }
     .page_form input, 
     .page_form textarea {
         width: inherit;
+    }
+    .logo {
+        font-size: 2rem;
     }
 }
 }

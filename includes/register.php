@@ -43,6 +43,7 @@ if (isset($_SESSION['form_data'])) {
 
 		// Puhdistetaan lomakkeen tiedot
 		unset($form_data);
+		unset($email_token);
 
 		// Ohjataan käyttäjä vahvistussivulle
 		header("Location: vahvistukset.php?rekisteröinti=onnistui!");

@@ -59,3 +59,55 @@ $mail = new PHPMailer(true);
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
 }
+
+
+
+// function to send password reset email
+function send_reset_email($username, $email, $pwd_token) {
+    //Create an instance; passing `true` enables exceptions
+    $mail = new PHPMailer(true);
+    
+        try {
+    
+            //Server settings
+            // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                   //Enable verbose debug output
+            $mail->isSMTP();                                            //Send using SMTP
+            $mail->Host       = $email_host;             //Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+            $mail->Username   = $email_username;                       //SMTP username
+            $mail->Password   = $email_password;                       //SMTP password
+            $mail->SMTPSecure = 'PHPMailer::ENCRYPTION_SMTPS';          //Enable implicit TLS encryption
+            $mail->CharSet    = $charset;                                // Set email charset        
+            $mail->Port       = 587;     
+            $mail->SMTPOptions = array(
+                'ssl' => array(
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true
+                )
+            );                       
+    
+            //Recipients
+            $mail->setFrom($SERVICEMAIL, 'Kuvapankki.fi');
+            $mail->addAddress($email, $username);     //Add a recipient
+    
+            //Content
+            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->Subject = 'Salasanan nollaus Kuvapankki.fi -palvelussa';
+            $email_template = "
+                <h3>Hei, $username!</h3>
+                <p>Joku, <strong>ilmeisesti sinä</strong>, olet pyytänyt salasanan nollaamista Kuvapankki.fi -pavelussa. 
+                Jos et ole itse pyytänyt salasanan nollausta, tämä viesti ei aiheuta sinulta toimenpidettä ja salasanasi pysyy ennallaan.</p>
+                <p>Jos kuitenkin olet pyytänyt salasanan nollausta, voit tehdä sen alla olevasta linkistä:</p>
+                <br><br>
+                <a href='http://$SERVER/$ROOT/vahvistukset.php?pwd_token=$pwd_token'>Nollaa Salasana</a>
+                <br>
+            ";
+            $mail->Body = $email_template;
+            
+            $mail->send();
+    
+        } catch (Exception $e) {
+            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        }
+    }

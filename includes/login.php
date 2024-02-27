@@ -3,9 +3,6 @@
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $pwd = $_POST['pwd'];
-
-
-    // input sanitization function
         
     try {
         include 'connections.php';
