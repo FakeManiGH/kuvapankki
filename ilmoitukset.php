@@ -1,20 +1,21 @@
 <?php
-
-    $title = 'Kuvaryhmät';
+    $title = 'Ilmoitukset';
     // $css = '';
     include 'header.php';
     checkSession();
+
     if (!is_logged_in()) {
-        header('Location: kirjaudu.php?kirjautumen=vaaditaan');
+        header('Location: kirjaudu.php?kirjautuminen=vaaditaan');
         die();
     }
 ?>
 
 <main>
 
-    <h1>Minun Ryhmät</h1>
+    <h1>Ilmoitukset</h1>
+    
+    
 
-    <h2>Julkiset ryhmät</h2>
 
 </main>
 

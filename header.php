@@ -2,10 +2,9 @@
     include 'includes/config_session.php';
 
     $active = basename($_SERVER['PHP_SELF'], ".php");
-
     function active($sivu,$active){
         return $active == $sivu ? 'active' : '';  
-        }
+    }
     
 ?>
 
@@ -14,9 +13,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
     <script src="scripts/scripts.js" defer></script>
+    <script src="https://kit.fontawesome.com/bfc21bc165.js" crossorigin="anonymous" defer></script>
     <?php
         if (isset($css)) echo "<link rel='stylesheet' href='$css'>";
         if (isset($js)) echo "<script defer src='$js'></script>";
@@ -26,40 +25,31 @@
 <body>
 
 <header>
-    <div class="user_menu">
-        <p class="logo">KUVA<span class="green">PANKKI</span></p>
+    <div class="logo_container">
+        <p class="logo" title="Etusivu" onclick="window.location.href='index.php'">KUVA<span class="green">PANKKI</span><i class="fa fa-home home_icon"></i></p>
 
         <?php
             if (is_logged_in()) {  
-                echo "<a href='profiili.php' id='user_menu' title='Käyttäjä Valikko'><i class='fa fa-user'></i> " . $_SESSION['username'] . "</a>";
+                echo "<a id='open_user_menu' title='Käyttäjä Valikko' href='javascript:void(0);'>". $_SESSION['username'] ."<i class='fa fa-bars' style='font-size: 1.4rem;'></i></a>";
             } else {
                 echo "<a href='kirjaudu.php' title='Kirjaudu Sisään' class='" . active('kirjaudu', $active) . "'><i class='fa fa-sign-in-alt'></i> Kirjaudu</a>";
             }
         ?>
     </div>
 
-    <!-- <form class="search_form" action="haku.php" method="get">
-            <label for="haku" class="hidden">Hae Kuvapankista</label>
-            <input type="text" name="haku" placeholder="Hae Kuvapankista">
-            <label for="sisalto" class="hidden">Sisältö</label>
-            <select name="sisalto">
-                <option value="kaikki">Kaikki</option>
-                <option value="kuvat">Kuvat</option>
-                <option value="galleriat">Galleriat</option>
-                <option value="ryhmat">Ryhmät</option>
-            </select>
-        <button type="submit"><i class="fa fa-search"></i> <span class="nav_txt">Etsi</span></button>
-    </form> -->
+    <nav id="user_navigation">
+        <?php include 'includes/user_navigation.php';?>
+    </nav>
 
     <nav class="top_navi">
-        <a href="index.php" title="Etusivu" class="<?=active('index',$active);?>"><i class="fa fa-home"></i> <span class="nav_txt">Etusivu</span></a>
         <a href="lisaa_kuvia.php" title="Lisää Kuvia" class="<?=active('lisaa_kuvia',$active);?>"><i class="fa fa-upload"></i> <span class="nav_txt">Lisää Kuvia</span></a>
-        <a href="galleriat.php" title="Galleriat" class="<?=active('galleriat',$active);?>"><i class="fa fa-images"></i> <span class="nav_txt">Galleriat</span></a>
-        <a href="tietoa.php" title="Tietoa" class="<?=active('tietoa',$active);?>"><i class="fa fa-info-circle"></i> <span class="nav_txt">Tietoa Palvelusta</span></a>
-        <a href="ota_yhteytta.php" title="Ota Yhteyttä" class="<?=active('ota_yhteytta',$active);?>"><i class="fa fa-envelope"></i> <span class="nav_txt">Ota Yhteyttä</span></a>
+        <a href="galleriat.php" title="Galleriat" class="<?=active('galleriat',$active);?>"><i class="fa-regular fa-images"></i> <span class="nav_txt">Galleriat</span></a>
+        <a href="ilmoitukset.php" title="Ilmoitukset" class="<?=active('ilmoitukset',$active);?>"><i class="fa fa-bell"></i> <span class="nav_txt">Ilmoitukset</span></a>
+        <a href="kaverit.php" title="Kaverit" class="<?=active('kaverit',$active);?>"><i class="fa fa-users"></i> <span class="nav_txt">Kaverit</span></a>
+        <a href="viestit.php" title="Viestit" class="<?=active('viestit',$active);?>"><i class="fa fa-envelope"></i> <span class="nav_txt">Viestit</span></a>
     </nav>
 </header>
 
 <nav class="page_navbar">
-    <?php include 'includes/navigation.php';?>
+    <?php include 'includes/page_navigation.php';?>
 </nav>

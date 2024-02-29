@@ -1,9 +1,9 @@
 <?php
-
-    $title = 'Kuvavirta';
-    $css = 'css/kuvat.css';
+    $title = 'Kaverit';
+    // $css = '';
     include 'header.php';
     checkSession();
+
     if (!is_logged_in()) {
         header('Location: kirjaudu.php?kirjautuminen=vaaditaan');
         die();
@@ -12,7 +12,9 @@
 
 <main>
 
-    <h1>Lisää Uusi Kuva</h1>
+    <h1>Omat Kaverit</h1>
+    
+    
 
 
 </main>

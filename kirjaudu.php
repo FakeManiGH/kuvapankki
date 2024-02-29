@@ -1,16 +1,6 @@
 <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         include "includes/login.php";
-
-        function check_login_errors() {
-            if (isset($_SESSION['errors_login'])) {
-                $errors = $_SESSION['errors_login'];
-        
-                foreach ($errors as $error) {
-                    echo $error;
-                }
-            }
-        }
     }
 
 
@@ -37,7 +27,17 @@
                 <label for="pwd">Salasana</label>
                 <input type="password" name="pwd" placeholder="Salasana">
             </span>
-            <p class='error_msg'><?php if (isset($_SESSION['errors_login'])) {check_login_errors();} ?></p>
+            <p class='error_msg'>
+            <?php 
+                if (isset($_SESSION['errors_login'])) {
+                    $errors = $_SESSION['errors_login'];
+                    unset($_SESSION['errors_login']);   
+                    foreach ($errors as $error) {
+                        echo $error;
+                    }
+                }
+            ?>
+            </p>
 
             <span class="buttons">
                 <button type="submit">Kirjaudu</button>
@@ -50,8 +50,5 @@
 
 
 <?php
-    if (isset($_SESSION['errors_login'])) {
-        unset($_SESSION['errors_login']);
-    }
     include 'footer.php';
 ?>

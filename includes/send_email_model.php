@@ -9,9 +9,6 @@ use PHPMailer\PHPMailer\Exception;
 
 //Load Composer's autoloader
 require 'vendor/autoload.php';
-require "settings.php";
-
-//Load email settings
 
 // function to send registration verification email
 function send_verification_email($username, $email, $email_token) {
@@ -19,6 +16,7 @@ function send_verification_email($username, $email, $email_token) {
 $mail = new PHPMailer(true);
 
     try {
+        require "settings.php";
 
         //Server settings
         // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                   //Enable verbose debug output
@@ -47,9 +45,9 @@ $mail = new PHPMailer(true);
         $mail->Subject = 'Vahvista säköpostiosoitteesi Kuvapankki.fi -palvelussa';
         $email_template = "
             <h3>Kiitos rekisteröitymisestäsi Kuvapankki.fi -palveluun, $username!</h3>
-            <p>Vahvista sähköpostiosoitteesi alla olevasta linkistä:</p>
-            <br><br>
-            <a href='http://$SERVER/$ROOT/vahvistukset.php?email_token=$email_token'>Vahvista sähköpostiosoitteesi</a><br><br>
+            <p>Vahvista vielä sähköpostiosoitteesi alla olevasta linkistä:</p>
+            <a href='http://$SERVER/$ROOT/includes/email_verification.php?email_token=$email_token'>Vahvista sähköpostiosoitteesi</a><br><br>
+            <p><strong>ÄLÄ VASTAA TÄHÄN VIESTIIN</strong></p>
         ";
         $mail->Body = $email_template;
         
@@ -68,7 +66,8 @@ function send_reset_email($username, $email, $pwd_token) {
     $mail = new PHPMailer(true);
     
         try {
-    
+            require "settings.php";
+
             //Server settings
             // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                   //Enable verbose debug output
             $mail->isSMTP();                                            //Send using SMTP
@@ -96,12 +95,11 @@ function send_reset_email($username, $email, $pwd_token) {
             $mail->Subject = 'Salasanan nollaus Kuvapankki.fi -palvelussa';
             $email_template = "
                 <h3>Hei, $username!</h3>
-                <p>Joku, <strong>ilmeisesti sinä</strong>, olet pyytänyt salasanan nollaamista Kuvapankki.fi -pavelussa. 
-                Jos et ole itse pyytänyt salasanan nollausta, tämä viesti ei aiheuta sinulta toimenpidettä ja salasanasi pysyy ennallaan.</p>
-                <p>Jos kuitenkin olet pyytänyt salasanan nollausta, voit tehdä sen alla olevasta linkistä:</p>
-                <br><br>
-                <a href='http://$SERVER/$ROOT/vahvistukset.php?pwd_token=$pwd_token'>Nollaa Salasana</a>
-                <br>
+                <p>Olet pyytänyt salasanasi nollaamista <strong>Kuvapankki.fi</strong> -pavelussa.</p> 
+                <p>Jos et ole lähettänyt tätä pyyntöä itse, tämä viesti ei vaadi sinulta toimenpiteitä ja salasanasi pysyy ennallaan.</p>
+                <p>Jos kuitenkin olet pyytänyt salasanasi nollaamista, voit tehdä sen alla olevasta linkistä:</p>
+                <a href='http://$SERVER/$ROOT/vahvistukset.php?pwd_token=$pwd_token'><strong>Nollaa Salasana</strong></a><br><br>
+                <p><strong>ÄLÄ VASTAA TÄHÄN VIESTIIN</strong></p>
             ";
             $mail->Body = $email_template;
             

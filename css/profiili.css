@@ -1,0 +1,11 @@
+.inline_x2 {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+    justify-content: right;
+}
+
+.page_form input:not([type="password"]) {
+    width: 100%;
+}

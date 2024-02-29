@@ -29,7 +29,10 @@ if ($current_page == "rekisteroidy.php") {
 
 // PROFIILI
 if ($current_page == "profiili.php") {
-    echo "<a title='Kirjaudu ulos' href='includes/log_out.php'><i class='fa fa-sign-out-alt'></i> Kirjaudu ulos</a>";
+    echo "<a title='Asetukset' href='asetukset.php'><i class='fa fa-cog'></i> Asetukset</a>";
+    echo "<a title='Ilmoitukset' href='ilmoitukset.php'><i class='fa fa-bell'></i> Ilmoitukset</a>";
+    echo "<a title='Viestit' href='viestit.php'><i class='fa fa-envelope'></i> Viestit</a>";
+    echo "<a title='Kaverit' href='kaverit.php'><i class='fa fa-users'></i> Kaverit</a>";
 }
 
 // GALLERIAT

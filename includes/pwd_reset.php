@@ -1,44 +1,43 @@
 <?php
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $userinfo = $_POST['userinfo'];
+    $email = $_POST['email'];
     $pwd_token = md5(rand(25, 50));
 
     try {
         include 'connections.php';
         include 'pwd_reset_model.php';
-        require_once 'pwd_reset_ctrl.php';
+        require_once 'regex.php';
         require_once "send_email_model.php";
+        require_once 'config_session.php';
 
-        // Luodaan error-array
-        $errors = [];
 
         // Tarkistetaan onko käyttäjän syötteet tyhjiä
-        if (is_input_empty($userinfo)) {
-            $errors['empty_input'] = 'Käyttäjätunnus tai sähköpostiosoite puuttuu!';  
+        if (empty($email)) {
+            $_SESSION['error_reset'] = 'Anna sähköpostiosoiteesi!';  
+            header ("Location: unohtunut_salasana.php?virhe");
+            die();
         }
-
+        
         // Tarkistetaan onko käyttäjän syötteet oikeassa muodossa
-        if (!is_username_or_email_correct($userinfo)) {
-            $errors['incorrect_input'] = 'Käyttäjätunnus tai sähköpostiosoite on väärässä muodossa!';
+        if (!preg_match($patternEmail, $email)) {
+            $_SESSION['error_reset'] = 'Sähköpostiosoite on väärässä muodossa!';  
+            header ("Location: unohtunut_salasana.php?virhe");
+            die();
         }
 
         // Puhdistetaan käyttäjän syötteet
-        $userinfo = trim_input($userinfo);
+        $email = trim($email);
+        $email = stripslashes($email);
+        $email = htmlspecialchars($email);
 
         // Haetaan käyttäjän tiedot tietokannasta
-        $result = get_user($pdo, $userinfo);
+        $result = get_user($pdo, $email);
 
         // Tarkistetaan onko käyttäjätunnus tai sähköpostiosoite oikea
         if (empty($result)) {
-            $errors['incorrect_input'] = 'Käyttäjätunnusta tai sähköpostiosoitetta ei löydy!';
-        }
-
-        // Jos virheitä, palauta takaisin salasanan nollaus-sivulle.
-        if ($errors) {
-            $_SESSION['errors_reset'] = $errors;
-
-            header ("Location: unohtunut_salasana.php");
+            $_SESSION['error_reset'] = 'Antamaasi sähköpostiosoitetta ei löydy!';  
+            header ("Location: unohtunut_salasana.php?virhe");
             die();
         }
 

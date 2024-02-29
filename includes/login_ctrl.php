@@ -18,7 +18,7 @@ function is_input_empty($username, $pwd) {
 }
 
 // Tarkistaa onko käyttäjätunnus oikea
-function is_username_correct(string $username, string $db_username) {
+function is_username_correct($username, $db_username) {
     if ($username === $db_username) {
         return true;
     } else {

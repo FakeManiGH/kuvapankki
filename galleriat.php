@@ -4,7 +4,7 @@
     include 'header.php';
     checkSession();
     if (!is_logged_in()) {
-        header('Location: kirjaudu.php?kirjautumen=vaaditaan');
+        header('Location: kirjaudu.php?kirjautuminen=vaaditaan');
         die();
     }
 
@@ -50,6 +50,15 @@
         <a class="gallery" href="#"></a>
 
         <a class="new_gallery" href="uusi_galleria.php">+</a>
+
+    </div>
+
+
+    <h2>Jäsenyydet</h2>
+
+    <div class="galleria_container">
+
+        
 
     </div>
 

@@ -12,9 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $errors = [];
 
-        // Tarkistetaan onko käyttäjän syötteet tyhjiä
+        // Jos käyttäjän syötteet ovat tyhjiä, palauta takaisin kirjautumissivulle.
         if (is_input_empty($username, $pwd)) {
             $errors['empty_input'] = 'Täytä kaikki kentät!';
+            $_SESSION['errors_login'] = $errors;
+            header ("Location: kirjaudu.php");
+            die();
         }
 
         // Puhdistetaan käyttäjän syötteet
@@ -24,13 +27,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Haetaan käyttäjän tiedot tietokannasta
         $result = get_user($pdo, $username);
 
-        // Tarkistetaan onko käyttäjätunnus ja salasana oikea ja onko käyttäjä vahvistettu
+        // Jos käyttäjätunnusta ei löydy, palauta takaisin kirjautumissivulle.
+        if (empty($result)) {
+            $errors['login_incorrect'] = 'Virheellinen käyttäjätunnus tai salasana!';
+            $_SESSION['errors_login'] = $errors;
+            header ("Location: kirjaudu.php");
+            die();
+        }
+
+        // Tarkistetaan täsmääkö käyttäjätunnus ja salasana.
         if (!is_username_correct($username, $result['username'])) { 
             $errors['login_incorrect'] = 'Virheellinen käyttäjätunnus tai salasana!';
         }
         if (!password_verify($pwd, $result['pwd'])) {
             $errors['login_incorrect'] = 'Virheellinen käyttäjätunnus tai salasana!';
         }
+
+        // Tarkistetaan onko käyttäjä vahvistettu
         if (!is_user_verified($result['verified'])) {
             $errors['login_incorrect'] = 'Käyttäjätunnus ei ole aktiivinen, vahvista sähköpostiosoite!';
         }
