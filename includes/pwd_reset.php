@@ -7,10 +7,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     try {
         include 'connections.php';
         include 'pwd_reset_model.php';
+        include 'pwd_reset_ctrl.php';
         require_once 'regex.php';
         require_once "send_email_model.php";
         require_once 'config_session.php';
 
+        // Puhdistetaan luotu token myöhempää vertailua varten (tietoturvasyistä)
+        $pwd_token = trim_input($pwd_token);
 
         // Tarkistetaan onko käyttäjän syötteet tyhjiä
         if (empty($email)) {
@@ -27,9 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         // Puhdistetaan käyttäjän syötteet
-        $email = trim($email);
-        $email = stripslashes($email);
-        $email = htmlspecialchars($email);
+        $email = trim_input($email);
 
         // Haetaan käyttäjän tiedot tietokannasta
         $result = get_user($pdo, $email);
@@ -56,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt = null;
 
         // Asetetaan salasanan nollaus onnistuneeksi
-        $_SESSION['reset_status'] = "Salasanan nollauslinkki on lähetetty sähköpostiisi!";
+        $_SESSION['reset_link'] = "Salasanan nollauslinkki on lähetetty sähköpostiisi!";
 
         // Ohjataan käyttäjä takaisin salasanan nollaus-sivulle
         header("Location: unohtunut_salasana.php?linkki=lähetetty.");

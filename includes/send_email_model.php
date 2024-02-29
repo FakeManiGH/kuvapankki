@@ -98,7 +98,7 @@ function send_reset_email($username, $email, $pwd_token) {
                 <p>Olet pyytänyt salasanasi nollaamista <strong>Kuvapankki.fi</strong> -pavelussa.</p> 
                 <p>Jos et ole lähettänyt tätä pyyntöä itse, tämä viesti ei vaadi sinulta toimenpiteitä ja salasanasi pysyy ennallaan.</p>
                 <p>Jos kuitenkin olet pyytänyt salasanasi nollaamista, voit tehdä sen alla olevasta linkistä:</p>
-                <a href='http://$SERVER/$ROOT/vahvistukset.php?pwd_token=$pwd_token'><strong>Nollaa Salasana</strong></a><br><br>
+                <a href='http://$SERVER/$ROOT/uusi_salasana.php?pwd_token=$pwd_token'><strong>Nollaa Salasana</strong></a><br><br>
                 <p><strong>ÄLÄ VASTAA TÄHÄN VIESTIIN</strong></p>
             ";
             $mail->Body = $email_template;

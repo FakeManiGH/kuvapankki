@@ -14,9 +14,9 @@
 
     <h1>Kirjaudu</h1>
 
-
-        <p>Kirjaudu sisään käyttäjätunnuksellasi ja salasanallasi.</p>
+    <p>Kirjaudu sisään käyttäjätunnuksellasi ja salasanallasi.</p>
         
+    <div class="form_container">
         <form action="kirjaudu.php" class="page_form" method="POST">
             <span class="inline">
                 <label for="username">Käyttäjätunnus</label>
@@ -43,8 +43,10 @@
                 <button type="submit">Kirjaudu</button>
             </span>
         </form>
-        <a href="unohtunut_salasana.php">Unohditko salasana?</a>
-        <p>Ei vielä tunnuksia? <a href="rekisteroidy.php">Rekisteröidy!</a></p>
+    </div>
+
+    <a href="unohtunut_salasana.php">Unohditko salasana?</a>
+    <p>Ei vielä tunnuksia? <a href="rekisteroidy.php">Rekisteröidy!</a></p>
 
 </main>
 
