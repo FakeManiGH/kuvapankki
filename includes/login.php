@@ -62,9 +62,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         session_id($sessionId);
 
         $_SESSION['user_id'] = htmlspecialchars($result['user_id']);
+        $_SESSION['user_img'] = htmlspecialchars($result['user_img']);
         $_SESSION['username'] = htmlspecialchars($result['username']);
-        $_SESSION['first_name'] = htmlspecialchars($result['first_name']);
-        $_SESSION['last_name'] = htmlspecialchars($result['last_name']);
         $_SESSION['phone'] = htmlspecialchars($result['phone']);
         $_SESSION['email'] = htmlspecialchars($result['email']);
         $_SESSION['last_regeneration'] = time();

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 // Puhdistaa käyttäjän syötteen
 function trim_input($data) {
     $data = trim($data);

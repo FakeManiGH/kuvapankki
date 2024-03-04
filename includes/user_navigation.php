@@ -3,7 +3,9 @@ if (is_logged_in()) {
     echo "<a href='javascript:void(0);' id='close_user_menu' title='Sulje Valikko'><i class='fa fa-arrow-circle-right'></i></a>";
 
     echo "<div class='user_container'>";
-        echo "<img src='https://placehold.co/150x150' class='user_image' alt='Profiilikuva'>";
+        echo "<div class='user_image_wrapper'>";
+            echo "<img src='".$_SESSION['user_img']."' class='user_image' alt='Profiilikuva'>";
+        echo "</div>";
         echo "<h4>" .$_SESSION['username'] . "</h4>";
     echo "</div>";
 

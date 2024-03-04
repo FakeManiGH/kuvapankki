@@ -30,7 +30,7 @@
 
         <?php
             if (is_logged_in()) {  
-                echo "<a id='open_user_menu' title='Käyttäjä Valikko' href='javascript:void(0);'>". $_SESSION['username'] ."<i class='fa fa-bars' style='font-size: 1.4rem;'></i></a>";
+                echo "<a id='open_user_menu' title='Käyttäjä Valikko' href='javascript:void(0);'>". $_SESSION['username'] ." <i class='fa fa-bars' style='font-size: 1.4rem;'></i></a>";
             } else {
                 echo "<a href='kirjaudu.php' title='Kirjaudu Sisään' class='" . active('kirjaudu', $active) . "'><i class='fa fa-sign-in-alt'></i> Kirjaudu</a>";
             }
@@ -40,6 +40,7 @@
     <nav id="user_navigation">
         <?php include 'includes/user_navigation.php';?>
     </nav>
+    <div class="menu_overlay"></div>
 
     <nav class="top_navi">
         <a href="lisaa_kuvia.php" title="Lisää Kuvia" class="<?=active('lisaa_kuvia',$active);?>"><i class="fa fa-upload"></i> <span class="nav_txt">Lisää Kuvia</span></a>

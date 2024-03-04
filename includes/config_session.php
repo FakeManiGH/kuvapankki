@@ -4,7 +4,7 @@ ini_set('session.use_only_cookies', 1);
 ini_set('session.use_strict_mode', 1);
 
 session_set_cookie_params([
-    'lifetime' => 1800,
+    'lifetime' => 1801,
     'path' => '/',
     'domain' => 'localhost',
     'secure' => true,
@@ -24,6 +24,7 @@ if (is_logged_in()) {
         $interval = 60 * 30;
         if (time() - $_SESSION['last_regeneration'] > $interval) {
             regenerate_session_id_loggedin();
+            checkSession();
         }
     }
 } else {
@@ -34,6 +35,7 @@ if (is_logged_in()) {
         $interval = 60 * 30;
         if (time() - $_SESSION['last_regeneration'] > $interval) {
             regenerate_session_id();
+            checkSession();
         }
     }
 }

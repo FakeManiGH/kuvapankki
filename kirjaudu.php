@@ -20,12 +20,12 @@
         <form action="kirjaudu.php" class="page_form" method="POST">
             <span class="inline">
                 <label for="username">Käyttäjätunnus</label>
-                <input type="text" name="username" placeholder="Käyttäjätunnus" autofocus>
+                <input type="text" name="username" placeholder="Käyttäjätunnus" autofocus required>
             </span>
 
             <span class="inline">
                 <label for="pwd">Salasana</label>
-                <input type="password" name="pwd" placeholder="Salasana">
+                <input type="password" name="pwd" placeholder="Salasana" required>
             </span>
             <p class='error_msg'>
             <?php 

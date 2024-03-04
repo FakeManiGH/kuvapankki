@@ -2,3 +2,11 @@
 
 settings.*
 mail.*
+
+
+# Files to ignore:
+
+
+# Directories to ignore:
+
+/profile_images/

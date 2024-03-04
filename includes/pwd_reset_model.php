@@ -23,7 +23,18 @@ function create_reset_token(object $pdo, int $user_id, string $pwd_token) {
 }
 
 
-// FOLLOWING FUNCTIONS ARE FOR AFTER THE USER HAS RECEIVED THE RESET LINK
+// FOLLOWING FUNCTIONS ARE FOR AFTER THE USER HAS RECEIVED THE RESET LINK & NORMAL PROFILE PWD RESET PROCESS
+
+// Get pwd from database
+function get_pwd(object $pdo, int $user_id) {
+    $query = "SELECT pwd FROM users WHERE user_id = :user_id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':user_id', $user_id);
+    $stmt->execute();
+
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result;
+}
 
 // Get token from database
 function get_token(object $pdo, string $pwd_token) {
