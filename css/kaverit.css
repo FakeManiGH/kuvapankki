@@ -1,0 +1,60 @@
+
+
+.friend_list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.friend {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background-color: #d1d1d1;
+    border-radius: 5px;
+}
+
+.friend h5 {
+    color: green;
+}
+
+.profile_info {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+.profile_picture {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.friend_info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+}
+
+
+/* LISÄÄ KAVERI SIVUN TYYLIT */
+
+#user_list {
+    margin-top: -15px;
+    margin-bottom: 10px;
+}
+
+
+
+@media screen and (max-width: 480px){
+    .link_text {
+        display: none;
+    }
+}

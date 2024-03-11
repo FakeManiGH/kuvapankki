@@ -7,11 +7,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 if ($current_page == "index.php") {
     if (isset($_SESSION['user_id'])) {
         echo "<a title='Profiili' href='profiili.php'><i class='fa fa-user'></i> Profiili</a>";
-        echo "<a title='Kirjaudu ulos' href='includes/log_out.php'><i class='fa fa-sign-out-alt'></i> Kirjaudu ulos</a>";
-    } else {
-        echo "<a title='Kirjaudu' href='kirjaudu.php'><i class='fa fa-user'></i> Kirjaudu</a>";
-        echo "<a title='Rekisteröidy' href='rekisteroidy.php'><i class='fa fa-user-plus'></i> Rekisteröidy</a>";
-    }
+    } 
 }
 
 // KIRJAUDU
@@ -50,4 +46,16 @@ if ($current_page == "tietoa.php") {
 // OTA YHTEYTTÄ
 if ($current_page == "ota_yhteytta.php") {
     echo "<a title='Tietoa Palvelusta' href='tietoa.php'><i class='fa fa-info-circle'></i> Tietoa Palvelusta</a>";
+}
+
+// KAVERIT
+
+if ($current_page == "kaverit.php") {
+    echo "<a title='Lisää Kavereita' href='lisaa_kaveri.php'><i class='fa fa-user-plus'></i> Lisää kaveri</a>";
+    echo "<a title='kaveripyynnöt' href='lisaa_kaveri.php'><i class='fa fa-bell'></i> Kaveripyynnöt</a>";
+    echo "<a title='Viestit' href='viestit.php'><i class='fa fa-message'></i> Viestit</a>";
+}
+
+if ($current_page == "lisaa_kaveri.php") {
+    echo "<a title='Kaverit' href='kaverit.php'><i class='fa fa-users'></i> Kaverit</a>";
 }

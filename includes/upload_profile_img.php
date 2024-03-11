@@ -52,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     // Asetetaan onnistumisviesti ja ohjataan takaisin profiiliin.
                     $_SESSION['profile_update_success'] = "Profiilikuva päivitetty onnistuneesti!";
+
                     header("Location: ../profiili.php?kuva=päivitetty");
                     exit();
 
