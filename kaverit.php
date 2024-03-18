@@ -15,23 +15,26 @@
 
 <main>
 
-    <h1>Omat Kaverit</h1>
+    <h1>Kaverit</h1>
 
     <p>Tällä sivulla näet kaverilistasi. Voit lisätä kavereita ja poistaa kavereita.</p>
     
     <form class="page_form">
-        <label for="search_user">Etsi Kaverilistalta</label>
-        <span class="inline">
-            <input type="text" id="search_input" name="search_user" placeholder="Etsi kavereita" required>
-        </span>
+        <fieldset>
+            <legend>Hae Kaveria</legend>
+            <label for="search_user" type="hidden" class="hidden"></label>
+            <span class="inline">
+                <input type="text" id="search_input" name="search_user" placeholder="Anna kaverin nimi" required>
+            </span>
+        </fieldset>
     </form>
 
-    <h4>Kaverilista</h4>
+    <h3>Omat Kaverit</h3>
 
     <div class="friend_list">
         <?php
             foreach ($friends as $friend) {
-                echo '<div class="friend">';
+                echo '<div class="friend" onclick="window.location.href=\'view_user.php?user_id='. $_SESSION['user_id'] . '\'">';
                 echo '<div class="profile_info">';
                 echo '<img class="profile_picture" src="' . $friend['user_img'] . '" alt="Profiilikuva">';
                 echo '<h4>' . $friend['username'] . '</h4>';

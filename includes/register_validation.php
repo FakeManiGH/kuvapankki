@@ -1,7 +1,5 @@
 
 <?php
-// Path: includes/form_validation.php
-// This file contains functions for validating form data.
 
 $username = $first_name = $last_name = $phone = $email = $pwd = $pwd2 = '';
 $usernameErr = $first_nameErr = $last_nameErr = $phoneErr = $emailErr = $pwdErr = $pwd2Err = '';
@@ -125,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     
 } else {
-    header("Location: ../rekisteroidy.php");
+    header("Location: index.php?pääsy=kielletty");
     exit();
 }
 

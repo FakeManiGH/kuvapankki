@@ -13,11 +13,19 @@ if (is_logged_in()) {
         echo "<a href='profiili.php' class='". active('profiili', $active) ."' title='Profiili'><i class='fa fa-user'></i> Profiili</a>";
         echo "<a href='asetukset.php' class='". active('asetukset', $active) ." title='Asetukset'><i class='fa fa-cog'></i> Asetukset</a>";
         echo "<a href='ilmoitukset.php' class='". active('ilmoitukset', $active) ." title='Ilmoitukset'><i class='fa fa-bell'></i> Ilmoitukset</a>";
-        echo "<a href='viestit.php' class='". active('viestit', $active) ." title='Viestit'><i class='fa fa-envelope'></i> Viestit</a>";
+        echo "<a href='viestit.php' class='". active('viestit', $active) ." title='Viestit'><i class='fa fa-envelope-open-text'></i> Viestit</a>";
         echo "<a href='kaverit.php' class='". active('kaverit', $active) ." title='Kaverit'><i class='fa fa-users'></i> Kaverit</a>";
     echo "</div>";
 
-    echo "<a href='includes/log_out.php' title='Kirjaudu Ulos'><i class='fa fa-sign-out-alt'></i> Kirjaudu Ulos</a>";
+    echo "<div class='user_links'>";
+        echo "<a href='tallenustila.php' class='". active('tallennustila', $active) ." title='Tallennustila'><i class='fa fa-cart-arrow-down'></i> Tallennustilaa</a>";
+        echo "<a href='ota_yhteytta.php' class='". active('ota_yhteytta', $active) ." title='Ota Yhteyttä'><i class='fa fa-envelope'></i> Ota Yhteyttä</a>";
+        echo "<a href='tuki.php' class='". active('tuki', $active) ." title='Tuki'><i class='fa fa-question-circle'></i> Tuki</a>";
+    echo "</div>";
+
+    echo "<div class='user_links'>";
+        echo "<button class='yellow_btn' onclick='location.href=\"includes/log_out.php\"' title='Kirjaudu Ulos'><i class='fa fa-sign-out-alt'></i> Kirjaudu Ulos</button>";
+    echo "</div>";
 
 } else {
     echo "<h4>Et ole kirjautunut sisään</h4>";

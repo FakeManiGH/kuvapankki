@@ -23,3 +23,11 @@ $patternPhone = "/^[0-9]{7,15}$/";
 // Email
 $patternEmail = "/^[a-zA-Z_]+[a-zA-Z0-9_\.+-]*@[a-zA-Z_]+(\.[a-zA-Z0-9_-]{2,})?\.[a-zA-Z]{2,}$/";
 
+// Gallery name
+$patternGallery = "/^.{1,75}$/";
+
+// Gallery description
+$patternDesc = "/^.{1,400}$/";
+
+// Gallery tags
+$patternTags = "/^.{0,100}$/";

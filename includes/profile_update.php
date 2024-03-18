@@ -11,8 +11,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     try {
         include 'connections.php';
-        include "profile_update_model.php";
-        include "profile_update_ctrl.php";
+        include "profile_model.php";
+        include "profile_ctrl.php";
         include "regex.php";
 
         // Puhdistetaan käyttäjän syötteet

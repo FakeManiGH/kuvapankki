@@ -3,11 +3,14 @@
         include "includes/login.php";
     }
 
-
-
     $title = 'Kirjaudu Sisään';
     $css = 'css/kirjaudu.css';
     include 'header.php';
+
+    if (is_logged_in()) {
+        header('Location: index.php?olet=kirjutunut');
+        die();
+    }
 ?>
 
 <main>

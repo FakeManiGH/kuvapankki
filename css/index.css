@@ -1,0 +1,45 @@
+.circles {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.circle {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+    align-items: center;
+    width: 350px;
+    height: 350px;
+    max-width: 100%;
+    border-radius: 50%;
+    background: #557055;
+    color: #fff;
+}
+
+.register_list {
+    display: flex;
+    flex-direction: column;
+    font-size: .9rem;
+    list-style-type: disc;
+    gap: 5px;
+}
+
+.small_txt {
+    font-size: .9rem;
+    text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+    .circle {
+        width: 300px;
+        height: 300px;
+    }
+    
+}

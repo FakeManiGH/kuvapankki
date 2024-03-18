@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Nollataan tietokantayhteys ja poistetaan muuttujat
         $pdo = null;
         $stmt = null;
-        header('Location: index.php?kirjautuminen=onnistui');
+        header('Location: selaa.php?kirjautuminen=onnistui');
         die();
     
     } catch (PDOException $e) {

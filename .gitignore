@@ -10,3 +10,4 @@ mail.*
 # Directories to ignore:
 
 /profile_images/
+/img/

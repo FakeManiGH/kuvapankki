@@ -1,5 +1,6 @@
 <?php
-    $title = 'Profiili';
+    
+    $title = 'Oma Profiili';
     $css = 'css/profiili.css';
     $js = 'scripts/profiili.js';
     include 'header.php';
@@ -9,28 +10,12 @@
         die();
     }
 
-    function securePhone($phone) {
-        $start = substr($phone, 0, -4);
-        $start = str_repeat("*", strlen($start));
-        $end = substr($phone, -4);
-        $securePhone = $start . $end;
-        return $securePhone;
-    }
+    require 'includes/connections.php';
+    require 'includes/profile_model.php';
 
-    function secureEmail($email) {
-        $start = substr($email, 0, 3);
-        $middle = substr($email, 3, strpos($email, '@') - 3);
-        $end = substr($email, strpos($email, '@'));
-        $secureEmail = $start . str_repeat("*", strlen($middle)) . $end;
-        return $secureEmail;
-    }
-
-    $username = $_SESSION['username'];
-    $email = $_SESSION['email'];
-    $phone = "0".$_SESSION['phone'];
-   /*  $email = secureEmail($_SESSION['email']);
-    $phone = securePhone($_SESSION['phone']); */
-
+    // Haetaan käyttäjän tiedot tietokannasta
+    $user = get_user($pdo, $_SESSION['user_id']);
+    
 ?>
 
 <main>
@@ -56,10 +41,12 @@
 
 
         <!-- Profiilikuva -->
-        <form class="page_form grid_item" action="includes/upload_profile_img.php" method="post" enctype="multipart/form-data">
+        <form class="page_form grid_item" action="includes/profile_img_upload.php" method="post" enctype="multipart/form-data">
+        <fieldset>
+        <legend>Profiilikuva</legend>
             <div class="image_container">
                 <div class="user_image_wrapper">
-                    <img id="profile_img" src="<?php if (isset($_SESSION['user_img'])) {echo $_SESSION['user_img'];} ?>" class="user_image" alt="Profiilikuva">
+                    <img id="profile_img" src="<?php if (isset($user['user_img'])) {echo htmlspecialchars($user['user_img']);} ?>" class="user_image" alt="Profiilikuva">
                 </div>
 
                 <div class="file_container">
@@ -75,20 +62,19 @@
                 }
                 ?>
             </p>
+        </fieldset>
         </form>
     </div>
 
 
-
-
-    <h2>Omat tiedot</h2>
-
     <form id="user_info" class="page_form" action="includes/profile_update.php" method="post">
+    <fieldset>
+        <legend>Omat Tiedot</legend>
 
         <span class="inline">
             <label for="username">Käyttäjätunnus</label>
             <span class="inline_x2">
-                <input type="text" id="username" name="username" value="<?php if (isset($_SESSION['username'])) {echo $_SESSION['username'];} ?>" placeholder="Käyttäjätunnus" readonly>
+                <input type="text" id="username" name="username" value="<?php if (isset($user['username'])) {echo htmlspecialchars($user['username']);} ?>" placeholder="Käyttäjätunnus" readonly>
                 <a id="edit_username" href="javascript:void(0);"><i class="fa-solid fa-pen-to-square"></i></a>
             </span>
         </span>
@@ -96,7 +82,7 @@
         <span class="inline">
             <label for="phone">Puhelinnumero</label>
             <span class="inline_x2">
-                <input type="text" id="phone" name="phone" value="<?php echo $phone; ?>" placeholder="Matkapuhelinnumero" readonly>
+                <input type="text" id="phone" name="phone" value="0<?php if (isset($user['phone'])) {echo htmlspecialchars($user['phone']);} ?>" placeholder="Matkapuhelinnumero" readonly>
                 <a id="edit_phone" href="javascript:void(0);"><i class="fa-solid fa-pen-to-square"></i></a>
             </span>
         </span>
@@ -104,7 +90,7 @@
         <span class="inline">
             <label for="email">Sähköpostiosoite</label>
             <span class="inline_x2">
-                <input type="email" id="email" name="email" value="<?php echo $email; ?>" placeholder="Sähköpostiosoite" readonly>
+                <input type="email" id="email" name="email" value="<?php if (isset($user['email'])) {echo htmlspecialchars($user['email']);} ?>" placeholder="Sähköpostiosoite" readonly>
                 <a id="edit_email" href="javascript:void(0);"><i class="fa-solid fa-pen-to-square"></i></a>
             </span>
         </span>
@@ -130,16 +116,14 @@
             <button type="submit">Tallenna Tiedot</button>
             <button id="reset" type="reset">Peruuta</button>
         </span>
-
+    </fieldset>
     </form>
 
 
-  
-
-    <h2>Salasanan Vaihto</h2>
 
     <form id="pwd_update_form" class="page_form" action="includes/pwd_update.php" method="post">
-
+    <fieldset>
+        <legend>Vaihda Salasana</legend>
         <span class="inline">
             <label for="old_pwd">Nykyinen Salasana <span class="red">*</span></label>
             <span class="inline_x2">
@@ -169,7 +153,7 @@
             <button type="submit">Vaihda Salasana</button>
             <button id="reset" type="reset">Peruuta</button>
         </span>
-
+    </fieldset>
     </form>
     
 

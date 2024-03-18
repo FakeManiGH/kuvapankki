@@ -1,7 +1,8 @@
 <?php
 
-    $title = 'Kuvavirta';
+    $title = 'Lisää Kuvia';
     $css = 'css/lisaa_kuvia.css';
+    $js = 'scripts/lisaa_kuvia.js';
     include 'header.php';
     checkSession();
     if (!is_logged_in()) {
@@ -12,34 +13,28 @@
 
 <main>
 
-    <h1>Lisää Uusi Kuva</h1>
+    <h1>Lisää Kuvia</h1>
 
-    <form action="upload.php" class="page_form" method="post" enctype="multipart/form-data">
-        <span class="inline">
-            <label for="file">Valitse Kuva</label>
-            <input type="file" name="file" id="file" class="form-control" >
-        </span>
+    <p>Lisää hienoja kuvia galleriaasi. Voit ladata helposti jopa 10 kuvaa kerrallaan.</p>
 
-        <span class="inline">
-            <label for="title">Otsikko</label>
-            <input type="text" name="title" id="title" class="form-control">
-        </span>
+    <div id="droparea">
+        <form class="page_form" method="post" enctype="multipart/form-data">
+            <h4>Siirrä haluamasi kuvat tähän, max 10kpl kerrallaan</h4>
+            <ul>
+                <li>Voit siirtää kuvia raahaamalla ne tähän tai valitsemalla ne tietokoneeltasi.</li>
+                <li>Kuvatiedostot voivat olla .jpg, .jpeg, tai .png -muotoisia.</li>
+                <li>Kuvatiedostojen maksimikoko on 5MB.</li>
+                <li>Voit ladata useita kuvia kerrallaan.</li>
+            </ul>
 
-        <span class="inline">
-            <label for="description">Kuvaus</label>
-            <textarea name="description" id="description" class="form-control"></textarea>
-        </span>
+            <label type="hidden" for="images"></label>
+            <input type="file" id="images" name="images" multiple>
+            <button type="button" onclick="document.getElementById('images').click()">Valitse tiedostot</button>
+        </form>
+    </div>
 
-        <span class="inline">
-            <label for="gallery">Valitse Galleria</label>
-            <select name="gallery" id="gallery">
-                <option value="0">Valitse Galleria</option>
-                <option value="1">Galleria 1</option>
-                <option value="2">Galleria 2</option>
-                <option value="3">Galleria 3</option>
-            </select>
-        </span>
-
+    <form action="images_add.php" class="image_form" id="image_form" method="post"></form>
+    
 
 </main>
 

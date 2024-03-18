@@ -5,6 +5,10 @@ $js = 'scripts/register.js';
 include 'header.php';
 checkSession();
 
+if (is_logged_in()) {
+    header('Location: index.php?olet=kirjutunut');
+    die();
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -29,9 +33,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <p>Rekisteröidy käyttäjäksi täyttämällä alla oleva lomake.</p>
 
-    <p><span class="red"> <strong>*</strong> pakollinen kenttä.</span></p>
-
     <form id="register_form" class="page_form" action="rekisteroidy.php" method="post">
+    <fieldset>
+        <legend>Rekisteröityminen</legend>
+        <p><span class="red"> <strong>*</strong> pakollinen kenttä.</span></p>
+
         <span class="inline">
             <label for="username">Käyttäjätunnus <span class="red">*</span></label>
             <input id="username" type="text" name="username" placeholder="Käyttäjätunnus" value="<?php if (isset($username)) {echo $username;} ?>" autofocus required>
@@ -78,6 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <button type="submit">Rekisteröidy</button>
             <button id="reset" type="reset">Tyhjennä</button>
         </span>
+    </fieldset>
     </form>
 
     <p>Onko sinulla jo tunnukset? <a href="kirjaudu.php">Kirjaudu sisään!</a></p>

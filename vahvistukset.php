@@ -19,7 +19,8 @@
 
     // ILmoitus sähköpostin vahvistukstuksen onnistumisesta
     } else if (isset($_SESSION['verify_status'])) { 
-        echo "<h4 class='green'>".$_SESSION['verify_status']."</h4>";
+        echo "<h4 class='green'>".$_SESSION['verify_status']."</h4><br>";
+        echo "<button><a href='kirjaudu.php'>Kirjaudu sisään</a></button>";
         unset($_SESSION['verify_status']);
     
 

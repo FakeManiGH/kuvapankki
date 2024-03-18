@@ -8,59 +8,110 @@
         die();
     }
 
-    $gallery = [
-        'head_image' => 'https://placehold.co/150x150'
-    ];
-    function gallery_background($gallery) {
-        if ($gallery['head_image']) {
-            return $gallery['head_image'];
-        } else {
-            return 'https://placehold.co/150x150';
-        } 
-    }
+    require 'includes/connections.php';
+    require 'includes/gallery_model.php';
+    $owned_galleries = view_owned_galleries($pdo, $_SESSION['user_id']);
+    $joined_galleries = view_joined_galleries($pdo, $_SESSION['user_id']);
 ?>
 
-<style>
-    .gallery {
-    background: url(<?php echo gallery_background($gallery); ?>);
-    background-size: cover;
-    background-position: center;
-    }
-</style>
 
 <main>
 
-    <p>Täältä näet omat galleriasi. Voit lisätä kuvia olemassa oleviin gallerioihin tai luoda uusia gallerioita.</p>
+    <h1>Galleriat</h1>
 
-    <h2>Yksityiset Galleriat</h2>
+    <p>Tältä sivilta löydät kaikki omat galleriasi. Luo gallerioita lempi aiheillesi ja jaa ne kavereiden kanssa.
+        Voit myös päättää pitää gallereiasi yksityisinä tai tehdä niistä julkisia. Tällöin kaikki voivat nähdä sen.</p>
 
-    <div class="galleria_container">
+    <form class="page_form">
+        <fieldset>
+            <legend><i class="fa fa-magnifying-glass"></i> Etsi Galleriaa</legend>
+            <label for="gallery_search" class="hidden"></label>
+            <span class="inline">
+                <input type="text" id="gallery_search" name="gallery_search" placeholder="Anna hakusana" required>
+                <button type="submit" id="gallery_search_button">Hae</button>
+            </span>
+        </fieldset>
+    </form>
 
-        <a class="gallery" href="#"></a>
+    <section>
+        <div class="filtering">
+            <h4>Omat Galleriat</h4>
+            <label for="sort_galleries_own" class="hidden"></label>
+            <select id="sort_galleries_own" name="sort_galleries_own">
+                <option value="newest">UUSIMMAT</option>
+                <option value="oldest">VANHIMMAT</option>
+                <option value="name">NIMI</option>
+            </select>
+        </div>
 
-        <a class="new_gallery" href="uusi_galleria.php">+</a>
+        <div class="galleria_container">
 
-    </div>
+            <?php
+            if (isset($owned_galleries) && !empty($owned_galleries)) {
+                foreach ($owned_galleries as $key => $gallery) {
+                    $owned_galleries[$key] = array_map('htmlspecialchars', $gallery);
 
+                    echo '<a class="gallery" href="galleria.php?galleria_id=' . $gallery['gallery_id'] . '">';
+                    echo '<img class="gallery_cover" src="../' . $gallery['cover_img'] .'" alt="Gallerian Kansikuva">';
+                    echo '<div class="gallery_info">';
+                    echo '<h4>' . $gallery['name'] . '</h4>';
+                    if ($gallery['visibility'] === 1) {
+                            echo '<p class="small_txt" title="Yksityinen">Yksityinen <i class="fa fa-lock"></i></p>';
+                        } else if ($gallery['visibility'] === 2){
+                            echo '<p class="small_txt" title="Jaettu">Kaverit <i class="fa fa-users"></i></p>';
+                        } else {
+                            echo '<p class="small_txt" title="Julkinen">Julkinen <i class="fa fa-signal"></i></p>';
+                        }
+                    echo '</div>';
+                    echo '</a>';  
+                }
 
-    <h2>Jaetut Galleriat</h2>
+            } else {
+                echo '<p class="small_txt grey">Ei Gallerioita.</p>';
+            }
+            ?>
 
-    <div class="galleria_container">
+        </div>
+    </section>
 
-        <a class="gallery" href="#"></a>
+    <section>
+        <div class="filtering">
+            <h4>Jäsenyydet</h4>
+            <label for="sort_galleries_joined" class="hidden"></label>
+            <select id="sort_galleries_joined" name="sort_galleries_own">
+                <option value="newest">UUSIMMAT</option>
+                <option value="oldest">VANHIMMAT</option>
+                <option value="name">NIMI</option>
+            </select>
+        </div>
 
-        <a class="new_gallery" href="uusi_galleria.php">+</a>
+        <div class="galleria_container">
 
-    </div>
+            <?php
+            if (isset($joined_galleries) && !empty($joined_galleries)) {
+                foreach ($joined_galleries as $gallery) {
+                    $joined_galleries[$key] = array_map('htmlspecialchars', $gallery);
+                    
+                    echo '<a class="gallery" href="galleria.php?galleria_id=' . $gallery['gallery_id'] . '">';
+                    echo '<img class="gallery_cover" src="../' . $gallery['cover_img'] .'" alt="Gallerian Kansikuva">';
+                    echo '<div class="gallery_info">';
+                    echo '<h4>' . $gallery['name'] . '</h4>';
+                    if ($gallery['visibility'] === 2) {
+                            echo '<p class="small_txt" title="Jaettu">Kaverit <i class="fa fa-users"></i></p>';
+                        } else {
+                            echo '<p class="small_txt" title="Julkinen">Julkinen <i class="fa fa-signal"></i></p>';
+                        }
+                    echo '</div>';
+                    echo '</a>';   
+                }
 
+            } else {
+                echo '<p class="small_txt grey">Ei Gallerioita.</p>';
+            }
+            ?>
 
-    <h2>Jäsenyydet</h2>
-
-    <div class="galleria_container">
-
-        
-
-    </div>
+        </div>
+    </section>
 
 </main>
 

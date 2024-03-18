@@ -1,11 +1,12 @@
 <?php
 
-if (isset($_GET['email_token'])) { 
+if (isset($_GET['email_token']) && !empty($_GET['email_token'])) {
     $token = $_GET['email_token'];
 
     try {
         include "connections.php";
         include "register_model.php";
+        include "config_session.php";
 
         $errors = [];
 

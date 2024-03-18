@@ -1,0 +1,125 @@
+
+#droparea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 3px dashed #333;
+    border-radius: 20px;
+    font-family: 'Open Sans', sans-serif;
+    padding: 50px 20px;
+}
+
+#droparea.highlight {
+    border-color: green;
+}
+
+#images {
+    display: none;
+}
+  
+li {
+    list-style: disc;
+    font-size: .9rem;
+    margin-left: 30px;
+    color: #555;
+}
+
+
+
+
+
+.image_form {
+    display: none;
+}
+
+.has_images {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
+}
+
+fieldset {
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+.field_wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.button_wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.image_form label {
+    font-family: 'Open Sans', sans-serif;
+    white-space: nowrap;
+    font-size: 1rem;
+    font-weight: 600;
+    width: 30%;
+    margin-top: 20px;
+}
+
+.image_form input, .image_form select {
+  box-sizing: border-box; /* Add this line */
+  padding: 10px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.image_form input:focus, 
+.image_form textarea:focus
+.image_form select:focus {
+    outline-style: none;
+    border-color: #399c39;
+    box-shadow: 0 0 5px #399c39;
+}
+
+.image_form input[type="file"] {
+    display: none;
+}
+
+.preview {
+    width: 100px;
+    height: -moz-fit-content;
+    height: fit-content;
+    border-radius: 5px;
+}
+
+.gallery_label {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.error_msg {
+    color: #ff0000;
+    font-family: 'Open Sans', sans-serif;
+    font-size: .9rem;
+    font-weight: 400;
+    margin-top: -5px;
+    align-self: flex-end;
+}
+
+
+
+@media screen and (max-width: 480px) {
+    .field_wrapper {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+    .preview {
+        width: 100%;
+    }
+}
+

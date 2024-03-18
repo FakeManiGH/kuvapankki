@@ -1,3 +1,4 @@
+
 .inline_x2 {
     display: flex;
     align-items: center;
@@ -23,7 +24,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     gap: 10px;
-    margin-bottom: 10px;
+    margin: 10px 0 10px 0;
 }
 
 #clear_file_select {
@@ -49,7 +50,4 @@
     font-size: .8rem;
 }
 
-h2 {
-    margin-bottom: -10px;
-}
 

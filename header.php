@@ -30,9 +30,9 @@
 
         <?php
             if (is_logged_in()) {  
-                echo "<a id='open_user_menu' title='Käyttäjä Valikko' href='javascript:void(0);'>". $_SESSION['username'] ." <i class='fa fa-bars' style='font-size: 1.4rem;'></i></a>";
+                echo "<a id='open_user_menu' title='Käyttäjä Valikko' href='javascript:void(0);'>". $_SESSION['username'] ." <img class='tiny_img' src=".$_SESSION['user_img']." alt='Profiilikuva'></a>";
             } else {
-                echo "<a href='kirjaudu.php' title='Kirjaudu Sisään' class='" . active('kirjaudu', $active) . "'><i class='fa fa-sign-in-alt'></i> Kirjaudu</a>";
+                echo "<a href='kirjaudu.php' title='Kirjaudu Sisään' class='" . active('kirjaudu', $active) . "'><i class='fa fa-sign-in'></i> Kirjaudu Sisään</a>";
             }
         ?>
     </div>
@@ -40,14 +40,27 @@
     <nav id="user_navigation">
         <?php include 'includes/user_navigation.php';?>
     </nav>
-    <div class="menu_overlay"></div>
+    <span class="menu_overlay"></span>
 
     <nav class="top_navi">
-        <a href="lisaa_kuvia.php" title="Lisää Kuvia" class="<?=active('lisaa_kuvia',$active);?>"><i class="fa fa-upload"></i> <span class="nav_txt">Lisää Kuvia</span></a>
-        <a href="galleriat.php" title="Galleriat" class="<?=active('galleriat',$active);?>"><i class="fa-regular fa-images"></i> <span class="nav_txt">Galleriat</span></a>
+        <a href="selaa.php" title="Selaa Kuvia" class="<?=active('selaa',$active);?>"><i class="fa fa-bars-staggered"></i> <span class="nav_txt">Selaa</span></a>
+        <div class="dropdown">
+            <a href="galleriat.php" title="Galleriat" class="<?=active('galleriat',$active);?>"><i class="fa-regular fa-images"></i> <span class="nav_txt">Galleriat <i class="fa-solid fa-caret-down"></i></span></a>
+            <div class="drop_links">
+                <a href="galleriat.php" title="Galleriat" class="<?=active('galleriat',$active);?>">Galleriat</a>
+                <a href="lisaa_kuvia.php" title="Lisää Kuvia" class="<?=active('lisaa_kuvia',$active);?>">Lisää Kuvia</a>
+                <a href="lisaa_galleria.php" title="Uusi Galleria" class="<?=active('lisaa_galleria',$active);?>">Uusi Galleria</a>
+            </div>
+        </div>
         <a href="ilmoitukset.php" title="Ilmoitukset" class="<?=active('ilmoitukset',$active);?>"><i class="fa fa-bell"></i> <span class="nav_txt">Ilmoitukset</span></a>
-        <a href="kaverit.php" title="Kaverit" class="<?=active('kaverit',$active);?>"><i class="fa fa-users"></i> <span class="nav_txt">Kaverit</span></a>
-        <a href="viestit.php" title="Viestit" class="<?=active('viestit',$active);?>"><i class="fa fa-envelope"></i> <span class="nav_txt">Viestit</span></a>
+        <div class="dropdown">
+            <a id="friends" href="kaverit.php" title="Kaverit" class="<?=active('kaverit',$active);?>"><i class="fa fa-users"></i> <span class="nav_txt">Kaverit <i class="fa-solid fa-caret-down"></i></span></a>
+            <div class="drop_links">
+                <a href="kaverit.php" title="Kaverit" class="<?=active('kaverit',$active);?>">Kaverit</a>
+                <a href="lisaa_kaveri.php" title="Lisää Kaveri" class="<?=active('lisaa_kaveri',$active);?>">Lisää Kaveri</a>
+            </div>
+        </div>
+        <a href="viestit.php" title="Viestit" class="<?=active('viestit',$active);?>"><i class="fa fa-envelope-open-text"></i> <span class="nav_txt">Viestit</span></a>
     </nav>
 </header>
 

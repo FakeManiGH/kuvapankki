@@ -13,12 +13,10 @@
     align-items: center;
     gap: 10px;
     padding: 10px;
-    background-color: #d1d1d1;
+    background: #d1d1d1;
     border-radius: 5px;
-}
-
-.friend h5 {
-    color: green;
+    color: #111;
+    cursor: pointer;
 }
 
 .profile_info {
@@ -29,8 +27,8 @@
 }
 
 .profile_picture {
-    width: 50px;
-    height: 50px;
+    width: 35px;
+    height: 35px;
     object-fit: cover;
     border-radius: 50%;
 }
@@ -41,6 +39,15 @@
     justify-content: space-between;
     gap: 10px;
     align-items: center;
+}
+
+.friend_info a {
+    color: #557055;
+    text-decoration: none;
+}
+
+.friend_info a:hover {
+    color: #71b371;
 }
 
 
@@ -56,5 +63,8 @@
 @media screen and (max-width: 480px){
     .link_text {
         display: none;
+    }
+    .friend_info a {
+        font-size: 1rem;
     }
 }

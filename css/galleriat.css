@@ -1,44 +1,91 @@
 
-.galleria_container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(125px, 1fr));
-    gap: 20px;
-}
-
-.new_gallery {
+section {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    box-sizing: border-box;
     gap: 10px;
-    border: 1px solid #999;
-    border-radius: 5px;
+    padding: 20px;
     background: #d1d1d1;
-    width: 50px;
-    height: 50px;
-    font-size: 2.5rem;
-    transform: all .5s ease-in-out;
+    border-radius: 5px;
 }
 
-.new_gallery:hover {
-    width: 75px;
-    height: 75px;
+.filtering {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    background: #d1d1d1;
+    border-bottom: 1px solid #b1b1b1;
+    padding: 0 0 5px 0;
+}
+
+.filtering select {
+    box-sizing: border-box;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    background: transparent;
+    color: #111;
+    font-family: 'Open Sans', sans-serif;
+    font-size: .9rem;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.galleria_container {
+    display: grid;
+    box-sizing: border-box;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
 }
 
 .gallery {
     display: flex;
+    position: relative;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;
-    font-size: .8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    color: #111;
-    border: 1px solid #999;
+    background: #d1d1d1;
     border-radius: 5px;
-    width: auto;
-    height: auto;
-    min-height: 125px;
+    overflow: hidden;
+    min-width: 250px;
+    min-height: 250px;
+}
 
+.gallery img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gallery_info {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    box-sizing: border-box;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 5px;
+    padding: 10px;
+    background: #11111180;
+    backdrop-filter: blur(5px);
+    color: #fff;
+    text-align: center;
+    transition: .5s ease;
+}
+
+.gallery_info h4 {
+    white-space: wrap;
+}
+
+.gallery:hover img {
+    transition: .5s ease;
+    filter: blur(1px);
+}
+
+.gallery:hover .gallery_info {
+    color: #71b371;
 }

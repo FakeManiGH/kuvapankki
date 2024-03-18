@@ -28,7 +28,7 @@ if (is_logged_in()) {
         }
     }
 } else {
-    // if not logged in
+    // Jos käyttäjä ei ole kirjautunut sisään
     if (!isset($_SESSION['last_regeneration'])) {
         regenerate_session_id();
     } else {
