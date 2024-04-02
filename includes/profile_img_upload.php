@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 try {
                     include "connections.php";
-                    include "profile_update_model.php";
+                    include "profile_model.php";
 
                     // Päivitetään tietokantaan uusi kuva
                     update_profile_img($pdo, $user_id, $image_destination_db);
@@ -58,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
                 } catch (PDOException $e) {
+                    error_log("PDOException: " . $e, 0);
                     $_SESSION['image_update_err'] = "Tietokantaongelma! Ole hyvä ja yritä uudelleen!";
                     header("Location: ../profiili.php?virhe=tietokanta");
                     exit();
@@ -79,6 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 } else {
 
-    header("Location: ../index.php?pääsy=kielletty");
+    $_SESSION['404_error'] = "Sivua ei löytynyt tai sinulla ei ole siihen oikeutta.";
+    header('Location: ../404.php?virhe');
     exit();
 }

@@ -15,34 +15,57 @@
 
 <main>
 
+    <?php
+        if (isset($_SESSION['friend_error'])) {
+            echo '<h4 class="red">' . $_SESSION['friend_error'] . '</h4>';
+            unset($_SESSION['friend_error']);
+        }
+
+        if (isset($_SESSION['friend_success'])) {
+            echo '<h4 class="green">' . $_SESSION['friend_success'] . '</h4>';
+            unset($_SESSION['friend_success']);
+        }
+    ?>
+
     <h1>Kaverit</h1>
 
-    <p>Tällä sivulla näet kaverilistasi. Voit lisätä kavereita ja poistaa kavereita.</p>
+    <div class="page_navigation">
+        <nav class="page_links">
+            <?php include 'includes/page_navigation.php';?>
+        </nav>    
+    </div>
+
+    <p>Tältä sivulta löydät listan kavereistasi. Jos sinulla ei vielä ole kavereita, <a href="lisaa_kaveri.php">lisää kaveri</a>.</p>
+
+    <div class="filter_container">
+        <h3>Omat Kaverit</h3>
+        <div class="filters">
+            <label for="filter_friends"><i class="fa fa-magnifying-glass"></i></label>
+            <input type="text" id="filter_friends" name="filter_friends" placeholder="Etsi kaveria">
+
+            <label for="sort_friends"><i class="fa fa-sort"></i></label>
+            <select id="sort_friends" name="sort_friends">
+                <option value="za" class="bold_txt">Lajittele</option>
+                <option value="az">Nimi A-Z</option>
+                <option value="za">Nimi Z-A</option>
+            </select>       
+        </div>
+    </div>
     
-    <form class="page_form">
-        <fieldset>
-            <legend>Hae Kaveria</legend>
-            <label for="search_user" type="hidden" class="hidden"></label>
-            <span class="inline">
-                <input type="text" id="search_input" name="search_user" placeholder="Anna kaverin nimi" required>
-            </span>
-        </fieldset>
-    </form>
 
-    <h3>Omat Kaverit</h3>
-
-    <div class="friend_list">
+    <div id="friend_list" class="friend_list">
         <?php
-            foreach ($friends as $friend) {
-                echo '<div class="friend" onclick="window.location.href=\'view_user.php?user_id='. $_SESSION['user_id'] . '\'">';
+            foreach ($friends as $key => $friend) {
+                $friends[$key] = array_map('htmlspecialchars', $friend);
+
+                echo '<div class="friend" data-name="'.$friend['username'].'">';
                 echo '<div class="profile_info">';
                 echo '<img class="profile_picture" src="' . $friend['user_img'] . '" alt="Profiilikuva">';
-                echo '<h4>' . $friend['username'] . '</h4>';
+                echo '<a href="profiili.php?u=' . $friend['user_id'] . '">' . $friend['username'] . '</a>';
                 echo '</div>';
                 echo '<nav class="friend_info">';
-                echo '<a href="profiili.php?user_id=' . $friend['user_id'] . '"><i class="fa-solid fa-circle-info"></i> <span class="small_txt link_text">Profiili</span></a>';
-                echo '<a href="laheta_viesti.php?user_id=' . $friend['user_id'] . '"><i class="fa-regular fa-message"></i> <span class="small_txt link_text">Viesti</span></a>';
-                echo '<a href="poista_kaveri.php?user_id=' . $friend['user_id'] . '"><i class="fa-solid fa-trash"></i> <span class="small_txt link_text">Poista</span></a>';
+                echo '<a href="laheta_viesti.php?u=' . $friend['user_id'] . '" title="Lähetä viesti"><i class="fa-regular fa-message"></i> <span class="small_txt link_text">Viesti</span></a>';
+                echo '<a href="includes/friends_remove.php?u=' . $friend['user_id'] . '" title="Poista kaveri"><i class="fa-solid fa-trash"></i> <span class="small_txt link_text">Poista</span></a>';
                 echo '</nav>';
                 echo '</div>';
             }
@@ -55,4 +78,5 @@
 
 <?php
     include 'footer.php';
+    $pdo = null;
 ?>

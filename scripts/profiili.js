@@ -85,8 +85,8 @@ document.getElementById('user_img').addEventListener('change', function(e) {
 
     if (file) {
         reader.readAsDataURL(file);
-        document.getElementById('clear_file_select').style.display = 'block';
-        document.getElementById('accept_file_select').style.display = 'block';
+        document.getElementById('clear_file_select').style.display = 'flex';
+        document.getElementById('accept_file_select').style.display = 'flex';
     } else {
         document.getElementById('profile_img').src = oldProfileImg;
     }

@@ -57,10 +57,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     } catch (PDOException $e) {
-        echo 'Virhe tietokantakyselyssä: ' . $e->getMessage();
+        error_log($e->getMessage());
+        $_SESSION['pwd_update_err'] = 'Virhe tietokannassa!';
     }
 
 } else {
-    header('Location: index.php?pääsy=kielletty');
-    exit();
+    
+    $_SESSION['404_error'] = "Sivua ei löytynyt tai sinulla ei ole siihen oikeutta.";
+    header("Location: ../404.php?virhe");
+    die();
 }

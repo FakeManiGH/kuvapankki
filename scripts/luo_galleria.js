@@ -2,9 +2,8 @@ let galleryVisibility = document.getElementById('visibility');
 let private = document.getElementById('private');
 let public = document.getElementById('public');
 let galleryMembers = document.getElementById('select_users_area');
-let visibilityInfo = document.getElementById('visibility_info');
-let visibilityPopup = document.getElementById('visibility_popup');
-let closePopup = document.getElementById('close_popup');
+let galleryMembersList = document.getElementById('selected_users_container');
+var selectedUserList = document.getElementById('selected_users_list');
 const form = document.getElementById('create_gallery');
 
 
@@ -16,24 +15,33 @@ galleryVisibility.addEventListener('change', function() {
     }
 });
 
-// Add user to gallery
+// Adding users to gallery
 document.getElementById('add_user').addEventListener('click', function() {
-    var selectUsers = document.getElementById('select_users');
-    var selectedUsers = document.getElementById('selected_users');
-    var selectedOption = selectUsers.options[selectUsers.selectedIndex];
+    let selectUsers = document.getElementById('select_users');
+    let selectedUsers = document.getElementById('selected_users');
+    let selectedOption = selectUsers.options[selectUsers.selectedIndex];
 
     if (selectedOption.value !== '' && selectedOption.value !== '0') {
         selectUsers.remove(selectUsers.selectedIndex);
         selectedUsers.appendChild(selectedOption);
+
+        let selectedUser = document.createElement('li');
+        selectedUser.classList.add('selected_user');
+        selectedUserList.appendChild(selectedUser);
+
+        let selectedUserText = document.createElement('p');
+        selectedUserText.textContent = selectedOption.text;
+        selectedUser.appendChild(selectedUserText);
         
         let removeButton = document.createElement('button');
-        removeButton.classList.add('remove_user');
+        removeButton.classList.add('func_btn', 'red');
         removeButton.innerHTML = '<i class="fa fa-trash"></i>';
-        selectedOption.appendChild(removeButton);
-        selectedOption.addEventListener('click', function() {
+        selectedUser.appendChild(removeButton);
+        removeButton.addEventListener('click', function() {
             selectedUsers.removeChild(selectedOption);
             selectUsers.appendChild(selectedOption);
             removeButton.remove();
+            selectedUser.remove();
         });
 
     } else {
@@ -56,10 +64,42 @@ function selectError() {
     , 1500);
 }
 
-// visibility info popup
-visibilityInfo.addEventListener('mouseover', function() {
-    visibilityPopup.style.display = 'flex';
+
+
+
+// Selected users info popup
+let usersInfo = document.getElementById('users_info');
+let usersPopup = document.getElementById('users_popup');
+let closeUsersPopup = document.getElementById('close_users_popup');
+
+usersInfo.addEventListener('mouseover', showUsersPopup); 
+
+usersInfo.addEventListener('mouseout', function() {
+    usersPopup.style.display = 'none';
 });
+
+function showUsersPopup() {
+    if (usersPopup.style.display === 'flex') {
+        usersPopup.style.display = 'none';
+    } else {
+        usersPopup.style.display = 'flex';
+        usersPopup.style.left = '0';
+        usersPopup.style.top = '40px';
+    }
+}
+
+closeUsersPopup.addEventListener('click', function() {
+    usersPopup.style.display = 'none';
+});
+
+
+
+// Visibility info popup
+let visibilityInfo = document.getElementById('visibility_info');
+let visibilityPopup = document.getElementById('visibility_popup');
+let closePopup = document.getElementById('close_visibility');
+
+visibilityInfo.addEventListener('mouseover', showVisibilityPopup); 
 
 visibilityInfo.addEventListener('mouseout', function() {
     visibilityPopup.style.display = 'none';
@@ -71,7 +111,7 @@ function showVisibilityPopup() {
     } else {
         visibilityPopup.style.display = 'flex';
         visibilityPopup.style.left = '0';
-        visibilityPopup.style.top = '50px';
+        visibilityPopup.style.top = '40px';
     }
 }
 
@@ -118,10 +158,6 @@ document.getElementById('reset').addEventListener('click', function() {
     document.getElementById('description').value = '';
     document.getElementById('tags').value = '';
     document.getElementById('visibility').value = '1';
-    document.getElementById('select_users').innerHTML = '';
-    document.getElementById('selected_users').innerHTML = '';
-    document.getElementById('select_users').innerHTML = '';
-    document.getElementById('select_users').innerHTML = '';
     document.getElementById('tags_counter').textContent = '0 / 15kpl';
     document.getElementById('desc_counter').style.color = 'black';
     document.getElementById('desc_counter').textContent = '0 / 400';
@@ -130,6 +166,16 @@ document.getElementById('reset').addEventListener('click', function() {
     document.getElementById('name_counter').style.color = 'black';
     document.getElementById('basic_info_err').textContent = '';
     document.getElementById('more_info_err').textContent = '';
+
+    // moving users back to select
+    let selectUsers = document.getElementById('select_users');
+    let selectedUsers = document.getElementById('selected_users');
+    Array.from(selectedUsers.options).forEach(option => {
+        selectedUsers.remove(option.index);
+        selectUsers.appendChild(option);
+    });
+    document.getElementById('select_users_area').style.display = 'none';
+    document.getElementById('selected_users_list').innerHTML = '';
 });
 
 // Name length counter

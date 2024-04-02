@@ -120,10 +120,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!preg_match($patternPwd2, $pwd2)) {
             $pwd2Err = 'Salasanat eivät täsmää';
         }
-    }
-    
-} else {
-    header("Location: index.php?pääsy=kielletty");
-    exit();
+    } 
 }
 

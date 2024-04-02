@@ -11,20 +11,21 @@ if (is_logged_in()) {
 
     echo "<div class='user_links'>";
         echo "<a href='profiili.php' class='". active('profiili', $active) ."' title='Profiili'><i class='fa fa-user'></i> Profiili</a>";
-        echo "<a href='asetukset.php' class='". active('asetukset', $active) ." title='Asetukset'><i class='fa fa-cog'></i> Asetukset</a>";
+        echo "<a href='suosikit.php' class='". active('suosikit', $active) ."' title='Suosikit'><i class='fa fa-heart'></i> Suosikit</a>";
         echo "<a href='ilmoitukset.php' class='". active('ilmoitukset', $active) ." title='Ilmoitukset'><i class='fa fa-bell'></i> Ilmoitukset</a>";
         echo "<a href='viestit.php' class='". active('viestit', $active) ." title='Viestit'><i class='fa fa-envelope-open-text'></i> Viestit</a>";
-        echo "<a href='kaverit.php' class='". active('kaverit', $active) ." title='Kaverit'><i class='fa fa-users'></i> Kaverit</a>";
+        echo "<a href='kaverit.php' class='". active('kaverit', $active) ." title='Kaverit'><i class='fa fa-user-group'></i> Kaverit</a>";
     echo "</div>";
 
     echo "<div class='user_links'>";
         echo "<a href='tallenustila.php' class='". active('tallennustila', $active) ." title='Tallennustila'><i class='fa fa-cart-arrow-down'></i> Tallennustilaa</a>";
+        echo "<a href='asetukset.php' class='". active('asetukset', $active) ." title='Asetukset'><i class='fa fa-cog'></i> Asetukset</a>";
         echo "<a href='ota_yhteytta.php' class='". active('ota_yhteytta', $active) ." title='Ota Yhteyttä'><i class='fa fa-envelope'></i> Ota Yhteyttä</a>";
-        echo "<a href='tuki.php' class='". active('tuki', $active) ." title='Tuki'><i class='fa fa-question-circle'></i> Tuki</a>";
+        echo "<a href='tietopankki.php' class='". active('tietopankki', $active) ." title='Tietopankki'><i class='fa fa-info-circle'></i> Tietopankki</a>";
     echo "</div>";
 
     echo "<div class='user_links'>";
-        echo "<button class='yellow_btn' onclick='location.href=\"includes/log_out.php\"' title='Kirjaudu Ulos'><i class='fa fa-sign-out-alt'></i> Kirjaudu Ulos</button>";
+        echo "<a href='includes/log_out.php' title='Kirjaudu Ulos'><i class='fa fa-sign-out-alt'></i> Kirjaudu Ulos</a>";
     echo "</div>";
 
 } else {

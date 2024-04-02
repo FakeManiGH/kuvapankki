@@ -27,10 +27,16 @@
         }
     ?>
 
-    <h1>Käyttäjäprofiili</h1>
-    
-    <div class="grid_container">
+    <h1>Oma Profiili</h1>
 
+    <div class="page_navigation">
+        <nav class="page_links">
+            <?php include 'includes/page_navigation.php';?>
+        </nav>    
+    </div>
+
+
+    <div class="grid_container">
         <div class="important_list grid_item">
             <p><i class="fa-solid fa-circle-exclamation"></i> Tältä sivulta löydät kaikki omat tietosi. Voit muokata tietojasi ja vaihtaa salasanasi.</p>
             <p><i class="fa-solid fa-circle-exclamation"></i> Osaa käyttäjätiedoista ei näytetä yksityisyyden suojan säilymiseksi.</p>
@@ -40,42 +46,44 @@
         </div>
 
 
+    
         <!-- Profiilikuva -->
-        <form class="page_form grid_item" action="includes/profile_img_upload.php" method="post" enctype="multipart/form-data">
-        <fieldset>
-        <legend>Profiilikuva</legend>
-            <div class="image_container">
-                <div class="user_image_wrapper">
-                    <img id="profile_img" src="<?php if (isset($user['user_img'])) {echo htmlspecialchars($user['user_img']);} ?>" class="user_image" alt="Profiilikuva">
-                </div>
+        <div class="grid_item">
+            <h3>Profiilikuva</h3>
 
-                <div class="file_container">
-                    <input type="file" name="userfile" id="user_img">
-                    <a id="clear_file_select" href="javascript:void(0);"><i class="fa fa-trash"></i></a>
-                    <button id="accept_file_select" type="submit"><i class="fa-solid fa-square-check"></i></button>
-                </div>  
-            </div>
-            <p id="file_err">
-                <?php if (isset($_SESSION['image_update_err'])) {
-                    echo $_SESSION['image_update_err'];
-                    unset($_SESSION['image_update_err']);
-                }
-                ?>
-            </p>
-        </fieldset>
-        </form>
+            <form class="page_form" action="includes/profile_img_upload.php" method="post" enctype="multipart/form-data">
+                <div class="image_container">
+                    <div class="user_image_wrapper">
+                        <img id="profile_img" src="<?php if (isset($user['user_img'])) {echo htmlspecialchars($user['user_img']);} ?>" class="user_image" alt="Profiilikuva">
+                    </div>
+
+                    <div class="file_container">
+                        <input type="file" name="userfile" id="user_img">
+                        <button class="func_btn green" id="accept_file_select" type="submit"><i class="fa-solid fa-square-check"></i></button>
+                        <button class="func_btn red" id="clear_file_select" type="reset"><i class="fa fa-trash"></i></button>
+                    </div>  
+                </div>
+                <p id="file_err">
+                    <?php if (isset($_SESSION['image_update_err'])) {
+                        echo $_SESSION['image_update_err'];
+                        unset($_SESSION['image_update_err']);
+                    }
+                    ?>
+                </p>
+            </form>
+        </div>
     </div>
 
 
-    <form id="user_info" class="page_form" action="includes/profile_update.php" method="post">
-    <fieldset>
-        <legend>Omat Tiedot</legend>
+    <!-- Käyttäjätiedot -->
+    <h3>Käyttäjätiedot</h3>
 
+    <form id="user_info" class="page_form" action="includes/profile_update.php" method="post">
         <span class="inline">
             <label for="username">Käyttäjätunnus</label>
             <span class="inline_x2">
                 <input type="text" id="username" name="username" value="<?php if (isset($user['username'])) {echo htmlspecialchars($user['username']);} ?>" placeholder="Käyttäjätunnus" readonly>
-                <a id="edit_username" href="javascript:void(0);"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a id="edit_username" href="javascript:void(0);" class="func_btn"><i class="fa-solid fa-pen-to-square"></i></a>
             </span>
         </span>
 
@@ -83,7 +91,7 @@
             <label for="phone">Puhelinnumero</label>
             <span class="inline_x2">
                 <input type="text" id="phone" name="phone" value="0<?php if (isset($user['phone'])) {echo htmlspecialchars($user['phone']);} ?>" placeholder="Matkapuhelinnumero" readonly>
-                <a id="edit_phone" href="javascript:void(0);"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a id="edit_phone" href="javascript:void(0);" class="func_btn"><i class="fa-solid fa-pen-to-square"></i></a>
             </span>
         </span>
 
@@ -91,7 +99,7 @@
             <label for="email">Sähköpostiosoite</label>
             <span class="inline_x2">
                 <input type="email" id="email" name="email" value="<?php if (isset($user['email'])) {echo htmlspecialchars($user['email']);} ?>" placeholder="Sähköpostiosoite" readonly>
-                <a id="edit_email" href="javascript:void(0);"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a id="edit_email" href="javascript:void(0);" class="func_btn"><i class="fa-solid fa-pen-to-square"></i></a>
             </span>
         </span>
 
@@ -99,7 +107,7 @@
             <label for="pwd">Salasana <span class="red">*</span></label>
             <span class="inline_x2">
                 <input type="password" id="pwd" name="pwd" placeholder="Vanha Salasana" required autocomplete="off">
-                <a id="show_pwd" href="javascript:void(0);"><i class="fa-regular fa-eye"></i></a>
+                <a id="show_pwd" href="javascript:void(0);" class="func_btn"><i class="fa-regular fa-eye"></i></a>
             </span>
         </span> 
 
@@ -116,19 +124,19 @@
             <button type="submit">Tallenna Tiedot</button>
             <button id="reset" type="reset">Peruuta</button>
         </span>
-    </fieldset>
     </form>
+    
+    <br>
 
-
+    <!-- Salasanan vaihto -->
+    <h3>Vaihda Salasana</h3>
 
     <form id="pwd_update_form" class="page_form" action="includes/pwd_update.php" method="post">
-    <fieldset>
-        <legend>Vaihda Salasana</legend>
         <span class="inline">
             <label for="old_pwd">Nykyinen Salasana <span class="red">*</span></label>
             <span class="inline_x2">
                 <input type="password" id="old_pwd" name="old_pwd" placeholder="Nykyinen Salasana" required autocomplete="off">
-                <a id="show_old_pwd" href="javascript:void(0);"><i class="fa-regular fa-eye"></i></a>
+                <a id="show_old_pwd" href="javascript:void(0);" class="func_btn"><i class="fa-regular fa-eye"></i></a>
             </span>
         </span>
 
@@ -136,7 +144,7 @@
             <label for="new_pwd">Uusi Salasana <span class="red">*</span></label>
             <span class="inline_x2">
                 <input type="password" id="new_pwd" name="new_pwd" placeholder="Uusi Salasana" required>
-                <a id="show_new_pwd" href="javascript:void(0);"><i class="fa-regular fa-eye"></i></a>
+                <a id="show_new_pwd" href="javascript:void(0);" class="func_btn"><i class="fa-regular fa-eye"></i></a>
             </span>
         </span>
 
@@ -153,7 +161,6 @@
             <button type="submit">Vaihda Salasana</button>
             <button id="reset" type="reset">Peruuta</button>
         </span>
-    </fieldset>
     </form>
     
 

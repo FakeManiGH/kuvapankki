@@ -1,3 +1,7 @@
 .error_msg {
     align-self: flex-start;
 }
+
+#email {
+    max-width: 500px;
+}

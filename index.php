@@ -14,25 +14,25 @@
     Kuvapankki on ilmainen ja helppokäyttöinen.</p>
     <div class="circles">
         <div class="circle">
-            <h3>Rekisteröidy Tänään!</h3>
+            <h3>REKISTERÖIDY TÄNÄÄN!</h3>
             <ul class="register_list">
-                <li>Luo kuvagallerioita.</li>
-                <li>Tallenna ja lataa kuvia.</li>
-                <li>Liity ja luo kuvaryhmiä.</li>
+                <li>Luo omia kuvagallerioita.</li>
+                <li>Jaa kuvasi kavereiden kanssa.</li>
+                <li>Kommentoi ja keskustele.</li>
             </ul>
-            <button class="yellow_btn" onclick="window.location.href='rekisteroidy.php'"><i class="fa fa-user-plus"></i> Rekisteröidy</button>
+            <button class="btn small_btn" onclick="window.location.href='rekisteroidy.php'"><i class="fa fa-user-plus"></i> Rekisteröidy</button>
         </div>
 
         <div class="circle">
-            <h3>Vieraile Tietopankissa.</h3>
+            <h3>KAIKKI KUVAPANKISTA!</h3>
             <p class="small_txt">Lue lisää palvelusta ja sen toiminnasta. Etsi ohjeita palvelun käyttämiseen ja apua ongelmiin.</p>
-            <button class="yellow_btn" onclick="window.location.href='tietoa.php'"><i class="fa fa-info-circle"></i>Tietopankki</button>
+            <button class="btn small_btn" onclick="window.location.href='tietoa.php'"><i class="fa fa-info-circle"></i>Tietopankki</button>
         </div>
 
         <div class="circle">
-            <h3>Onko Kysyttävää?</h3>
+            <h3>USKALLA KYSYÄ!</h3>
             <p class="small_txt">Ota yhteyttä asiakaspalveluumme, niin autamme sinua ja vastaamme kysymyksiin mielellämme.</p>
-            <button class="yellow_btn" onclick="window.location.href='ota_yhteytta.php'"><i class="fa fa-envelope"></i> Ota Yhteyttä</button>
+            <button class="btn small_btn" onclick="window.location.href='ota_yhteytta.php'"><i class="fa fa-envelope"></i> Ota Yhteyttä</button>
         </div>
     </div>
 

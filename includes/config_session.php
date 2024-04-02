@@ -1,19 +1,21 @@
 <?php
 
-ini_set('session.use_only_cookies', 1);
-ini_set('session.use_strict_mode', 1);
+// Asetetaan sessionin asetukset, jos sessiota ei ole vielä aloitettu (LISÄÄ tämä tiedostoon, jos se on ennen headeria)
+if (session_status() == PHP_SESSION_NONE) {
+    ini_set('session.use_only_cookies', 1);
+    ini_set('session.use_strict_mode', 1);
 
-session_set_cookie_params([
-    'lifetime' => 1801,
-    'path' => '/',
-    'domain' => 'localhost',
-    'secure' => true,
-    'httponly' => true,
-]);
+    session_set_cookie_params([
+        'lifetime' => 1800,
+        'path' => '/',
+        'domain' => 'localhost',
+        'secure' => true,
+        'httponly' => true,
+    ]);
+}
 
-
-// Aloitetaan sessio
-session_start();
+// Aloitetaan sessio jos sitä ei ole vielä aloitettu
+checkSession();
 
 
 // Uusitaan session ID 30 minutin välein

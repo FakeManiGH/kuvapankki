@@ -24,7 +24,7 @@
     <div class="form_container">
         <form action="unohtunut_salasana.php" class="page_form" method="POST">
             <label for="email">Sähköpostiosoite</label>
-            <input type="text" name="email" placeholder="Anna sähköpostiosoite" autofocus>
+            <input type="text" id="email" name="email" placeholder="Anna sähköpostiosoite" autofocus>
 
             <p class='error_msg'>
                 <?php
@@ -41,7 +41,7 @@
         </form>
     </div>
         
-    <p>Etkö muista <strong>käyttäjätunnustasi</strong> tai <strong>sähköpostiosoitettasi</strong>? <a href="ota_yhteytta.php">Ota Yhteyttä</a> palvelun ylläpitoon.</p>
+    <p>Etkö muista <strong>sähköpostiosoitettasi</strong>? <a href="ota_yhteytta.php">Ota Yhteyttä</a> palvelun ylläpitoon.</p>
 </main>
 
 

@@ -21,6 +21,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $email = trim_input($email);
         $pwd = trim_input($pwd);
 
+        // Tarkistetaan onko käyttäjän syötteet tyhjiä
+        if (inputs_empty($username, $phone, $email)) {
+            $_SESSION['profile_update_err'] = 'Täytä kaikki kentät!';
+            header('Location: ../profiili.php?virhe');
+            die();
+        }
+
+        // Tarkistetaan onko salasana annettu 
+        if (empty($pwd)) {
+            $_SESSION['profile_update_err'] = 'Anna salasana muokataksesi tietoja.';
+            header('Location: ../profiili.php?virhe');
+            die();
+        }
+
         // tarkistetaan onko käyttäjätunnus oikeassa muodossa.
         if (!preg_match($patternUser, $username)) {
             $_SESSION['profile_update_err'] = 'Käyttäjätunnuksen tulee olla 5-35 merkkiä pitkä.';
@@ -45,35 +59,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Haetaan käyttäjän tiedot tietokannasta
         $result = get_user($pdo, $user_id);
 
+        // Tarkistetaan täsmääkö salasana
+        if (!password_verify($pwd, $result['pwd'])) {
+            $_SESSION['profile_update_err'] = 'Salasana on virheellinen!';
+            header('Location: ../profiili.php?virhe');
+            die();
+        }
+
         // Tarkistetaan onko käyttäjätunnus tyhjä, käytössä tai muuttunut
-        if (!empty($username) && $username !== $result['username'] && username_exists($pdo, $username)) {
+        if ($username !== $result['username'] && username_exists($pdo, $username)) {
             $_SESSION['profile_update_err'] = 'Käyttäjätunnus on jo käytössä!';
             header('Location: ../profiili.php?virhe');
             die();
-        } else {
-            $username = compare_info($username, $result['username']);
         }
             
         // Tarkistetaan onko käyttäjätunnussähköposti tyhjä, käytössä tai muuttunut
-        if (!empty($email) && $email !== $result['email'] && email_exists($pdo, $email)) {
-            $_SESSION['profile_update_err'] = 'Sähköpostiosoite on jo käytössä!';
+        if ($email !== $result['email'] && email_exists($pdo, $email)) {
+            $_SESSION['profile_update_err'] = 'Sähköposti on jo käytössä!';
             header('Location: ../profiili.php?virhe');
             die();
-        } else {
-            $email = compare_info($email, $result['email']);
-        }  
+        }
 
         // Verratataan onko puhelinnumero muuttunut.
         $phone = compare_info($phone, $result['phone']);
-
-        // Tarkistetaan täsmääkö salasana
-        if (!empty($pwd)) {
-            if (!password_verify($pwd, $result['pwd'])) {
-                $_SESSION['profile_update_err'] = 'Salasana on virheellinen!';
-                header('Location: ../profiili.php?virhe');
-                die();
-            }
-        }
 
         // Päivitetään käyttäjän tiedot
         update_user($pdo, $user_id, $username, $phone, $email);
@@ -82,24 +90,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $pdo = null;
         $stmt = null;
 
-        // Asetetaan käyttäjän tietojen päivitys onnistuneeksi
-        $_SESSION['profile_update_success'] = 'Tietojen päivitys onnistui!';
-
         // Asetetaan käyttäjän tiedot uudelleen sessioon
         $_SESSION['username'] = $username;
         $_SESSION['phone'] = $phone;
         $_SESSION['email'] = $email;
 
-
-        header('Location: ../profiili.php?onnistui');
+        // Asetetaan käyttäjän tietojen päivitys onnistuneeksi
+        $_SESSION['profile_update_success'] = 'Tietojen päivitys onnistui!';
+        header('Location: ../profiili.php?päivitys=onnistui');
         die();
 
 
     } catch (PDOException $e) {
-        die("Tietokantavirhe: " . $e->getMessage());
+        error_log("Database error: " . $e->getMessage());
+        die("Tietokantavirhe. Yritä myöhemmin uudelleen.");
     }
 
 } else {
-    header('Location: ../index.php?pääsy=kielletty');
+    
+    $_SESSION['404_error'] = "Sivua ei löytynyt tai sinulla ei ole siihen oikeutta.";
+    header('Location: ../404.php?virhe');
     die();
 }

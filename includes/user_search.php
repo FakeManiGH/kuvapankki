@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Syötteen minimi ja maksimipituus
         if (!input_length($search_input, 3, 40)) {
             $_SESSION['search_error'] = 'Hakusanan tulee olla 3-40 merkkiä pitkä.';
-            header('Location: lisaa_kaveri.php?hakuvirhe!');
+            header('Location: lisaa_kaveri.php?virhe.');
             die();
         }
         

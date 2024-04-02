@@ -1,6 +1,6 @@
 <?php
 
-if (isset($pwd_token)) {
+if (!isset($pwd_token) || !empty($pwd_token)) {
     include 'includes/connections.php';
     require_once 'includes/pwd_reset_ctrl.php';
     require_once 'includes/pwd_reset_model.php';
@@ -24,10 +24,11 @@ if (isset($pwd_token)) {
         $stmt = null;
 
     } catch (PDOException $e) {
-        die("Virhe: " . $e->getMessage());
+        error_log("PDOException: " . $e->getMessage());
+        die("Tietokantavirhe. Yritä myöhemmin uudelleen.");
     }
     
 } else {
-    header("Location: index.php?pääsy=kieletty");
-    die();
+    
+    $token_error = "Virheellinen tai vanhentunut nollauslinkki!";   
 }

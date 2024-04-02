@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (is_input_empty($username, $pwd)) {
             $errors['empty_input'] = 'Täytä kaikki kentät!';
             $_SESSION['errors_login'] = $errors;
-            header ("Location: kirjaudu.php");
+            header ("Location: ../kirjaudu.php?tyhjä=kenttä");
             die();
         }
 
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (empty($result)) {
             $errors['login_incorrect'] = 'Virheellinen käyttäjätunnus tai salasana!';
             $_SESSION['errors_login'] = $errors;
-            header ("Location: kirjaudu.php");
+            header ("Location: ../kirjaudu.php?kirjautuminen=epäonnistui");
             die();
         }
 
@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($errors) {
             $_SESSION['errors_login'] = $errors;
 
-            header ("Location: kirjaudu.php");
+            header ("Location: ../kirjaudu.php?kirjautuminen=epäonnistui");
             die();
         }
 
@@ -71,14 +71,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Nollataan tietokantayhteys ja poistetaan muuttujat
         $pdo = null;
         $stmt = null;
-        header('Location: selaa.php?kirjautuminen=onnistui');
+        header('Location: ../selaa.php?kirjautuminen=onnistui');
         die();
     
     } catch (PDOException $e) {
-        die("Virhe tietokantakyselyssä: " . $e->getMessage());
+        error_log("PDOException: " . $e->getMessage());
+        die("Tietokantavirhe. Yritä myöhemmin uudelleen.");
     }
 } else {
     
-    header("Location: kirjaudu.php?pääsy=estetty");
-    exit();
+    $_SESSION['404_error'] = "Sivua ei löytynyt tai sinulla ei ole siihen oikeutta.";
+    header('Location: ../404.php?virhe');
+    die();
 }

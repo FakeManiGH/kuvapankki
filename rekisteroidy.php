@@ -31,13 +31,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <h1>Rekisteröidy</h1>
 
-    <p>Rekisteröidy käyttäjäksi täyttämällä alla oleva lomake.</p>
+    <p>Rekisteröidy käyttäjäksi täyttämällä alla oleva lomake ( <span class="red"><strong>*</strong> pakollinen kenttä</span> ).</p>
+    <p></p>
 
     <form id="register_form" class="page_form" action="rekisteroidy.php" method="post">
-    <fieldset>
-        <legend>Rekisteröityminen</legend>
-        <p><span class="red"> <strong>*</strong> pakollinen kenttä.</span></p>
-
         <span class="inline">
             <label for="username">Käyttäjätunnus <span class="red">*</span></label>
             <input id="username" type="text" name="username" placeholder="Käyttäjätunnus" value="<?php if (isset($username)) {echo $username;} ?>" autofocus required>
@@ -84,7 +81,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <button type="submit">Rekisteröidy</button>
             <button id="reset" type="reset">Tyhjennä</button>
         </span>
-    </fieldset>
     </form>
 
     <p>Onko sinulla jo tunnukset? <a href="kirjaudu.php">Kirjaudu sisään!</a></p>

@@ -5,7 +5,7 @@ declare(strict_types=1);
 // Hakee käyttäjät tietokannasta
 function search_users(object $pdo, string $search_input) {
     $search_input = '%' . $search_input . '%';
-    $query = "SELECT username, user_id FROM users WHERE username LIKE :search_input";
+    $query = "SELECT username, user_id FROM users WHERE username LIKE :search_input LIMIT 10";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':search_input', $search_input);
     $stmt->execute();
@@ -14,16 +14,23 @@ function search_users(object $pdo, string $search_input) {
     return $user_list;
 }
 
-// Hakee käyttäjän id:n tietokannasta
-function get_user_id(object $pdo, string $user) {
-    $query = "SELECT user_id FROM users WHERE username = :user";
+// Tarkistetaan onko käyttäjä olemassa | boolean
+function user_exists(object $pdo, int $user_id) {
+    $query = "SELECT * FROM users WHERE user_id = :user_id LIMIT 1";
     $stmt = $pdo->prepare($query);
-    $stmt->bindParam(':user', $user);
+    $stmt->bindParam(':user_id', $user_id);
     $stmt->execute();
 
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $result;
+    
+    if ($result) {
+        return true;
+    } else {
+        return false;
+    }
 }
+
+
 
 // Hakee kaverit tietokannasta
 function get_friends(object $pdo, int $user_id) {
@@ -107,7 +114,7 @@ function is_friend(object $pdo, int $your_id, int $friend_id) {
     }
 }
 
-// Peruu kaveripyyntö
+// Peruu kaveripyynnön
 function cancel_request(object $pdo, int $your_id, int $friend_id) {
     $query = "DELETE FROM friend_requests WHERE your_id = :your_id AND friend_id = :friend_id";
     $stmt = $pdo->prepare($query);
@@ -116,11 +123,29 @@ function cancel_request(object $pdo, int $your_id, int $friend_id) {
     $stmt->execute();
 }
 
-// Hyväksyy kaveripyyntö
+// Hyväksyy kaveripyynnön
 function add_friend(object $pdo, int $your_id, int $friend_id) {
     $query = "INSERT INTO friends (user_id, friend) VALUES (:your_id, :friend_id)";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':your_id', $your_id);
     $stmt->bindParam(':friend_id', $friend_id);
+    $stmt->execute();
+}
+
+// Poistaa kaverin
+function remove_friend(object $pdo, int $your_id, int $friend_id) {
+    $query = "DELETE FROM friends WHERE user_id = :your_id AND friend = :friend_id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':your_id', $your_id);
+    $stmt->bindParam(':friend_id', $friend_id);
+    $stmt->execute();
+}
+
+// Poistaa kaverin myös toiselta käyttäjältä
+function remove_friend_from_friend(object $pdo, int $your_id, int $friend_id) {
+    $query = "DELETE FROM friends WHERE user_id = :friend_id AND friend = :your_id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':friend_id', $friend_id);
+    $stmt->bindParam(':your_id', $your_id);
     $stmt->execute();
 }

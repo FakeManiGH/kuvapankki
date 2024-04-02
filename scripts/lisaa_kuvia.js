@@ -56,16 +56,23 @@ function handleDrop(e) {
     handleFiles(files)
 }
 
+
 // Function to handle the files
 function handleFiles(files) {
-    form.innerHTML = '';
+    resetImageForm();
     formStart();
+    
+    // Create a new DataTransfer object
+    let dataTransfer = new DataTransfer();
 
     for (let i = 0; i < files.length; i++) {
         let file = files[i];
 
         if (checkFileType(file) && checkFileSize(file)) {
             if (i < 10) {
+                // Add the file to the DataTransfer object
+                dataTransfer.items.add(file);
+
                 addFieldsForImage(file, i);
             } else {
                 tooManyFiles();
@@ -75,6 +82,13 @@ function handleFiles(files) {
             displayError(file);
         }
     }
+
+    // Get the file input
+    let fileInput = document.getElementById('fileInput');
+
+    // Assign the files of the DataTransfer object to the files of the file input
+    fileInput.files = dataTransfer.files;
+
     if (form.classList.contains('has_images')) {
         formEnd();
     } else {
@@ -84,33 +98,35 @@ function handleFiles(files) {
 
 // Function to add the file input fields for the images
 function addFieldsForImage(file, index) {
-    let fieldSet = form.querySelector('fieldset');
+    let selectedImages = document.querySelector('.selected_images');
 
-    let fieldWrapper = document.createElement('div');
+    let fieldWrapper = document.createElement('span');
     fieldWrapper.classList.add('field_wrapper');
-    fieldSet.appendChild(fieldWrapper);
+    selectedImages.appendChild(fieldWrapper);
 
     let preview = document.createElement('img');
     preview.src = URL.createObjectURL(file);
     preview.classList.add('preview');
     fieldWrapper.appendChild(preview);
 
-    let fileInput = document.createElement('input');
-    fileInput.type = 'hidden';
-    fileInput.name = 'file[' + index + ']';
-    fileInput.value = file.name;
-    fieldWrapper.appendChild(fileInput);
+    let titleLabel = document.createElement('label');
+    titleLabel.textContent = 'Otsikko';
+    fieldWrapper.appendChild(titleLabel);
 
     let titleInput = document.createElement('input');
     titleInput.type = 'text';
-    titleInput.name = 'title[' + index + ']';
-    titleInput.placeholder = 'Otsikko kuvalle ' + (index + 1);
+    titleInput.name = 'title[]';
+    titleInput.placeholder = 'Anna otsikko kuvalle ' + (index + 1);
     fieldWrapper.appendChild(titleInput);
+
+    let descriptionLabel = document.createElement('label');
+    descriptionLabel.textContent = 'Kuvateksti';
+    fieldWrapper.appendChild(descriptionLabel);
 
     let descriptionInput = document.createElement('input');
     descriptionInput.type = 'text';
-    descriptionInput.name = 'description[' + index + ']';
-    descriptionInput.placeholder = 'Kuvateksti kuvalle ' + (index + 1);
+    descriptionInput.name = 'description[]';
+    descriptionInput.placeholder = 'Anna kuvaus kuvalle ' + (index + 1);
     fieldWrapper.appendChild(descriptionInput);
 }
 
@@ -135,57 +151,27 @@ function checkFileSize(file) {
 
 // Function to add the form start
 function formStart() {
-    let fieldSet = document.createElement('fieldset');
-    form.appendChild(fieldSet);
-
-    let legend = document.createElement('legend');
-    legend.textContent = 'Lisättävät kuvat';
-    fieldSet.appendChild(legend);
-
+    let form = document.getElementById('image_form');
     form.classList.add('has_images');
+
+    let selectedImages = document.createElement('span');
+    selectedImages.classList.add('selected_images');
+    form.appendChild(selectedImages);
 }
 
 // Function to add the gallery select and submit button to the form
 function formEnd() {
-    let fieldSet = form.querySelector('fieldset');
-
-    let galleryLabel = document.createElement('label');
-    galleryLabel.for = 'gallery';
-    galleryLabel.innerHTML = 'Valitse galleria <span class="red">*</span>';
-    galleryLabel.classList.add('gallery_label');
-    fieldSet.appendChild(galleryLabel);
-
-    let gallerySelect = document.createElement('select');
-    gallerySelect.name = 'gallery';
-    gallerySelect.id = 'gallery';
-    gallerySelect.hasAttribute('required');
-    fieldSet.appendChild(gallerySelect);
-
-    let optionDefault = document.createElement('option');
-    optionDefault.value = 'Valitse galleria';
-    optionDefault.textContent = 'Valitse galleria';
-    gallerySelect.appendChild(optionDefault);
-
-    fetch('galleries_view.php')
-        .then(response => response.json())
-        .then(data => {
-            for (var i = 0; i < data.length; i++) {
-                var option = document.createElement('option');
-                option.value = data[i].id; // replace 'id' with the actual property name
-                option.textContent = data[i].name; // replace 'name' with the actual property name
-                gallerySelect.appendChild(option);
-            }
-        })
-        .catch(error => console.error('Error:', error));
+    let selectedImages = document.querySelector('.selected_images');
+    let form = document.getElementById('image_form');
 
     let validationError = document.createElement('p');
     validationError.classList.add('error_msg');
     validationError.textContent = '';
-    fieldSet.appendChild(validationError);
+    selectedImages.appendChild(validationError);
 
     let buttonWrapper = document.createElement('div');
-    buttonWrapper.classList.add('button_wrapper');
-    fieldSet.appendChild(buttonWrapper);
+    buttonWrapper.classList.add('buttons');
+    form.appendChild(buttonWrapper);
 
     let submitButton = document.createElement('button');
     submitButton.type = 'submit';
@@ -196,8 +182,7 @@ function formEnd() {
     cancelbutton.type = 'button';
     cancelbutton.textContent = 'Tyhjennä';
     cancelbutton.addEventListener('click', function() {
-        form.classList.remove('has_images');
-        form.innerHTML = '';
+        resetImageForm();
     });
     buttonWrapper.appendChild(cancelbutton);
 }
@@ -228,12 +213,27 @@ function tooManyFiles() {
 
 // Function to validate the form (gallery select)
 form.addEventListener('submit', function(e) {
-    let gallerySelect = document.getElementById('gallery');
+    let gallerySelect = document.getElementById('selected_gallery');
     let galleryOption = gallerySelect.options[gallerySelect.selectedIndex];
     let galleryError = document.querySelector('.error_msg');
 
-    if (galleryOption.value === '' || galleryOption.value === 'Valitse galleria') {
+    if (galleryOption.value === '0' || galleryOption.value === 'Valitse galleria') {
         galleryError.textContent = 'Valitse kuville galleria.';
         e.preventDefault();
     }
 });
+
+// function to reset the image form
+function resetImageForm() {
+    form.classList.remove('has_images');
+    let selectedImages = document.querySelector('.selected_images');
+    let buttonWrapper = document.querySelector('.buttons');
+    if (selectedImages === null) {
+        return;
+    }
+    selectedImages.innerHTML = '';
+    buttonWrapper.innerHTML = '';
+    selectedImages.remove();
+    buttonWrapper.remove();
+}
+

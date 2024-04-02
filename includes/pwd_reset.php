@@ -64,10 +64,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         die();
 
     } catch (PDOException $e) {
-        echo "Virhe tietokantakyselyssä: " . $e->getMessage();
+        error_log("PDOException: " . $e->getMessage());
+        die("Tietokantavirhe. Yritä myöhemmin uudelleen.");
     }
 
 } else {
-    header("Location: ../unohtunut_salasana.php?pääsy=estetty");
+
+    $_SESSION['404_error'] = "Sivua ei löytynyt tai sinulla ei ole siihen oikeutta.";
+    header("Location: ../404.php?virhe");
     die();
 }

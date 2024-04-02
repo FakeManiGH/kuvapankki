@@ -44,10 +44,13 @@ if (isset($_GET['email_token']) && !empty($_GET['email_token'])) {
 
 
     } catch (PDOException $e) {
-        die("Vahvistus epäonnistui: " . $e->getMessage());
+        error_log("Database error: " . $e->getMessage());
+        die("Tietokantavirhe. Yritä myöhemmin uudelleen.");
     }
 
 } else {
-    header("Location: ../index.php?pääsy=kielletty");
-    exit();
+
+    $_SESSION['404_error'] = "Sivua ei löytynyt tai sinulla ei ole siihen oikeutta.";
+    header("Location: ../404.php?virhe");
+    die();
 }

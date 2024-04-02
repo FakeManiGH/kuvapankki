@@ -58,8 +58,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         }
 
-
-
         // POINT OF NO RETURN
 
         // Luodaan galleria
@@ -69,14 +67,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         create_gallery_user($pdo, $gallery_id, $owner_id, 1);
 
         // Tarkistetaan näkyvyys ja lisätään käyttäjät ryhmään tarvittaessa.
-        if ($visibility == 2 || $visibility == 3) {
+        if ($visibility == 2 || $visibility == 3 && !empty($selected_users)) {
             $selected_users = $_POST['selected_users']; 
             $selected_users = array_map('trim_input', $selected_users);
             $selected_users = array_filter($selected_users);
             $selected_users = array_unique($selected_users);
 
             foreach ($selected_users as $user) {
-                create_gallery_user($pdo, $gallery_id, $user, 2);
+                create_gallery_user($pdo, $gallery_id, $user, 3);
             }
         }
 
@@ -113,25 +111,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         // Asetetaan galleria luoduksi
                         $_SESSION['gallery_create_success'] = 'Galleria luotu onnistuneesti!';
-                        header('Location: ../galleria.php?gallery='.$gallery_id.'&luonti=onnistui');
+                        header('Location: ../galleria.php?galleria_id='.$gallery_id.'&luonti=onnistui');
                         exit();
 
                     } else {
                         $_SESSION['gallery_create_success'] = 'Galleria luotu onnistuneesti!';
                         $_SESSION['cover_img_error'] = 'Kansikuvan latuas epäonnistui. Kuvatiedosto on liian suuri!';
-                        header('Location: ../galleria.php?gallery='.$gallery_id.'&virhe=koko');
+                        header('Location: ../galleria.php?galleria_id='.$gallery_id.'&virhe=koko');
                         exit();
                     }
                 } else {
                     $_SESSION['gallery_create_success'] = 'Galleria luotu onnistuneesti!';
                     $_SESSION['cover_img_error'] = 'Kansikuvan latuas epäonnistui. Vain .jpg, .jpeg tai .png sallittu!';
-                    header('Location: ../galleria.php?gallery='.$gallery_id.'&virhe=tyyppi');
+                    header('Location: ../galleria.php?galleria_id='.$gallery_id.'&virhe=tyyppi');
                     exit();
                 }
             } else {
                 $_SESSION['gallery_create_success'] = 'Galleria luotu onnistuneesti!';
                 $_SESSION['cover_img_error'] = 'Kansikuvan latuas epäonnistui. Tiedoston latauksessa tapahtui virhe!';
-                header('Location: ../galleria.php?gallery='.$gallery_id.'&virhe=lataus');
+                header('Location: ../galleria.php?galleria_id='.$gallery_id.'&virhe=lataus');
                 exit();
             }
             
@@ -139,14 +137,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Asetetaan galleria luoduksi
         $_SESSION['gallery_create_success'] = 'Galleria luotu onnistuneesti!';
-        header('Location: ../lisaa_galleria.php?luonti=onnistui&ei=kansikuvaa');
+        header('Location: ../galleria.php?galleria_id='.$gallery_id.'&luonti=onnistui&ei=kansikuvaa');
         exit();     
 
     } catch (PDOException $e) {
-        echo 'Error: ' . $e->getMessage();
+        error_log("PDOException: " . $e->getMessage());
+        die("Tietokantavirhe. Yritä myöhemmin uudelleen.");
     }
 
 } else {
-    header('Location: index.php?pääsy=kielletty');
+    $_SESSION['404_error'] = "Sivua ei löytynyt tai sinulla ei ole siihen oikeutta.";
+    header('Location: ../404.php?virhe');
     exit();
 }

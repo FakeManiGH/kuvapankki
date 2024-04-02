@@ -4,13 +4,15 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 3px dashed #333;
+    background: #555;
+    border: 3px dashed #222;
     border-radius: 20px;
     font-family: 'Open Sans', sans-serif;
-    padding: 50px 20px;
+    padding: 60px 20px;
 }
 
 #droparea.highlight {
+    background: #abcaab;
     border-color: green;
 }
 
@@ -22,7 +24,6 @@ li {
     list-style: disc;
     font-size: .9rem;
     margin-left: 30px;
-    color: #555;
 }
 
 
@@ -31,32 +32,30 @@ li {
 
 .image_form {
     display: none;
-}
-
-.has_images {
-    display: flex;
     flex-direction: column;
     gap: 10px;
     padding: 0;
 }
 
-fieldset {
-    margin-top: 20px;
-    margin-bottom: 0px;
+.has_images {
+    display: flex;
+}
+
+.selected_images {
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 10px;
 }
 
 .field_wrapper {
     display: flex;
     flex-direction: row;
+    box-sizing: border-box;
     align-items: center;
     gap: 10px;
     width: 100%;
-}
-
-.button_wrapper {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
 }
 
 .image_form label {
@@ -64,8 +63,6 @@ fieldset {
     white-space: nowrap;
     font-size: 1rem;
     font-weight: 600;
-    width: 30%;
-    margin-top: 20px;
 }
 
 .image_form input, .image_form select {
@@ -80,25 +77,23 @@ fieldset {
 .image_form textarea:focus
 .image_form select:focus {
     outline-style: none;
-    border-color: #399c39;
-    box-shadow: 0 0 5px #399c39;
+    border-color: #ff9900;
+    box-shadow: 0 0 5px #ff9900;
+}
+
+#selected_gallery option:first-child {
+    font-weight: bold;
 }
 
 .image_form input[type="file"] {
     display: none;
-}
+} 
 
 .preview {
     width: 100px;
     height: -moz-fit-content;
     height: fit-content;
     border-radius: 5px;
-}
-
-.gallery_label {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 1rem;
-    font-weight: 600;
 }
 
 .error_msg {
@@ -112,11 +107,15 @@ fieldset {
 
 
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
     .field_wrapper {
         flex-direction: column;
         gap: 10px;
         align-items: flex-start;
+        margin: 10px 0;
+    }
+    .field_wrapper label {
+        margin-bottom: -5px;
     }
     .preview {
         width: 100%;

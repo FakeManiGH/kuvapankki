@@ -1,40 +1,30 @@
 <?php
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $user = $_GET['user'];
+    $user_id = $_GET['u'];
 
     try {
         require 'connections.php';
-        require 'friends_get_ctrl.php';
-        require 'friends_get_model.php';
+        require 'friends_ctrl.php';
+        require 'friends_model.php';
         require 'config_session.php';
 
-        // Puhdistetaan haettu käyttäjätunnus
-        $user = trim_input($user);
-
-        // Haetaan käyttäjän id
-        $result = get_user_id($pdo, $user);
-
-        // Sidotaan tulos muuttujaan
-        $user_id = $result['user_id'];
-        $your_id = $_SESSION['user_id'];
+        // Puhdistetaan muuttujat
+        $user_id = htmlspecialchars($user_id);
+        $your_id = htmlspecialchars($_SESSION['user_id']);
 
         // Tarkistetaan onko käyttäjä olemassa
-        if (!$user_id) {
-            $_SESSION['friend_request_error'] = 'Käyttäjää ei löytynyt.';
-            header('Location: ../lisaa_kaveri.php?käyttäjä_ei_olemassa');
+        if (!user_exists($pdo, $user_id)) {
+            $_SESSION['friend_request_error'] = 'Käyttäjää ei löydy.';
+            header('Location: ../lisaa_kaveri.php?käyttäjää_ei_loydy');
             die();
         }
 
         // Tarkistetaan onko käyttäjä jo kaveri
-        $friends = get_friends($pdo, $your_id);
-
-        foreach ($friends as $friend) {
-            if ($friend['user_id'] === $user_id) {
-                $_SESSION['friend_request_error'] = 'Käyttäjä on jo kaverisi.';
-                header('Location: ../lisaa_kaveri.php?käyttäjä=kaverisi');
-                die();
-            }
+        if (is_friend($pdo, $your_id, $user_id)) {
+            $_SESSION['friend_request_error'] = 'Käyttäjä on jo kaverisi.';
+            header('Location: ../lisaa_kaveri.php?käyttäjä_on_jo_kaveri');
+            die();
         }
 
         // Tarkistetaan onko käyttäjä jo lähettänyt kaveripyyntöä
@@ -54,10 +44,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
         
     } catch (PDOException $e) {
-        echo 'Tietokantavirhe: ' . $e->getMessage();
+        error_log("PDOException: " . $e->getMessage());
+        die("Tietokantavirhe. Yritä myöhemmin uudelleen.");
     }
 
 } else {
-    header('Location: ../index.php?pääsy=kielletty');
+    
+    $_SESSION['404_error'] = "Sivua ei löytynyt tai sinulla ei ole siihen oikeutta.";
+    header('Location: ../404.php?virhe');
     die();
 }
