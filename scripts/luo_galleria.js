@@ -10,8 +10,10 @@ const form = document.getElementById('create_gallery');
 galleryVisibility.addEventListener('change', function() {
     if (galleryVisibility.value === '1') {
         galleryMembers.style.display = 'none';
+        galleryVisibility.style.marginBottom = '10px';
     } else {
         galleryMembers.style.display = 'flex';
+        galleryVisibility.style.marginBottom = '0';
     }
 });
 
@@ -186,7 +188,7 @@ document.getElementById('name').addEventListener('input', function() {
     if (nameLength > 75) {
         document.getElementById('name_counter').style.color = 'red';
     } else {
-        document.getElementById('name_counter').style.color = 'black';
+        document.getElementById('name_counter').style.color = 'white';
     }
 });
 
@@ -198,7 +200,7 @@ document.getElementById('description').addEventListener('input', function() {
     if (descLength > 400) {
         document.getElementById('desc_counter').style.color = 'red';
     } else {
-        document.getElementById('desc_counter').style.color = 'black';
+        document.getElementById('desc_counter').style.color = 'white';
     }
 });
 
@@ -219,7 +221,7 @@ document.getElementById('tags').addEventListener('input', function() {
     if (tagsLength > 15) {
         document.getElementById('tags_counter').style.color = 'red';
     } else {
-        document.getElementById('tags_counter').style.color = 'black';
+        document.getElementById('tags_counter').style.color = 'white';
     }
 });
 
@@ -229,29 +231,28 @@ form.addEventListener('submit', function(e) {
     let galleryName = document.getElementById('name');
     let galleryDesc = document.getElementById('description');
     let galleryTags = document.getElementById('tags');
-    let basicInfoError = document.getElementById('basic_info_err');
-    let moreInfoError = document.getElementById('more_info_err');
+    let formErrors = document.getElementById('form_errors');
 
     if (galleryName.value === '' || galleryDesc.value === '') {
-        basicInfoError.textContent = 'Täytä kaikki pakolliset kentät.';
+        formErrors.textContent = 'Täytä kaikki pakolliset kentät.';
         e.preventDefault();
     }
 
     if (galleryName.value.length > 75) {
         currentNameLength = galleryName.value.length;
-        basicInfoError.textContent = 'Gallerian nimi on liian pitkä. ' + currentNameLength +'/75 merkkiä.';
+        formErrors.textContent = 'Gallerian nimi on liian pitkä. ' + currentNameLength +'/75 merkkiä.';
         e.preventDefault();
     }
 
     if (galleryDesc.value.length > 400) {
         currentDescLength = galleryDesc.value.length;
-        basicInfoError.textContent = 'Kuvaus on liian pitkä. ' + currentDescLength +'/400 merkkiä.';
+        formErrors.textContent = 'Kuvaus on liian pitkä. ' + currentDescLength +'/400 merkkiä.';
         e.preventDefault();
     }
 
-    if (galleryTags.value.length > 100) {
-        currentTagsLength = galleryTags.value.length;
-        moreInfoError.textContent = 'Avainsanat ylittävätä merkkirajan. ' + currentTagsLength +'/100 merkkiä.';
+    if (galleryTags.value.split(' ').length > 15) {
+        currentTagsLength = galleryTags.value.split(' ').length;
+        formErrors.textContent = 'Avainsanat ylittävätä merkkirajan. ' + currentTagsLength +'/ 15kpl.';
         e.preventDefault();
     }
 });

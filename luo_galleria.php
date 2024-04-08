@@ -22,6 +22,8 @@
     <p>Luo uusi galleria täyttämällä alla oleva lomake. <span class="red"><strong>( * pakollinen kenttä )</strong></span></p>
     
     <form id="create_gallery" class="page_form" action="includes/gallery_create.php" method="post" enctype="multipart/form-data">
+
+        <!-- Perustiedot -->
         <span class="inline">
             <label for="name">Gallerian Nimi <span class="red">*</span></label>
             <input type="text" id="name" name="name" placeholder="Gallerian nimi" required>
@@ -34,6 +36,8 @@
         </span>
             <p id="desc_counter" class="length_counter">0 / 400</p>
 
+
+        <!-- Näkyvyys -->
         <span class="inline">
             <label for="visibility" id="visibility_info" >Näkyvyys <span class="red">*</span> <a href="javascript:void(0)" onclick="showVisibilityPopup()" class="info_btn"> <i class="fa fa-info-circle"></i></a></label>
             <select id="visibility" name="visibility" required>
@@ -41,17 +45,18 @@
                 <option id="friends" value="2">Kaverit</option>
                 <option id="public" value="3">Julkinen</option>
             </select>
+
             <ul id="visibility_popup" class="info_popup">
-            <button id="close_visibility" class="popup_close red"><i class="fa fa-circle-xmark"></i></button>
-            <h4>Tietoa näkyvyydestä</h4>
-            <li><strong>Yksityinen:</strong> Vain sinä näet gallerian.</li>
-            <li><strong>Kaverit:</strong> Vain sinä ja lisäämäsi kaverit näkevät gallerian.</li>
-            <li><strong>Julkinen:</strong> Kaikki näkevät gallerian, mutta vain jäsenet voivat lisätä sisältöä.</li>
+                <button id="close_visibility" class="popup_close red"><i class="fa fa-circle-xmark"></i></button>
+                <h4>Tietoa näkyvyydestä</h4>
+                <li><strong>Yksityinen:</strong> Vain sinä näet gallerian.</li>
+                <li><strong>Kaverit:</strong> Vain sinä ja lisäämäsi kaverit näkevät gallerian.</li>
+                <li><strong>Julkinen:</strong> Kaikki näkevät gallerian, mutta vain jäsenet voivat lisätä sisältöä.</li>
             </ul>
         </span>
-            
-        <p id="basic_info_err" class="error_msg"></p>
 
+
+        <!-- Jäsenet -->
         <fieldset id="select_users_area">
             <span class="inline" style="margin-bottom: 20px;">
                 <label for="selects_users" id="users_info">Valitse Jäesenet <a href="javascript:void(0)" onclick="showUsersPopup()" class="info_btn"> <i class="fa fa-info-circle"></i></a></label>
@@ -86,6 +91,7 @@
             </span>
         </fieldset>
         
+
         <!-- Kansikuva -->
         <span class="inline">
             <label for="cover_img">Kansikuva</label>
@@ -108,14 +114,13 @@
             ?>
         </p>
         
+
         <!-- Avainsanat -->
         <span class="inline">
             <label for="tags">Avainsanat</label>
             <input type="text" id="tags" name="tags" placeholder="esim. koiria maisemat ufot...">
         </span>
         <p id="tags_counter" class="length_counter">0 / 15kpl</p>
-
-        <p id="more_info_err" class="error_msg"></p>
 
         <p>
             <?php if (isset($_SESSION['gallery_create_err'])) {
@@ -129,6 +134,9 @@
             <button type="submit">Luo Galleria</button>
             <button id="reset" type="reset">Tyhjennä</button>
         </span>
+
+        <!-- Virheilmoitukset -->
+        <p id="form_errors" class="error_msg"></p>
     </form>
 
 

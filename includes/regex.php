@@ -6,10 +6,10 @@
 $patternUser = "/^.{5,35}$/";
 
 // First name
-$patternFirst = "/^[a-zåäöA-ZÅÄÖ0'\- ]{1,50}$/";
+$patternFirst = "/^[a-zåäöA-ZÅÄÖ0'\- ]{2,50}$/";
 
 // Last name
-$patternLast = "/^[a-zåäöA-ZÅÄÖ0'\- ]{1,50}$/";
+$patternLast = "/^[a-zåäöA-ZÅÄÖ0'\- ]{2,50}$/";
 
 // Password
 $patternPwd = "/^.{12,}$/";

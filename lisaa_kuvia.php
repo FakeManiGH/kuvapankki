@@ -47,44 +47,43 @@
             <label type="hidden" for="images"></label>
             <input type="file" id="images" name="images" multiple>
 
-            <button type="button" onclick="document.getElementById('images').click()">Valitse tiedostot</button>
+            <button type="button" class="small_btn" onclick="document.getElementById('images').click()"><i class="fa fa-upload"></i> Valitse tiedostot</button>
         </form>
     </div>
 
     <!-- Kuvien tiedot -->
-    <form action="includes/images_add.php" class="image_form" id="image_form" method="post" enctype="multipart/form-data">
-        <h3>Kuvien Tiedot</h3>    
+    <form action="includes/images_add.php" id="image_form" method="post" enctype="multipart/form-data">  
 
-        <span class="inline">
-            <label for="selected_gallery">Valitse Galleria <span class="red">*</span></label>
-            <select name="gallery" id="selected_gallery">
-                <option value="0">Valitse Galleria:</option>
-                <?php
-                    foreach ($galleries as $key => $gallery) {
-                        $galleries[$key] = array_map('htmlspecialchars', $gallery);
-                        echo '<option value="' . $gallery['gallery_id'] . '" '. ($gallery_id == $gallery['gallery_id'] ? 'selected' : '') .'>'. $gallery['name'] .' - ';
+        <label for="selected_gallery" class="hidden"></label>
+        <select name="gallery" id="selected_gallery">
+            <option value="0">Valitse Galleria:</option>
+            <?php
+                foreach ($galleries as $key => $gallery) {
+                    $galleries[$key] = array_map('htmlspecialchars', $gallery);
+                    echo '<option value="' . $gallery['gallery_id'] . '" '. ($gallery_id == $gallery['gallery_id'] ? 'selected' : '') .'>'. $gallery['name'] .' - ';
 
-                        if ($gallery['owner_id'] == $_SESSION['user_id']) {
-                            echo 'OMA';
-                        } elseif ($gallery['owner_id'] !== $_SESSION['user_id'] && $gallery['role_id'] == 1) {
-                            echo 'ADMIN';
-                        } elseif ($gallery['role_id'] == 2) {
-                            echo 'OIKEUDET';
-                        } 
+                    if ($gallery['owner_id'] == $_SESSION['user_id']) {
+                        echo 'OMA';
+                    } elseif ($gallery['owner_id'] !== $_SESSION['user_id'] && $gallery['role_id'] == 1) {
+                        echo 'ADMIN';
+                    } elseif ($gallery['role_id'] == 2) {
+                        echo 'OIKEUDET';
+                    } 
 
-                        if ($gallery['visibility'] == 1) {
-                            echo ' (Yksityinen)';
-                        } else if ($gallery['visibility'] == 2) {
-                            echo ' (Kaverit)';
-                        } else {
-                            echo ' (Julkinen)';
-                        }
-
-                        '</option>';
+                    if ($gallery['visibility'] == 1) {
+                        echo ' (Yksityinen)';
+                    } else if ($gallery['visibility'] == 2) {
+                        echo ' (Kaverit)';
+                    } else {
+                        echo ' (Julkinen)';
                     }
-                ?>
-            </select>
-        </span>
+
+                    '</option>';
+                }
+            ?>
+        </select>
+
+        <p class="red" id="gallery_error"></p>
 
         <label for="images[]" class="hidden"></label>
         <input type="file" id="fileInput" class="hidden" name="images[]" multiple>

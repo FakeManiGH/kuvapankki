@@ -1,6 +1,6 @@
 <?php
     $title = 'Kirjaudu Sisään';
-    $css = 'css/kirjaudu.css';
+    // $css = '';
     include 'header.php';
     checkSession();
     if (is_logged_in()) {
@@ -15,34 +15,32 @@
 
     <p>Kirjaudu sisään käyttäjätunnuksellasi ja salasanallasi.</p>
         
-    <div class="form_container">
-        <form action="includes/login.php" class="page_form" method="POST">
-            <label for="username">Käyttäjätunnus</label>
+    <div class="hero_item">
+        <form action="includes/login.php" method="POST">
+            <label for="username">Käyttäjätunnus <strong class="red">*</strong></label>
             <input type="text" name="username" placeholder="Käyttäjätunnus" autofocus required>
 
-            <label for="pwd">Salasana</label>
+            <label for="pwd">Salasana <strong class="red">*</strong></label>
             <input type="password" name="pwd" placeholder="Salasana" required>
 
-            <p class='error_msg'>
-            <?php 
-                if (isset($_SESSION['errors_login'])) {
-                    $errors = $_SESSION['errors_login'];
-                    unset($_SESSION['errors_login']);   
-                    foreach ($errors as $error) {
-                        echo $error;
+            <?php
+                if (isset($_SESSION['login_error'])) {
+                    foreach ($_SESSION['login_error'] as $error) {
+                        echo "<p class='red'>". $error ."</p>";
                     }
+                    unset($_SESSION['login_error']);
                 }
             ?>
-            </p>
 
             <span class="buttons">
-                <button type="submit">Kirjaudu</button>
+                <button type="submit"><i class="fa fa-sign-in"></i> Kirjaudu</button>
             </span>
         </form>
-    </div>
 
-    <a href="unohtunut_salasana.php">Unohditko salasana?</a>
-    <p>Ei vielä tunnuksia? <a href="rekisteroidy.php">Rekisteröidy!</a></p>
+        <a href="unohtunut_salasana.php">Unohditko salasana?</a>
+
+        <p>Ei vielä tunnuksia? <a href="rekisteroidy.php">Rekisteröidy!</a></p>
+    </div>
 
 </main>
 

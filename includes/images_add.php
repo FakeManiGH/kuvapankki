@@ -68,6 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 continue;
             }
 
+            // Muutetaan tiedoston koko 
+
             // Haetaan tiedoston tyyppi
             $fileExt = explode('.', $fileName);
             $fileActualExt = strtolower(end($fileExt));
@@ -96,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             move_uploaded_file($fileTmpName, $fileDestination);
 
             // Lisätään kuva tietokantaan
-            add_image($pdo, $fileNameNew, $title, $description, $fileDestDB, $user_id, $gallery_id);
+            add_image($pdo, $fileNameNew, $title, $description, $fileDestDB, $fileSize, $user_id, $gallery_id);
 
             // Tarkistetaan onko tiedosto siirretty
             if (!file_exists($fileDestination)) {
@@ -118,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      
     } catch (PDOException $e) {
         $pdo->rollBack();
-        error_log("PDOException: " . $e->getMessage());
+        error_log($e->getMessage(), 3, "../../logs/image_errors.log");
         die("Tietokantavirhe. Yritä myöhemmin uudelleen.");
     }
 

@@ -7,11 +7,17 @@
     justify-content: left;
 }
 
+input, textarea, select {
+    padding: 10px;
+}
+
 .popup_close {
     display: none;
 }
 
-
+#visibility {
+    margin-bottom: 10px;
+}
 
 
 
@@ -24,6 +30,7 @@
     position: relative;
     flex-direction: column;
     gap: 10px;
+    margin: 10px 0 10px 0;
 }
 
 #selected_users {

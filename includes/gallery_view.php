@@ -29,7 +29,7 @@ if (isset($_GET['g']) && !empty($_GET['g'])) {
         // Tarkistetaan onko galleria olemassa
         if (empty($gallery)) {
             $_SESSION['404_error'] = 'Valitsemaasi galleriaa ei löytynyt.';
-            header('Location: 404.php?sivu=ei_loydy');
+            header('Location: 404.php?sivua=ei_loydy');
             die();
         }
 
@@ -42,7 +42,7 @@ if (isset($_GET['g']) && !empty($_GET['g'])) {
                 die();
             }
         } else if ($gallery['visibility'] == '2') {
-            if (!is_friend($pdo, $user_id, $gallery['owner_id'])) {
+            if (!is_friend($pdo, $user_id, $gallery['owner_id']) && $gallery['owner_id'] != $user_id) {
                 $_SESSION['404_error'] = 'Valitsemaasi galleriaa ei löytynyt tai sinulla ei ole oikeutta siihen.';
                 header('Location: 404.php?sivu=ei_loydy');
                 die();

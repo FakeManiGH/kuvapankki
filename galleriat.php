@@ -27,27 +27,12 @@
     </div>
 
     <?php if (!is_logged_in()) {
-        echo '<p class="red">Kirjaudu sisään luodaksesi omia gallerioita.</p>';
+        echo '<p class="red">Kirjaudu sisään tai rekisteröidy luodaksesi omia gallerioita tai liittyäksesi kaverin galleriaan.</p>';
     } else {
         echo '<p>Tältä sivilta löydät kaikki omat galleriasi. Luo gallerioita lempi aiheillesi ja jaa ne kavereiden kanssa.
         Voit myös päättää pitää gallereiasi yksityisinä tai tehdä niistä julkisia. Tällöin kaikki voivat nähdä sen.</p>';
     } ?>
     
-
-    
-    <!-- Etsi Galleriaa -->
-    <form class="page_form">
-        <h3>Etsi Galleriaa</h3>
-        <label for="gallery_search" class="hidden">Etsi Galleriaa</label>
-        <span class="inline">
-            <input type="text" id="gallery_search" name="gallery_search" placeholder="Anna hakusana tai koodi" required>
-            <button type="submit" id="gallery_search_button">Hae</button>
-        </span>
-
-        <p class="error_msg"></p>
-    </form>
-
-    <!-- Galleria Haku Tulos -->
 
     <?php if (is_logged_in()) { ?>
     <!-- Omat Galleriat -->

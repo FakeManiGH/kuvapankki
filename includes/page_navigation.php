@@ -3,19 +3,6 @@ checkSession();
 
 $current_page = basename($_SERVER['PHP_SELF']);
 
-
-// ETUSIVU
-if ($current_page == "index.php") {
-    if (!is_logged_in()) {
-        echo "<a title='Kirjaudu' href='kirjaudu.php'><i class='fa fa-user'></i> Kirjaudu</a>";
-        echo "<a title='Rekisteröidy' href='rekisteroidy.php'><i class='fa fa-user-plus'></i> Rekisteröidy</a>";
-        echo "<a title='Tietoa Palvelusta' href='tietoa.php'><i class='fa fa-info-circle'></i> Tietoa Palvelusta</a>";
-    } else {
-        echo "<a title='Profiili' href='profiili.php'><i class='fa fa-user'></i> Profiili</a>";
-        echo "<a title='Lisää Kuvia' href='lisaa_kuvia.php'><i class='fa fa-upload'></i> Lisää Kuvia</a>";
-    }
-}
-
 // KIRJAUDU
 if ($current_page == "kirjaudu.php") {
     echo "<a title='Rekisteröidy' href='rekisteroidy.php'><i class='fa fa-user-plus'></i> Rekisteröidy</a>";
@@ -38,6 +25,7 @@ if ($current_page == "rekisteroidy.php") {
 // PROFIILI
 if ($current_page == "profiili.php") {
     echo "<a title='Asetukset' href='asetukset.php'><i class='fa fa-cog'></i> Asetukset</a>";
+    echo "<a title='Kirjaudu Ulos' href='includes/log_out.php'><i class='fa fa-sign-out'></i> Kirjaudu Ulos</a>";
 }
 
 // GALLERIAT

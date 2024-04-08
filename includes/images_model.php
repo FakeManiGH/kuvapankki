@@ -29,13 +29,10 @@ function has_write_access(object $pdo, int $user_id, int $gallery_id): bool {
 }
 
 // add image to database
-function add_image(object $pdo, $fileNameNew, string $title, string $description, string $fileDestDB, int $user_id, int $gallery_id) {
-    $query = "INSERT INTO images (file_name, title, description, url, user_id, gallery_id) VALUES (?, ?, ?, ?, ?, ?)";
+function add_image(object $pdo, $fileNameNew, string $title, string $description, string $fileDestDB, int $fileSize, int $user_id, int $gallery_id) {
+    $query = "INSERT INTO images (file_name, title, description, url, size, user_id, gallery_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $pdo->prepare($query);
-    $stmt->execute([$fileNameNew, $title, $description, $fileDestDB, $user_id, $gallery_id]);
-    if ($errorInfo[0] != '00000') {
-        echo "Error: " . $errorInfo[2];
-    }
+    $stmt->execute([$fileNameNew, $title, $description, $fileDestDB, $fileSize, $user_id, $gallery_id]);
 }
 
 
@@ -60,7 +57,5 @@ function update_image(object $pdo, int $image_id, string $title, string $descrip
     $query = "UPDATE images SET title = ?, description = ? WHERE image_id = ?";
     $stmt = $pdo->prepare($query);
     $stmt->execute([$title, $description, $image_id]);
-    if ($errorInfo[0] != '00000') {
-        echo "Error: " . $errorInfo[2];
-    }
 }
+

@@ -64,8 +64,9 @@
                 echo '<a href="profiili.php?u=' . $friend['user_id'] . '">' . $friend['username'] . '</a>';
                 echo '</div>';
                 echo '<nav class="friend_info">';
-                echo '<a href="laheta_viesti.php?u=' . $friend['user_id'] . '" title="Lähetä viesti"><i class="fa-regular fa-message"></i> <span class="small_txt link_text">Viesti</span></a>';
-                echo '<a href="includes/friends_remove.php?u=' . $friend['user_id'] . '" title="Poista kaveri"><i class="fa-solid fa-trash"></i> <span class="small_txt link_text">Poista</span></a>';
+                echo '<a href="laheta_viesti.php?u=' . $friend['user_id'] . '" title="Lähetä viesti"><i class="fa-regular fa-message"></i> <span class="small_txt">Viesti</span></a>';
+                echo '|';
+                echo '<a href="includes/friends_remove.php?u=' . $friend['user_id'] . '" title="Poista kaveri"><i class="fa-solid fa-trash"></i> <span class="small_txt">Poista</span></a>';
                 echo '</nav>';
                 echo '</div>';
             }

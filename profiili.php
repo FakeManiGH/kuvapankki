@@ -1,5 +1,5 @@
 <?php
-    
+    ob_start();
     $title = 'Oma Profiili';
     $css = 'css/profiili.css';
     $js = 'scripts/profiili.js';
@@ -12,10 +12,14 @@
 
     require 'includes/connections.php';
     require 'includes/profile_model.php';
+    require 'includes/profile_ctrl.php';
+    include 'includes/storage_space_view.php';
 
     // Haetaan käyttäjän tiedot tietokannasta
     $user = get_user($pdo, $_SESSION['user_id']);
-    
+
+    $user_json = json_encode($user);
+
 ?>
 
 <main>
@@ -35,138 +39,139 @@
         </nav>    
     </div>
 
+    <p>Täällä voit muokata profiilikuvaasi, käyttäjätietojasi ja salasanaasi. Voit myös tarkastella tallennustilaasi ja hallita tiedostoja.</p>
 
-    <div class="grid_container">
-        <div class="important_list grid_item">
-            <p><i class="fa-solid fa-circle-exclamation"></i> Tältä sivulta löydät kaikki omat tietosi. Voit muokata tietojasi ja vaihtaa salasanasi.</p>
-            <p><i class="fa-solid fa-circle-exclamation"></i> Osaa käyttäjätiedoista ei näytetä yksityisyyden suojan säilymiseksi.</p>
-            <p><i class="fa-solid fa-circle-exclamation"></i> Vaihtaaksesi etu- tai sukunimeä, <a href="ota_yhteytta.php">ota yhteyttä</a> ylläpitoon.</p>
-            <p><i class="fa-solid fa-circle-exclamation"></i> Muista tallentaa tiedot, jotta muutokset astuvat voimaan.</p>
-            <p><i class="fa-solid fa-circle-exclamation"></i> Salasana aina pakollinen tietojen päivittämiseksi, poislukien profiilikuva.</p>
+    <div class="hero_container">
+
+        <!-- Tallennustila -->
+        <div id="" class="hero_item">
+            <h3>Tallennustila</h3>
+            <ul>
+                <?php 
+                    echo "<li><strong>Tilauksesi:</strong> ". htmlspecialchars($subscription['sub_name']) ."</li>";
+                    echo "<li><strong>Tallennustila:</strong> ". htmlspecialchars($storage_space_view) ."</li>";
+                    echo "<li><strong>Tilaa käytetty:</strong> ". htmlspecialchars($used_space_view) ."</li>";
+                ?>
+            </ul>
+
+            <span>
+                <label for="storage">TALLENNUSTILAN KÄYTTÖ:</label>
+                <span class="inline">
+                    <?php 
+                        if ($used_space_percentage > 80) {
+                            echo "<progress id='storage' value='". $used_space_percentage ."' max='100' class='red'></progress>";
+                        } else {
+                            echo "<progress id='storage' value='". $used_space_percentage ."' max='100'></progress>";
+                        }
+                        echo "<p class='no_wrap'>". $used_space_percentage ." %</p>";
+                    ?>
+                </span>
+            </span>
+
+            <div class="buttons">
+                <button class="small_btn" onclick="window.location.href='hallitse_tiedostoja.php'"><i class="fa-regular fa-pen-to-square"></i> Hallitse tiedostoja</button>
+                <?php 
+                    if ($subscription['sub_type'] !== 1) {
+                        echo "<button class='small_btn' onclick='window.location.href=\"tilaus.php\"'><i class='fa-regular fa-pen-to-square'></i> Hallitse tilausta</button>";
+                    } else {
+                        echo "<button class='small_btn' onclick='window.location.href=\"tilaus.php\"'><i class='fa fa-shopping-cart'></i> Lisää tilaa</button>";
+                    }
+                ?>
+            </div>
+        </div>
+    
+
+        <!-- Profiilikuva -->
+        <div class="hero_item">
+            <h3>Profiilikuva</h3>
+
+            <p>Vaihda profiilikuvaasi klikkaamalla "Vaihda profiilikuva" -painiketta. Suosittelemme käyttämään neliön muotoista kuvaa.</p>
+
+            <form id="profile_img_form" enctype="multipart/form-data">
+                <span class="inline">
+                    <img id="profile_img" src="<?php echo htmlspecialchars($user['user_img']); ?>" class="user_image" alt="Profiilikuva">
+                    <p class="error_msg" id="file_err"></p>
+                    <p class="success_msg" id="file_success"></p>
+                </span>
+
+                <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user['user_id']); ?>">
+            
+                <div class="buttons">
+                    <input type="file" class="hidden" type="hidden" name="userfile" id="userfile">
+                    <button class="func_btn green" id="accept_file_select" type="submit"><i class="fa-solid fa-square-check"></i> <span class="small_txt">Hyväksy</span></button>
+                    <button class="func_btn red" id="clear_file_select" type="reset"><i class="fa fa-trash"></i> <span class="small_txt">Hylkää</span></button>
+                </div>
+            </form>
         </div>
 
 
-    
-        <!-- Profiilikuva -->
-        <div class="grid_item">
-            <h3>Profiilikuva</h3>
+        <!-- Käyttäjän tiedot -->
+        <div class="hero_item">
+            <h3>Käyttäjätiedot</h3>
 
-            <form class="page_form" action="includes/profile_img_upload.php" method="post" enctype="multipart/form-data">
-                <div class="image_container">
-                    <div class="user_image_wrapper">
-                        <img id="profile_img" src="<?php if (isset($user['user_img'])) {echo htmlspecialchars($user['user_img']);} ?>" class="user_image" alt="Profiilikuva">
-                    </div>
+            <p><i class="fa fa-circle-info"></i> Uusi sähköpostiosoite tulee vahvistaa sähköpostiin lähetetystä linkistä.</p>
 
-                    <div class="file_container">
-                        <input type="file" name="userfile" id="user_img">
-                        <button class="func_btn green" id="accept_file_select" type="submit"><i class="fa-solid fa-square-check"></i></button>
-                        <button class="func_btn red" id="clear_file_select" type="reset"><i class="fa fa-trash"></i></button>
-                    </div>  
-                </div>
-                <p id="file_err">
-                    <?php if (isset($_SESSION['image_update_err'])) {
-                        echo $_SESSION['image_update_err'];
-                        unset($_SESSION['image_update_err']);
-                    }
-                    ?>
-                </p>
+            <ul>
+                <li class="info_container">
+                    <p><strong>Käyttäjätunnus:</strong></p> 
+                    <?php echo "<a href='kayttaja.php?u=". htmlspecialchars($user['user_id']) ."' id='username'>". htmlspecialchars($user['username']) ."</a>"; ?>
+                </li>
+
+                <li class="info_container">
+                    <p><strong>Etunimi:</strong></p> 
+                    <p id="first_name"><?php echo htmlspecialchars($user['first_name']); ?></p>
+                </li>
+
+                <li class="info_container">
+                    <p><strong>Sukunimi:</strong></p> 
+                    <p id="last_name"><?php echo htmlspecialchars($user['last_name']); ?></p>
+                </li>
+
+                <li class="info_container">
+                    <p><strong>Puhelinnumero:</strong></p> 
+                    <p id="phone_number">0<?php echo htmlspecialchars($user['phone']); ?></p>
+                </li>
+
+                <li class="info_container">
+                    <p><strong>Sähköposti:</strong></p> 
+                    <p id="email_address"><?php echo htmlspecialchars($user['email']); ?></p>
+                </li>
+            </ul>
+
+            <div class="buttons">
+                <button id='edit_profile' class='btn small_btn'><i class='fa-regular fa-pen-to-square'></i> Muokkaa tietoja</button>
+            </div>
+            
+            <p id="infoSuccess" class='green'></p>
+        </div>  
+
+
+        <!-- Salasanan vaihto -->
+        <div class="hero_item">
+            <h3>Vaihda Salasanasi</h3>
+
+            <p>Vaihtaaksesi salasanaasi, tulee sinun lähettää nollauspyyntö sähköpostiisi. Sähköpostiosoitteen tulee olla liitetty Kuvapankki-tiliisi. (<strong class="red">*</strong> pakollinen kenttä).</p>
+
+            <form id="pwd_form" method="post">
+                <label for="email">Sähköposti <strong class="red">*</strong></label>
+                <input type="email" name="email" id="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
+
+                <button class="small_btn" type="submit"><i class="fa-regular fa-envelope"></i> Lähetä</button>
             </form>
+            
+            <p id="pwd_success" class="success_msg" class='green'></p>
+            <p id="pwd_error" class="error_msg" class='red'></p>
+
+            <p>Jos sinulla on ongelmia salasanan vaihdon kanssa, <a href="ota_yhteytta.php?aihe=salasana">ota yhteyttä</a> ylläpitoomme.</p>
         </div>
     </div>
 
 
-    <!-- Käyttäjätiedot -->
-    <h3>Käyttäjätiedot</h3>
-
-    <form id="user_info" class="page_form" action="includes/profile_update.php" method="post">
-        <span class="inline">
-            <label for="username">Käyttäjätunnus</label>
-            <span class="inline_x2">
-                <input type="text" id="username" name="username" value="<?php if (isset($user['username'])) {echo htmlspecialchars($user['username']);} ?>" placeholder="Käyttäjätunnus" readonly>
-                <a id="edit_username" href="javascript:void(0);" class="func_btn"><i class="fa-solid fa-pen-to-square"></i></a>
-            </span>
-        </span>
-
-        <span class="inline">
-            <label for="phone">Puhelinnumero</label>
-            <span class="inline_x2">
-                <input type="text" id="phone" name="phone" value="0<?php if (isset($user['phone'])) {echo htmlspecialchars($user['phone']);} ?>" placeholder="Matkapuhelinnumero" readonly>
-                <a id="edit_phone" href="javascript:void(0);" class="func_btn"><i class="fa-solid fa-pen-to-square"></i></a>
-            </span>
-        </span>
-
-        <span class="inline">
-            <label for="email">Sähköpostiosoite</label>
-            <span class="inline_x2">
-                <input type="email" id="email" name="email" value="<?php if (isset($user['email'])) {echo htmlspecialchars($user['email']);} ?>" placeholder="Sähköpostiosoite" readonly>
-                <a id="edit_email" href="javascript:void(0);" class="func_btn"><i class="fa-solid fa-pen-to-square"></i></a>
-            </span>
-        </span>
-
-        <span class="inline">
-            <label for="pwd">Salasana <span class="red">*</span></label>
-            <span class="inline_x2">
-                <input type="password" id="pwd" name="pwd" placeholder="Vanha Salasana" required autocomplete="off">
-                <a id="show_pwd" href="javascript:void(0);" class="func_btn"><i class="fa-regular fa-eye"></i></a>
-            </span>
-        </span> 
-
-        <p class='error_msg' id="update_errors">
-            <?php 
-                if (isset($_SESSION['profile_update_err'])) {
-                    echo $_SESSION['profile_update_err'];
-                    unset($_SESSION['profile_update_err']);   
-                }
-            ?>
-        </p>
-
-        <span class="buttons">
-            <button type="submit">Tallenna Tiedot</button>
-            <button id="reset" type="reset">Peruuta</button>
-        </span>
-    </form>
-    
-    <br>
-
-    <!-- Salasanan vaihto -->
-    <h3>Vaihda Salasana</h3>
-
-    <form id="pwd_update_form" class="page_form" action="includes/pwd_update.php" method="post">
-        <span class="inline">
-            <label for="old_pwd">Nykyinen Salasana <span class="red">*</span></label>
-            <span class="inline_x2">
-                <input type="password" id="old_pwd" name="old_pwd" placeholder="Nykyinen Salasana" required autocomplete="off">
-                <a id="show_old_pwd" href="javascript:void(0);" class="func_btn"><i class="fa-regular fa-eye"></i></a>
-            </span>
-        </span>
-
-        <span class="inline">
-            <label for="new_pwd">Uusi Salasana <span class="red">*</span></label>
-            <span class="inline_x2">
-                <input type="password" id="new_pwd" name="new_pwd" placeholder="Uusi Salasana" required>
-                <a id="show_new_pwd" href="javascript:void(0);" class="func_btn"><i class="fa-regular fa-eye"></i></a>
-            </span>
-        </span>
-
-        <p class='error_msg'>
-            <?php 
-                if (isset($_SESSION['pwd_update_err'])) {
-                    echo $_SESSION['pwd_update_err'];
-                    unset($_SESSION['pwd_update_err']);   
-                }
-            ?>
-        </p>
-
-        <span class="buttons">
-            <button type="submit">Vaihda Salasana</button>
-            <button id="reset" type="reset">Peruuta</button>
-        </span>
-    </form>
-    
-
-
-
 </main>
+
+<script>
+    var user = <?php echo json_encode($user); ?>;
+</script>
 
 <?php
     include 'footer.php';

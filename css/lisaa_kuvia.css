@@ -4,7 +4,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #555;
+    background: #111;
     border: 3px dashed #222;
     border-radius: 20px;
     font-family: 'Open Sans', sans-serif;
@@ -26,17 +26,6 @@ li {
     margin-left: 30px;
 }
 
-
-
-
-
-.image_form {
-    display: none;
-    flex-direction: column;
-    gap: 10px;
-    padding: 0;
-}
-
 .has_images {
     display: flex;
 }
@@ -54,55 +43,35 @@ li {
     flex-direction: row;
     box-sizing: border-box;
     align-items: center;
+    justify-content: space-between;
     gap: 10px;
-    width: 100%;
 }
 
-.image_form label {
-    font-family: 'Open Sans', sans-serif;
-    white-space: nowrap;
-    font-size: 1rem;
+.field_wrapper label {
+    justify-content: right;
+}
+
+input {
+    padding: 10px;
+}
+
+#selected_gallery {
+    padding: 10px 15px;
+    margin-bottom: 10px;
     font-weight: 600;
-}
-
-.image_form input, .image_form select {
-  box-sizing: border-box; /* Add this line */
-  padding: 10px;
-  border: 1px solid #aaa;
-  border-radius: 5px;
-  width: 100%;
-}
-
-.image_form input:focus, 
-.image_form textarea:focus
-.image_form select:focus {
-    outline-style: none;
-    border-color: #ff9900;
-    box-shadow: 0 0 5px #ff9900;
+    font-family: 'Open Sans', sans-serif;
+    border: none;
 }
 
 #selected_gallery option:first-child {
-    font-weight: bold;
+    font-weight: 400;
 }
 
-.image_form input[type="file"] {
-    display: none;
-} 
-
 .preview {
-    width: 100px;
+    width: 125px;
     height: -moz-fit-content;
     height: fit-content;
     border-radius: 5px;
-}
-
-.error_msg {
-    color: #ff0000;
-    font-family: 'Open Sans', sans-serif;
-    font-size: .9rem;
-    font-weight: 400;
-    margin-top: -5px;
-    align-self: flex-end;
 }
 
 
@@ -116,6 +85,7 @@ li {
     }
     .field_wrapper label {
         margin-bottom: -5px;
+        justify-content: left;
     }
     .preview {
         width: 100%;

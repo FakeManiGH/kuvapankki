@@ -25,34 +25,36 @@
 <body>
 
 <header>
-    <div class="logo_container">
-        <p class="logo" title="Etusivu" onclick="window.location.href='index.php'">KUVA<span class="orange">PANKKI</span><span class="large_txt"> . FI</span><i class="fa fa-home home_icon"></i></p>
+    <div class="grid_container">
+        <p class="logo" title="Etusivu" onclick="window.location.href='index.php'">KUVA<span class="orange">PANKKI</span><span class="large_txt">.FI</span><i class="fa fa-home home_icon"></i></p>
 
-        <?php
-            if (is_logged_in()) {  
-                echo "<a id='open_user_menu' title='Käyttäjä Valikko' href='javascript:void(0);'>". $_SESSION['username'] ." <img class='tiny_img' src=".$_SESSION['user_img']." alt='Profiilikuva'></a>";
-            } else {
-                echo "<a href='kirjaudu.php' title='Kirjaudu Sisään' class='" . active('kirjaudu', $active) . "'><i class='fa fa-sign-in'></i> Kirjaudu Sisään</a>";
-            }
-        ?>
+        <div class="search_container">
+            <?php
+                if (is_logged_in()) {  
+                    echo "<a href='profiili.php' title='Oma Profiili'>". $_SESSION['username'] ." <img id='tiny_profile_img' class='tiny_img' src=".$_SESSION['user_img']." alt='Profiilikuva'></a>";
+                } else {
+                    echo "<a href='kirjaudu.php' title='Kirjaudu Sisään' class='" . active('kirjaudu', $active) . "'><i class='fa fa-sign-in'></i> Kirjaudu Sisään</a>";
+                }
+            ?>
+
+            <form action="search.php" class="header_search" method="GET">
+                <input type="text" id="search" name="search" placeholder="Etsi Kuvapankista" required>
+                <button type="submit" class="func_btn" id="search_button"><i class="fa fa-magnifying-glass"></i></button>
+            </form>
+        </div>
     </div>
 
-    <nav id="user_navigation">
-        <?php include 'includes/user_navigation.php';?>
-    </nav>
-    <span class="menu_overlay"></span>
-
-    <div class="search_container">
-        <form action="search.php" class="header_search" method="GET">
-            <input type="text" id="search" name="search" placeholder="Etsi Kuvapankista" required>
-            <button type="submit" class="func_btn" id="search_button"><i class="fa fa-magnifying-glass"></i></button>
-        </form>
-    </div>
+    
 </header>
+
+<nav id="user_navigation">
+    <?php include 'includes/user_navigation.php';?>
+</nav>
+<span class="menu_overlay"></span>
 
 <div class="top_navi">
     <nav class="link_container">
-        <a href="selaa.php" title="Selaa Kuvia" class="<?=active('selaa',$active);?>"><i class="fa fa-bars-staggered"></i> <span class="nav_txt">Selaa</span></a>
+        <a href="selaa.php" title="Selaa Kuvia" class="<?=active('selaa',$active);?>"><i class="fa fa-hashtag"></i> <span class="nav_txt">Julkaisut</span></a>
         <div class="dropdown">
             <a href="galleriat.php" title="Galleriat" class="<?=active('galleriat',$active);?>"><i class="fa-regular fa-image"></i> <span class="nav_txt">Galleriat <i class="fa-solid fa-caret-down"></i></span></a>
             <div class="drop_links">
@@ -69,6 +71,9 @@
                 <a href="lisaa_kaveri.php" title="Lisää Kaveri" class="<?=active('lisaa_kaveri',$active);?>">Lisää Kaveri</a>
             </div>
         </div>
-        <a href="viestit.php" title="Viestit" class="<?=active('viestit',$active);?>"><i class="fa fa-envelope-open-text"></i> <span class="nav_txt">Viestit</span></a>
+        <a href="viestit.php" title="Viestit" class="<?=active('viestit',$active);?>"><i class="fa fa-message"></i> <span class="nav_txt">Viestit</span></a>
+        <?php if (is_logged_in()) { 
+            echo "<a href='javascript:void(0);' id='open_user_menu' title='Käyttäjä Valikko'><i class='fa fa-bars'></i><span class='nav_txt'>Lisää</span></a>";
+        } ?>
     </nav>
 </div>

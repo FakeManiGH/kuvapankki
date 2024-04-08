@@ -111,6 +111,7 @@ function addFieldsForImage(file, index) {
 
     let titleLabel = document.createElement('label');
     titleLabel.textContent = 'Otsikko';
+    titleLabel.htmlFor = 'title[]';
     fieldWrapper.appendChild(titleLabel);
 
     let titleInput = document.createElement('input');
@@ -121,6 +122,7 @@ function addFieldsForImage(file, index) {
 
     let descriptionLabel = document.createElement('label');
     descriptionLabel.textContent = 'Kuvateksti';
+    descriptionLabel.htmlFor = 'description[]';
     fieldWrapper.appendChild(descriptionLabel);
 
     let descriptionInput = document.createElement('input');
@@ -215,10 +217,13 @@ function tooManyFiles() {
 form.addEventListener('submit', function(e) {
     let gallerySelect = document.getElementById('selected_gallery');
     let galleryOption = gallerySelect.options[gallerySelect.selectedIndex];
-    let galleryError = document.querySelector('.error_msg');
+    let galleryError = document.getElementById('gallery_error');
 
-    if (galleryOption.value === '0' || galleryOption.value === 'Valitse galleria') {
+    if (galleryOption.value === '0') {
         galleryError.textContent = 'Valitse kuville galleria.';
+        setTimeout(function() {
+            galleryError.textContent = '';
+        }, 3000);
         e.preventDefault();
     }
 });

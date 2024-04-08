@@ -4,17 +4,16 @@ if (is_logged_in()) {
 
     echo "<div class='user_container'>";
         echo "<div class='user_image_wrapper'>";
-            echo "<img src='".$_SESSION['user_img']."' class='user_image' alt='Profiilikuva'>";
+            echo "<img src='".$_SESSION['user_img']."' id='menu_profile_img' class='user_image' alt='Profiilikuva'>";
         echo "</div>";
-        echo "<h4>" .$_SESSION['username'] . "</h4>";
+        echo "<h4 id='menu_username'>" .$_SESSION['username'] . "</h4>";
     echo "</div>";
 
     echo "<div class='user_links'>";
         echo "<a href='profiili.php' class='". active('profiili', $active) ."' title='Profiili'><i class='fa fa-user'></i> Profiili</a>";
         echo "<a href='suosikit.php' class='". active('suosikit', $active) ."' title='Suosikit'><i class='fa fa-heart'></i> Suosikit</a>";
         echo "<a href='ilmoitukset.php' class='". active('ilmoitukset', $active) ." title='Ilmoitukset'><i class='fa fa-bell'></i> Ilmoitukset</a>";
-        echo "<a href='viestit.php' class='". active('viestit', $active) ." title='Viestit'><i class='fa fa-envelope-open-text'></i> Viestit</a>";
-        echo "<a href='kaverit.php' class='". active('kaverit', $active) ." title='Kaverit'><i class='fa fa-user-group'></i> Kaverit</a>";
+        echo "<a href='viestit.php' class='". active('viestit', $active) ." title='Viestit'><i class='fa fa-message'></i> Viestit</a>";
     echo "</div>";
 
     echo "<div class='user_links'>";

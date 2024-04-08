@@ -7,11 +7,13 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 
-//Load Composer's autoloader
-require 'vendor/autoload.php';
+
 
 // function to send registration verification email
 function send_verification_email($username, $email, $email_token) {
+//Load Composer's autoloader
+require 'vendor/autoload.php';
+
 //Create an instance; passing `true` enables exceptions
 $mail = new PHPMailer(true);
 
@@ -62,6 +64,9 @@ $mail = new PHPMailer(true);
 
 // function to send password reset email
 function send_reset_email($username, $email, $pwd_token) {
+    //Load Composer's autoloader
+    require '../vendor/autoload.php';
+
     //Create an instance; passing `true` enables exceptions
     $mail = new PHPMailer(true);
     

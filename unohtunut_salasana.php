@@ -4,44 +4,38 @@
     }
 
     $title = 'Salasana Unohtunut';
-    $css = 'css/unohtunut_salasana.css';
-    // $js = '';
+    // $css = '';
+    $js = 'scripts/unohtunut_salasana.js';
     include 'header.php';
 ?>
 
 <main>
-    <?php
-        if (isset($_SESSION['reset_link'])) {
-            echo "<h4 class='green'>".$_SESSION['reset_link']."</h4>";
-            unset($_SESSION['reset_link']); 
-        }
-    ?>
         
     <h1>Unohtuiko Salasana?</h1>
             
-    <p>Jos olet unohtanut salasanasi, voit asettaa uuden salasanan lähettämällä nollaus-linkin profiilisi liitettyyn sähköpostiosoitteeseen.</p>
+    <p>Nollataksesi salasanaasi, tulee sinun lähettää nollauspyyntö sähköpostiisi.</p>
     
-    <div class="form_container">
-        <form action="unohtunut_salasana.php" class="page_form" method="POST">
-            <label for="email">Sähköpostiosoite</label>
-            <input type="text" id="email" name="email" placeholder="Anna sähköpostiosoite" autofocus>
+    <div class="hero_item">
+        <h3>Anna sähköpostiosoitteesi</h3>
 
-            <p class='error_msg'>
-                <?php
-                    if (isset($_SESSION['error_reset'])) {
-                        echo $_SESSION['error_reset'];
-                        unset($_SESSION['error_reset']); 
-                    }
-                ?>
-            </p>
+        <p>Sähköpostiosoitteen tulee olla liitetty Kuvapankki-tiliisi. (<strong class="red">*</strong> pakollinen kenttä).</p>
+
+        <form id="pwd_form" method="POST">
+
+            <label for="email">Sähköpostiosoite <strong class="red">*</strong></label>
+            <input type="text" id="email" name="email" placeholder="Anna sähköpostiosoite">
 
             <span class="buttons">
-                <button type="submit">Lähetä</button>
+                <button type="submit"><i class="fa fa-envelope"></i> Lähetä</button>
             </span>
         </form>
+
+        <p id="pwd_error" class="error_msg"></p>
+        <p id="pwd_success" class="success_msg"></p>
+
+        <p>Etkö muista <strong>sähköpostiosoitettasi</strong>? <a href="ota_yhteytta.php">Ota Yhteyttä</a> palvelun ylläpitoon.</p>
     </div>
         
-    <p>Etkö muista <strong>sähköpostiosoitettasi</strong>? <a href="ota_yhteytta.php">Ota Yhteyttä</a> palvelun ylläpitoon.</p>
 </main>
 
 

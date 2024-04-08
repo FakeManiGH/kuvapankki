@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 // Find user with email
-function get_user(object $pdo, string $email) {
+function get_user_by_email(object $pdo, string $email) {
     $query = "SELECT username, email, user_id FROM users WHERE email = :email";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':email', $email);

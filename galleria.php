@@ -41,10 +41,10 @@
         }
     ?>
 
-    <div class="grid_container">
+    <div class="hero_container">
 
         <!-- Gallerian kansikuva -->
-        <div class="grid_item">
+        <div class="hero_item">
             <?php
                 echo '<img class="cover_img" src="' . htmlspecialchars($cover_img) . '" alt="Gallerian Kansikuva">';
                 if (isset($user_role) && $user_role === 1) {
@@ -54,7 +54,7 @@
         </div>
         
         <!-- Gallerian tiedot -->
-        <div class="grid_item">
+        <div class="hero_item">
             <?php
                 echo '<nav class="buttons">';
                 if ($user_id == $owner) {
