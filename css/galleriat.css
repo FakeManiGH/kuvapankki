@@ -24,7 +24,7 @@ section {
     gap: 10px 20px;
     padding: 10px 15px;
     background: #111;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .gallery_item a {

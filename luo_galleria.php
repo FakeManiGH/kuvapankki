@@ -12,133 +12,174 @@
     // Haetaan kaverilista
     require_once 'includes/friends_view.php';
 
-
 ?>
 
 <main>
 
     <h1>Luo Uusi Galleria</h1>
 
-    <p>Luo uusi galleria täyttämällä alla oleva lomake. <span class="red"><strong>( * pakollinen kenttä )</strong></span></p>
+    <p>Luo uusi galleria täyttämällä alla oleva lomake. Voit samalla määritellä gallerian näkyvyyden ja jäsenet. Voit myös lisätä galleriaan kansikuvan ja avainsanoja.
+        Lisätietoa gallerioista löydät <a href="teitopankki.php">tietopankista</a>. <strong class="red">*</strong> -pakollinen kenttä.</p>
     
-    <form id="create_gallery" class="page_form" action="includes/gallery_create.php" method="post" enctype="multipart/form-data">
+    <div class="hero_item">
+        <form id="create_gallery" method="post" enctype="multipart/form-data">
 
-        <!-- Perustiedot -->
-        <span class="inline">
-            <label for="name">Gallerian Nimi <span class="red">*</span></label>
-            <input type="text" id="name" name="name" placeholder="Gallerian nimi" required>
-        </span>
-            <p id="name_counter" class="length_counter">0 / 75</p>
+            <!-- Gallery name -->
+            <span class="form_group">
+                <label for="name">Gallerian nimi <span class="red">*</span></label>
+                <p class="small_txt grey">Anna gallerialle nimi. Gallerian nimi voi olla enintään 75 merkkiä pitkä ja uniikki.</p>
+                <input type="text" id="gallery_name" name="name" placeholder="Anna gallerialle nimi" required>
+                <p id="name_counter" class="length_counter"></p>
 
-        <span class="inline">
-            <label for="description">Kuvaus <span class="red">*</span></label>
-            <textarea id="description" name="description" placeholder="Gallerian kuvaus" required></textarea>
-        </span>
-            <p id="desc_counter" class="length_counter">0 / 400</p>
+                <!-- Error message -->
+                <p id="gallery_name_error" class="error_msg"></p>
+            </span>
+
+            <!-- Description -->
+            <span class="form_group">
+                <label for="description">Kuvaus <span class="red">*</span></label>
+                <p class="small_txt grey">Kuvaile galleriaa. Kuvaus voi olla enintään 400 merkkiä pitkä.</p>
+                <textarea id="gallery_description" name="description" placeholder="Kuviale galleriaa..." required></textarea>
+                <p id="desc_counter" class="length_counter"></p>
+
+                <!-- Error message -->
+                <p id="gallery_desc_error" class="error_msg"></p>
+            </span>
+
+            <!-- Category -->
+            <span class="form_group">
+                <label for="category">Kategoria <span class="red">*</span></label>
+                <p class="small_txt grey">Valitse gallerialle sopiva kategoria.</p>
+                <select id="gallery_category" name="category" required>
+                    <option value="0">Valitse Kategoria</option>
+                    <option value="1">Luonto</option>
+                    <option value="2">Eläimet</option>
+                    <option value="3">Ihmiset</option>
+                    <option value="4">Kaupunki</option>
+                    <option value="5">Maisemat</option>
+                    <option value="6">Taide</option>
+                    <option value="7">Muoti</option>
+                    <option value="8">Ruoka</option>
+                    <option value="9">Kulttuuri</option>
+                    <option value="10">Urheilu</option>
+                    <option value="11">Tekniikka</option>
+                    <option value="12">Muu</option>
+                </select>
+
+                <!-- Error message -->
+                <p id="gallery_category_error" class="error_msg"></p>
+            </span>
+
+            <!-- Visibility -->
+            <span class="form_group">
+                <label for="visibility" id="visibility_info">Näkyvyys <span class="red">*</span> <a href="javascript:void(0)" onclick="showVisibilityPopup()" class="info_btn"> <i class="fa fa-info-circle"></i></a></label>
+                <p class="small_txt grey">Valitse gallerian näkyvyys. Määrittää, ketkä näkevät gallerian sisällön ja julkaisut.</p>
+                <select id="gallery_visibility" name="visibility" required>
+                    <option value="1">Julkinen</option>
+                    <option value="2">Kaverit</option>
+                    <option value="3">Vain jäsenet</option>
+                </select>
+
+                <ul id="visibility_popup" class="info_popup">
+                    <button type="button" id="close_visibility_info" class="popup_close func_btn"><i class="fa fa-circle-xmark"></i></button>
+                    <h4>Tietoa näkyvyydestä</h4>
+                    <li><strong class="green">Julkinen:</strong> Gallerian julkaisut ja kuvat on kaikkien nähtävissä.</li>
+                    <li><strong class="green">Kaverit:</strong> Gallerian julkaisut ja kuvat näkyvät jäsenten kavereille.</li>
+                    <li><strong class="green">Vain jäsenet:</strong> Gallerian julkaisut ja kuvat näkyvät vain sen jäsenille.</li>
+                </ul>
+
+                <!-- Error message -->
+                <p id="gallery_visibility_error" class="error_msg"></p>
+            </span>
 
 
-        <!-- Näkyvyys -->
-        <span class="inline">
-            <label for="visibility" id="visibility_info" >Näkyvyys <span class="red">*</span> <a href="javascript:void(0)" onclick="showVisibilityPopup()" class="info_btn"> <i class="fa fa-info-circle"></i></a></label>
-            <select id="visibility" name="visibility" required>
-                <option id="private" value="1">Yksityinen</option>
-                <option id="friends" value="2">Kaverit</option>
-                <option id="public" value="3">Julkinen</option>
-            </select>
+            <!-- Type -->
+            <span class="form_group">
+                <label for="type" id="type_info">Kuka voi liittyä? <span class="red">*</span> <a href="javascript:void(0)" onclick="showTypePopup()" class="info_btn"> <i class="fa fa-info-circle"></i></a></label>
+                <p class="small_txt grey">Valitse, kuka voi liittyä galleriaan. Jäsenet eivät voi automaattisesti lisätä kuvia ja sisältöä. Lisätietoa <i class="fa fa-info-circle"></i> painikkeella.</p>
+                <select id="gallery_type" name="type" required>
+                    <option id="public" value="1">Kuka tahansa</option>
+                    <option id="friends" value="2">Kaverit</option>
+                    <option id="invite" value="3">Vain kutsutut</option>
+                    <option id="private" value="4" selected>Yksityinen</option>
+                </select>
 
-            <ul id="visibility_popup" class="info_popup">
-                <button id="close_visibility" class="popup_close red"><i class="fa fa-circle-xmark"></i></button>
-                <h4>Tietoa näkyvyydestä</h4>
-                <li><strong>Yksityinen:</strong> Vain sinä näet gallerian.</li>
-                <li><strong>Kaverit:</strong> Vain sinä ja lisäämäsi kaverit näkevät gallerian.</li>
-                <li><strong>Julkinen:</strong> Kaikki näkevät gallerian, mutta vain jäsenet voivat lisätä sisältöä.</li>
-            </ul>
-        </span>
+                <ul id="type_popup" class="info_popup">
+                    <button type="button" id="close_type_info" class="popup_close func_btn"><i class="fa fa-circle-xmark"></i></button>
+                    <h4>Tietoa jäsenistä:</h4>
+                    <li><strong class="green">Vapaa kaikille:</strong> Kuka tahansa voi liittyä galleriaan, omistaja ja admin jäsenet hallitsevat jäsenyyksiä.</li>
+                    <li><strong class="green">Kavereille:</strong> Kaverisi voivat liittyä galleriaan.</li>
+                    <li><strong class="green">Kutsutut jäsenet:</strong> Vain kutsutut jäsenet pääsevät liittymään galleriaan.</li>
+                    <li><strong class="green">Yksityinen:</strong> Galleria on henkilökohtainen.</li>
+                    <li><strong class="green">Oikeudet:</strong> Jäsenten oikeuksia gallerian sisällä voit muuttaa gallerian asetuksista.</li>
+                </ul>
 
+                <!-- Error message -->
+                <p id="gallery_type_error" class="error_msg"></p>
+            </span>
 
-        <!-- Jäsenet -->
-        <fieldset id="select_users_area">
-            <span class="inline" style="margin-bottom: 20px;">
-                <label for="selects_users" id="users_info">Valitse Jäesenet <a href="javascript:void(0)" onclick="showUsersPopup()" class="info_btn"> <i class="fa fa-info-circle"></i></a></label>
-                <span class="inline_x2">
-                    <select id="select_users">
-                        <?php
-                            if (empty($friends)) {
-                                echo '<option value="0">Ei Kavereita</option>';
-                            } else {
-                                echo '<option value="0">Valitse Kaveri</option>';
-                            }
-                            asort($friends);
-                            foreach ($friends as $friend) {
-                                echo '<option value="' . $friend['user_id'] . '">' . $friend['username'] . '</option>';
-                            }
-                        ?>
-                    </select>
-                    <button type="button" id="add_user">Lisää</button>
-                    <ul id="users_popup" class="info_popup">
-                    <button id="close_users_popup" class="popup_close red"><i class="fa fa-circle-xmark"></i></button>
-                        <h4>Tietoa jäsenistä</h4>
-                        <li>Valituille jäsenille lähetetään kutsu galleriaan. Kutsu on voimassa 7 päivää ja poistuu automaattisesti, jos kutsuun ei vastata.</li>
-                        <li>Kutsu antaa kutsutulle käyttäjälle lukuoikeuden galleriaan, kun tämä hyväksyy kutsun. Voit muuttaa jäsenten oikeuksia gallerian asetuksista.</li>
-                    </ul>
+            <!-- Invite users -->
+            <div id="select_users_area">
+                <span class="form_group">
+                    <label for="selects_users" id="users_info">Kutsu jäseneksi <a href="javascript:void(0)" onclick="showUsersPopup()" class="info_btn"> <i class="fa fa-info-circle"></i></a></label>
+                    <p class="small_txt grey">Lähetä kaverille kutsu galleriaan. Toistaiseksi et voi suoraan kutsua käyttäjää, joka ei ole kaverisi. <a href="lisaa_kaveri.php">Lisää kaverieta</a>, joita kutsua.</p>
+                    <span class="inline_x2">
+                        <select id="select_users">
+                            <?php
+                                if (empty($friends)) {
+                                    echo '<option value="0">Ei Kavereita</option>';
+                                } else {
+                                    echo '<option value="0">Valitse Kaveri</option>';
+                                }
+                                asort($friends);
+                                foreach ($friends as $friend) {
+                                    echo '<option value="'. $friend['user_id'] .'">'. $friend['username'] .'</option>';
+                                }
+                            ?>
+                        </select>
+                        <button type="button" class="small_btn" id="add_user">Lisää</button>
+                        <ul id="users_popup" class="info_popup">
+                        <button type="button" id="close_users_popup" class="popup_close func_btn"><i class="fa fa-circle-xmark"></i></button>
+                            <h4>Tietoa jäsenistä</h4>
+                            <li>Valituille jäsenille lähetetään kutsu galleriaan.</li>
+                            <li>Kutsutuilla jäsenillä ei automaattisesti ole oikeutta lisätä kuvia ja sisältöä, mutta he näkevät gallerian sisällön ja voivat ladata kuvia galleriasta.</li>
+                        </ul>
+                    </span>
                 </span>
+
+                <span id="selected_users_container" class="inline">
+                    <label for="selected_users[]" type="hidden" class="hidden">Valitut jäsenet</label>
+                    <select class="hidden" type="hidden" id="selected_users" name="selected_users[]" multiple></select>
+                    <ul id="selected_users_list"></ul>
+                </span>
+
+                <!-- Error message -->
+                <p id="gallery_users_error" class="error_msg"></p>
+            </div>
+            
+
+            <!-- Tags -->
+            <span class="form_group">
+                <label for="tags">Avainsanat <strong class="red">*</strong></label>
+                <p class="small_txt grey">Lisää avainsanoja, jotka kuvaavat galleriaa. Avainsanoja tulee olla vähintään 1 ja enintään 15kpl.</p>
+                <input type="text" id="gallery_tags" name="tags" placeholder="esim. koiria maisemat ufot...">
+                <p id="tags_counter" class="length_counter"></p>
+
+                <!-- Error message -->
+                <p id="gallery_tags_error" class="error_msg"></p>
             </span>
 
-            <span id="selected_users_container" class="inline">
-                <label for="selected_users[]">Valitut Jäsenet</label>
-                <select class="hidden" type="hidden" id="selected_users" name="selected_users[]" multiple></select>
-                <ul id="selected_users_list"></ul>
+
+            <!-- Bottom buttons -->
+            <span class="buttons">
+                <button type="submit">Luo Galleria</button>
+                <button id="reset" type="reset">Tyhjennä</button>
             </span>
-        </fieldset>
-        
 
-        <!-- Kansikuva -->
-        <span class="inline">
-            <label for="cover_img">Kansikuva</label>
-            <span class="inline_x2">
-                <div class="image_container">
-                    <div class="cover_img_wrapper">
-                        <img id="cover_img_preview" src="img/gallery_default.jpg" alt="Gallery cover image preview">
-                    </div>
-                </div>
-                <input type="file" id="cover_img" name="cover_img">
-                <a class="func_btn red" id="clear_preview_img" href="javascript:void(0);"><i class="fa fa-trash"></i></a>
-            </span>
-        </span>
-
-        <p id="file_err">
-            <?php if (isset($_SESSION['image_update_err'])) {
-                echo $_SESSION['image_update_err'];
-                unset($_SESSION['image_update_err']);
-            }
-            ?>
-        </p>
-        
-
-        <!-- Avainsanat -->
-        <span class="inline">
-            <label for="tags">Avainsanat</label>
-            <input type="text" id="tags" name="tags" placeholder="esim. koiria maisemat ufot...">
-        </span>
-        <p id="tags_counter" class="length_counter">0 / 15kpl</p>
-
-        <p>
-            <?php if (isset($_SESSION['gallery_create_err'])) {
-                echo $_SESSION['gallery_create_err'];
-                unset($_SESSION['gallery_create_err']);
-            } ?>
-        </p>
-        
-        <!-- Napit -->
-        <span class="buttons">
-            <button type="submit">Luo Galleria</button>
-            <button id="reset" type="reset">Tyhjennä</button>
-        </span>
-
-        <!-- Virheilmoitukset -->
-        <p id="form_errors" class="error_msg"></p>
-    </form>
-
+            <!-- Error messages -->
+            <p id="form_errors" class="error_msg"></p>
+        </form>
+    </div>
 
 </main>
 

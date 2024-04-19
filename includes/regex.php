@@ -31,3 +31,6 @@ $patternDesc = "/^.{1,400}$/";
 
 // Gallery tags
 $patternTags = "/^.{0,100}$/";
+
+// User linking regex
+$patternLink = "/@(\w+)\b/";

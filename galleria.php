@@ -13,20 +13,12 @@
 <main>
     <!-- Serverin ilmoitukset -->
     <?php
-        // Kuvien lisäys ilmoitukset
-        if (isset($_SESSION['image_upload_success'])) {
-            echo '<h5 class="green">' . $_SESSION['image_upload_success'] . '</h5>';
-            unset($_SESSION['image_upload_success']);
+        // Gallerian luonti ilmoitukset
+        if (isset($_SESSION['gallery_create_success'])) {
+            echo '<h5 class="green">' . $_SESSION['gallery_create_success'] . '</h5>';
+            unset($_SESSION['gallery_create_success']);
         }
-        if (isset($_SESSION['image_upload_errors'])) {
-            echo '<h5 class="red">Kuvien lisäys epäonnistui:</h5>';
-            echo '<ul>';
-            foreach ($_SESSION['image_upload_errors'] as $error) {
-                echo '<li class="red">' . $error . '</li>';
-            }
-            echo '</ul>';
-            unset($_SESSION['image_upload_errors']);
-        }
+
 
 
         // Kuvan päivitys ilmoitukset
@@ -47,7 +39,7 @@
         <div class="hero_item">
             <?php
                 echo '<img class="cover_img" src="' . htmlspecialchars($cover_img) . '" alt="Gallerian Kansikuva">';
-                if (isset($user_role) && $user_role === 1) {
+                if (isset($user_role) && $user_role == 1) {
                     echo '<a id="change_cover" href="javascript:void(0);"><i class="fa fa-pen"></i> Vaihda kansikuva</a>';
                 }
             ?>
@@ -88,22 +80,9 @@
                     echo '<p><strong>Näkyvyys:</strong> Julkinen</p>';
                 }
                 ?>
-    
         </div>
     </div>
 
-    <!-- Kuvien lisäys ja hallinta -->
-    <nav class="gallery_options">
-        <?php
-            if ($user_role == 1) {
-                echo '<a href="lisaa_kuvia.php?g='. $gallery_id .'"><i class="fa fa-upload"></i> Lisää Kuvia</a>';
-                echo '<a href="javascript:void(0)" id="manage_images"><i class="fa fa-pen-to-square"></i> Muokkaa Kuvia</a>';
-            } else if ($user_role == 2) {
-                echo '<a href="lisaa_kuvia.php?g='. $gallery_id .'"><i class="fa fa-upload"></i> Lisää Kuvia</a>';
-                echo '<a href="javascript:void(0)" id="manage_images"><i class="fa fa-pen-to-square"></i> Muokkaa Kuvia <span class="small_txt">(omat)</span></a>';
-            }
-        ?>
-    </nav>
     
     <!-- Kuvien lajittelu ja rajaus -->
     <div class="filter_container">
@@ -121,11 +100,13 @@
         </div>
 
         <div class="buttons">
-            <button id="grid_view" title="Grid-view" class="func_btn view_btn active"><i class="fa fa-grip"></i></button>
-            <button id="list_view" title="List-view" class="func_btn view_btn"><i class="fa fa-list"></i></button>
+            <button id="post_view" title="Julkaisu näkymä" class="func_btn view_btn"><i class="fa fa-hashtag"></i></button>
+            <button id="grid_view" title="Ruudukko näkymä" class="func_btn view_btn active"><i class="fa fa-grip"></i></button>
+            <button id="list_view" title="Lista näkymä" class="func_btn view_btn"><i class="fa fa-list"></i></button>
         </div>
     </div>
     
+
     <!-- Kuvagalleria -->
     <div class="gallery_container">
         <?php
@@ -156,22 +137,15 @@
                             }
                             echo '<p>'.  $image['username'] .'</p>';
                             echo '<p>'.  $image['uploaded'] .'</p>';
-                            echo '<div class="buttons">';
-                                echo '<button class="func_btn small_btn"><i class="fa fa-heart"></i></button>';
-                                echo '<button onclick="" class="func_btn small_btn"><i class="fa fa-comment"></i></button>';
-                                echo '<button class="func_btn small_btn"><i class="fa fa-share"></i></button>';
-                                echo '<button data-url="'. $image['url'] .'" data-name="'. $image['title'] .'" class="func_btn small_btn download_btn"><i class="fa fa-download"></i></button>';
-                                echo '<span class="edit_btns">';
-                                    if ($user_role == 1 || $user_id == $image['user_id']) {
-                                        echo '<button data-gallery="'. $gallery_id .'" data-id="'. $image['image_id'] .'" data-url="'. $image['url'] .'" data-title="'. $image['title'] .'" data-desc="'. $image['description'] .'" class="func_btn small_btn edit_btn green"><i class="fa fa-pen"></i></button>';
-                                        echo '<button data-gallery="'. $gallery_id .'" data-id="'. $image['image_id'] .'" data-url="'. $image['url'] .'" data-title="'. $image['title'] .'" class="func_btn small_btn delete_btn red"><i class="fa fa-trash"></i></button>';
-                                    } else if ($user_role == 2 && $image['user_id'] == $user_id) {
-                                        echo '<button data-id="'. $image['user_id'] .'" data-url="'. $image['url'] .'" data-title="'. $image['title'] .'" data-desc="'. $image['description'] .'" class="func_btn small_btn edit_btn green"><i class="fa fa-pen"></i></button>';
-                                        echo '<button data-gallery="'. $gallery_id .'" data-id="'. $image['image_id'] .'" data-url="'. $image['url'] .'" data-title="'. $image['title'] .'" class="func_btn small_btn delete_btn red"><i class="fa fa-trash"></i></button>';
-                                    } else {
-                                        echo '<p class="red"><i class="fa fa-eye-slash"></i></p>';
-                                    }
-                                echo '</span>';
+                            echo '<div class="buttons image_btns">';
+                                if ($user_role == 1 || $user_id == $image['user_id']) {
+                                    echo '<button data-gallery="'. $gallery_id .'" data-id="'. $image['image_id'] .'" data-url="'. $image['url'] .'" data-title="'. $image['title'] .'" data-desc="'. $image['description'] .'" class="func_btn edit_btn"><i class="fa fa-pen"></i></button>';
+                                } else if ($user_role == 2 && $image['user_id'] == $user_id) {
+                                    echo '<button data-id="'. $image['user_id'] .'" data-url="'. $image['url'] .'" data-title="'. $image['title'] .'" data-desc="'. $image['description'] .'" class="func_btn edit_btn"><i class="fa fa-pen"></i></button>';
+                                } else {
+                                    echo '';
+                                }
+                                echo '<button data-url="'. $image['url'] .'" data-name="'. $image['title'] .'" class="func_btn download_btn"><i class="fa fa-download"></i></button>';
                             echo '</div>';
                             
                         echo '</div>';

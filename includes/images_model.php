@@ -29,10 +29,10 @@ function has_write_access(object $pdo, int $user_id, int $gallery_id): bool {
 }
 
 // add image to database
-function add_image(object $pdo, $fileNameNew, string $title, string $description, string $fileDestDB, int $fileSize, int $user_id, int $gallery_id) {
-    $query = "INSERT INTO images (file_name, title, description, url, size, user_id, gallery_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+function add_image(object $pdo, $fileNameNew, int $post_id, string $title, string $description, string $fileDestDB, int $fileSize, int $user_id, int $gallery_id) {
+    $query = "INSERT INTO images (file_name, post_id, title, description, url, size, user_id, gallery_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $pdo->prepare($query);
-    $stmt->execute([$fileNameNew, $title, $description, $fileDestDB, $fileSize, $user_id, $gallery_id]);
+    $stmt->execute([$fileNameNew, $post_id, $title, $description, $fileDestDB, $fileSize, $user_id, $gallery_id]);
 }
 
 
@@ -59,3 +59,13 @@ function update_image(object $pdo, int $image_id, string $title, string $descrip
     $stmt->execute([$title, $description, $image_id]);
 }
 
+
+
+// IMAGE DELETE
+
+// function to delete image
+function delete_image(object $pdo, int $image_id) {
+    $query = "DELETE FROM images WHERE image_id = ?";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([$image_id]);
+}

@@ -76,6 +76,9 @@ input {
 
 
 
+
+/* Media queries */
+
 @media screen and (max-width: 768px) {
     .field_wrapper {
         flex-direction: column;

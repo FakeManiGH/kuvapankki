@@ -1,0 +1,261 @@
+.hero_item {
+    min-height: -moz-fit-content;
+    min-height: fit-content;
+    border-radius: 5px;
+}
+
+#form_container {
+    height: 0;
+    padding: 0 20px;
+    margin: -10px 0 -10px 0;
+    border-radius: 10px;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: all 0.3s ease;
+}
+
+#form_container.active {
+    height: auto;
+    padding: 20px;
+    margin: 0;
+    transform: scaleY(1);
+    transform-origin: top;
+    transition: all 0.3s ease;
+}
+
+.preview_image {
+    display: flex;
+    position: relative;
+    width: auto;
+    height: auto;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.preview_image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.remove_image {
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #993232;
+    color: #e6e6e6;
+    padding: 10px;
+    border-radius: 0 0 0 5px;
+    cursor: pointer;
+}
+
+.remove_image:hover {background: #702525;}
+
+
+
+/* POSTS */
+
+.post_list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.post {
+    padding: 10px 15px;
+    gap: 10px;
+    border-radius: 10px;
+}
+
+.post_header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.post_links {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.post_images {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.post_image {
+    display: flex;
+    position: relative;
+    width: auto;
+    height: auto;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.post_image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    cursor: pointer;
+}
+
+.post_btn {
+    font-size: .9rem;
+}
+
+.post_delete_container {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.post_delete_container label {
+    display: flex;
+    font-size: .9rem;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    width: -moz-fit-content;
+    width: fit-content;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+
+}
+
+
+
+/* POST COMMENTS */
+
+.comment_container {
+    display: block;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
+    border-top: 1px dashed #333;
+    height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.comment_container.active {
+    display: flex;
+    height: auto;
+    transform: scaleY(1);
+    padding: 10px 0 0 0;
+    transform-origin: top;
+    transition: all 0.3s ease;
+}
+
+.comments_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.comment_item {
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 5px 10px;
+    padding: 0 10px;
+}
+
+.user_link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 5px;
+}
+
+.comment_header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 8px 5px 5px;
+    border-radius: 50px;
+    background: #333;
+}
+
+.own_comment {background: #194366;}
+
+.comment_txt {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.comment_footer {
+    display: flex;
+    justify-self: end;
+    flex-direction: row;
+    align-items: center;
+    gap: 2px;
+}
+
+
+
+
+
+
+/* COMMENT FORM */
+
+.comment_form {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding: 10px 0 0 0;
+    align-items: center;
+}
+
+.comment_input {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    color: #e6e6e6;
+    background: #111;
+    border-radius: 0;
+    border-bottom: 1px solid #777;
+}
+
+.comment_input:focus {
+    outline: none;
+    border-bottom: 1px solid #ff9900;
+}
+
+
+
+/* RESPONSIVE */
+
+@media screen and (max-width: 768px) {
+    .comment_item {
+        flex-wrap: wrap;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .post_images {
+        grid-template-columns: repeat(auto-fill, minmax(125px, 1fr));
+    }
+    .comment_form {
+        flex-wrap: wrap;
+    }
+    
+}
+
+
+/* ANIMATIONS */

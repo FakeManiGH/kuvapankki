@@ -46,6 +46,9 @@
         <!-- Tallennustila -->
         <div id="" class="hero_item">
             <h3>Tallennustila</h3>
+
+            <p>Hallitse tallennustilaasi. Voit tarvittaessa tilata lisää tilaa tai tehdä tilaa uusille kuville tiedostojenhallinnan avulla.</p>
+
             <ul>
                 <?php 
                     echo "<li><strong>Tilauksesi:</strong> ". htmlspecialchars($subscription['sub_name']) ."</li>";
@@ -55,7 +58,7 @@
             </ul>
 
             <span>
-                <label for="storage">TALLENNUSTILAN KÄYTTÖ:</label>
+                <label for="storage">Tallennustilan käyttö:</label>
                 <span class="inline">
                     <?php 
                         if ($used_space_percentage > 80) {
@@ -69,7 +72,7 @@
             </span>
 
             <div class="buttons">
-                <button class="small_btn" onclick="window.location.href='hallitse_tiedostoja.php'"><i class="fa-regular fa-pen-to-square"></i> Hallitse tiedostoja</button>
+                <button class="small_btn" onclick="window.location.href='hallitse_tiedostoja.php'"><i class="fa-regular fa-folder-open"></i> Hallitse tiedostoja</button>
                 <?php 
                     if ($subscription['sub_type'] !== 1) {
                         echo "<button class='small_btn' onclick='window.location.href=\"tilaus.php\"'><i class='fa-regular fa-pen-to-square'></i> Hallitse tilausta</button>";
@@ -150,7 +153,7 @@
         <div class="hero_item">
             <h3>Vaihda Salasanasi</h3>
 
-            <p>Vaihtaaksesi salasanaasi, tulee sinun lähettää nollauspyyntö sähköpostiisi. Sähköpostiosoitteen tulee olla liitetty Kuvapankki-tiliisi. (<strong class="red">*</strong> pakollinen kenttä).</p>
+            <p>Vaihtaaksesi salasanaasi, tulee sinun lähettää nollauspyyntö sähköpostiisi. Sähköpostiosoitteen tulee olla liitetty Kuvapankki-tiliisi. <strong class="red">*</strong> -pakollinen kenttä.</p>
 
             <form id="pwd_form" method="post">
                 <label for="email">Sähköposti <strong class="red">*</strong></label>

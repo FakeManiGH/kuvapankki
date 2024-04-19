@@ -1,3 +1,9 @@
+label {
+    font-size: 1.2rem;
+}
+
+select {margin-bottom: 10px;}
+
 .inline_x2 {
     display: flex;
     flex-direction: row;
@@ -8,15 +14,11 @@
 }
 
 input, textarea, select {
-    padding: 10px;
+    padding: 9px;
 }
 
 .popup_close {
     display: none;
-}
-
-#visibility {
-    margin-bottom: 10px;
 }
 
 
@@ -30,7 +32,6 @@ input, textarea, select {
     position: relative;
     flex-direction: column;
     gap: 10px;
-    margin: 10px 0 10px 0;
 }
 
 #selected_users {
@@ -50,10 +51,10 @@ input, textarea, select {
     flex-direction: row;
     align-items: center;
     gap: 10px;
-    padding: 10px 15px;
-    border-radius: 50px;
+    padding: 8px 12px;
+    border-radius: 5px;
     color: #e6e6e6;
-    background: #111;
+    background: #333;
 }
 
 
@@ -74,6 +75,7 @@ input, textarea, select {
     object-fit: cover;
     object-position: center;
     border-radius: 10px;
+    border: 1px solid #333;
 }
 
 #cover_img {

@@ -10,13 +10,7 @@
         header('Location: kirjaudu.php?kirjautuminen=vaaditaan');
         die();
     }
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        include 'includes/friends_requests_get.php';
-        include 'includes/user_search.php';
-    } else {
-        include 'includes/friends_requests_get.php';
-    }
-    
+    include 'includes/friends_requests_get.php';
 ?>
 
 <main>
@@ -71,52 +65,29 @@
         </nav>    
     </div>
     
-    <p>Tällä sivulla voit lisätä kavereita. Alla olevalla haulla voit lisätä kavereita, sekä näet omat kaveripyyntösi.</p>
+    <p>Hae käyttäjiä ja lisää kavereita. Tältä sivulta voit myös hallita kaveripyyntöjäsi.</p>
     
     <!-- Käyttäjän haku lomake -->
-    <form class="page_form" method="POST">
-        <h3>Etsi Käyttäjää</h3>
-        <label for="search_user" class="hidden"></label>
-        <span class="inline">
-            <input type="text" id="search_input" name="search_user" placeholder="Anna käyttäjänimi" required>
-            <button type="submit">Etsi</button>
-            <?php if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                echo '<a href="javascript:void(0)" id="search_reset">Tyhjennä</a>';
-            }
-            ?>
-        </span>
-        <p class="error_msg">
-            <?php if (isset($_SESSION['search_error'])) {
-                echo $_SESSION['search_error'];
-                unset($_SESSION['search_error']);
-            }
-            ?>
-        </p>
-    </form>
-
-    <div id="user_list" class="friend_list">
-        <?php
-            if (isset($user_list)) {
-                foreach ($user_list as $key => $user) {
-                    $user_list[$key] = array_map('htmlspecialchars', $user);
-                    echo '<div class="friend">';
-                    echo '<div class="profile_info">';
-                    echo '<a href="kayttaja.php?u='.$user['user_id'].'"><i class="fa fa-user"></i> ' . $user['username'] . '</a>';
-                    echo '</div>';
-                        if (is_friend($pdo, $_SESSION['user_id'], $user['user_id'])) {
-                            echo '<p class="small_txt">Kaverisi</p>';
-                        } else if (request_already_sent($pdo, $_SESSION['user_id'], $user['user_id'])) {
-                            echo '<p class="small_txt">Kaveripyyntö lähetetty</p>';
-                        } else {
-                            echo '<a href="includes/friends_requests_send.php?u=' . $user['user_id'] . '"><i class="fa-solid fa-circle-plus"></i> <span class="small_txt">LISÄÄ KAVERIKSI</span></a>';
-                        }
-                    echo '</div>';
-                } if (empty($user_list)) {
-                    echo '<p class="small_txt grey">Ei hakutuloksia.</p>';
-                }
-            }
-        ?>
+    <div class="hero_item">
+        <form id="user_search_form" method="POST">
+            <h4>Etsi Käyttäjää</h4>
+            <p>Etsi käyttäjää käyttäjänimellä ja lisää kaveriksi.</p>
+            <label for="search_user" class="hidden">Etsi käyttäjää:</label>
+            <span class="inline">
+                <input type="text" id="search_input" name="search_user" placeholder="Anna käyttäjänimi" required>
+                <span class="buttons">
+                    <button class="small_btn" type="submit">Etsi</button>
+                    <button class="small_btn" type="reset" id="search_reset">Tyhjennä</button>
+                </span>
+            </span>
+        </form>
+        <p class="error_msg" id="search_error"></p>
+        
+        <!-- Hakutulokset -->
+        <ul id="search_results"></ul>
     </div>
+
+    
 
     <!-- Lähetetyt Kaveripyynnöt -->
     <h3>Lähetetyt Kaveripyynnöt</h3>

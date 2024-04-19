@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 // Hakee käyttäjät tietokannasta
 function search_users(object $pdo, string $search_input) {
-    $search_input = '%' . $search_input . '%';
     $query = "SELECT username, user_id FROM users WHERE username LIKE :search_input LIMIT 10";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':search_input', $search_input);

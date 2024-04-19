@@ -60,3 +60,8 @@ window.addEventListener('scroll', () => {
 
     lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
 }, false);
+
+
+// CREARTE A NOTIFICATION
+
+const createNotification = async (userId, type) => {};

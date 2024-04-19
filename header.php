@@ -38,7 +38,7 @@
             ?>
 
             <form action="search.php" class="header_search" method="GET">
-                <input type="text" id="search" name="search" placeholder="Etsi Kuvapankista" required>
+                <input type="text" id="search" name="search" placeholder="Etsi galleriaa" required>
                 <button type="submit" class="func_btn" id="search_button"><i class="fa fa-magnifying-glass"></i></button>
             </form>
         </div>
@@ -52,28 +52,36 @@
 </nav>
 <span class="menu_overlay"></span>
 
-<div class="top_navi">
-    <nav class="link_container">
-        <a href="selaa.php" title="Selaa Kuvia" class="<?=active('selaa',$active);?>"><i class="fa fa-hashtag"></i> <span class="nav_txt">Julkaisut</span></a>
-        <div class="dropdown">
-            <a href="galleriat.php" title="Galleriat" class="<?=active('galleriat',$active);?>"><i class="fa-regular fa-image"></i> <span class="nav_txt">Galleriat <i class="fa-solid fa-caret-down"></i></span></a>
-            <div class="drop_links">
-                <a href="galleriat.php" title="Galleriat" class="<?=active('galleriat',$active);?>">Galleriat</a>
-                <a href="luo_galleria.php" title="Uusi Galleria" class="<?=active('luo_galleria',$active);?>">Luo Galleria</a>
-                <a href="lisaa_kuvia.php" title="Lisää Kuvia" class="<?=active('lisaa_kuvia',$active);?>">Lisää Kuvia</a>
+<?php if (is_logged_in()) { ?>
+    <div class="top_navi">
+        <nav class="link_container">
+            <a href="julkaisut.php" title="Selaa Kuvia" class="<?=active('julkaisut',$active);?>"><i class="fa fa-hashtag"></i> <span class="nav_txt">Julkaisut</span></a>
+            <div class="dropdown">
+                <a href="galleriat.php" title="Galleriat" class="<?=active('galleriat',$active);?>"><i class="fa-regular fa-image"></i> <span class="nav_txt">Galleriat <i class="fa-solid fa-caret-down"></i></span></a>
+                <div class="drop_links">
+                    <a href="galleriat.php" title="Galleriat" class="<?=active('galleriat',$active);?>">Galleriat</a>
+                    <a href="luo_galleria.php" title="Uusi Galleria" class="<?=active('luo_galleria',$active);?>">Luo Galleria</a>
+                    <a href="lisaa_kuvia.php" title="Lisää Kuvia" class="<?=active('lisaa_kuvia',$active);?>">Lisää Kuvia</a>
+                </div>
             </div>
-        </div>
-        <a href="ilmoitukset.php" title="Ilmoitukset" class="<?=active('ilmoitukset',$active);?>"><i class="fa fa-bell"></i> <span class="nav_txt">Ilmoitukset</span></a>
-        <div class="dropdown">
-            <a id="friends" href="kaverit.php" title="Kaverit" class="<?=active('kaverit',$active);?>"><i class="fa fa-user-group"></i> <span class="nav_txt">Kaverit <i class="fa-solid fa-caret-down"></i></span></a>
-            <div class="drop_links">
-                <a href="kaverit.php" title="Kaverit" class="<?=active('kaverit',$active);?>">Kaverit</a>
-                <a href="lisaa_kaveri.php" title="Lisää Kaveri" class="<?=active('lisaa_kaveri',$active);?>">Lisää Kaveri</a>
+            <a href="suosikit.php" title="Suosikit" class="<?=active('suosikit',$active);?>"><i class="fa fa-heart"></i> <span class="nav_txt">Suosikit</span></a>
+            <div class="dropdown">
+                <a id="friends" href="kaverit.php" title="Kaverit" class="<?=active('kaverit',$active);?>"><i class="fa fa-user-group"></i> <span class="nav_txt">Kaverit <i class="fa-solid fa-caret-down"></i></span></a>
+                <div class="drop_links">
+                    <a href="kaverit.php" title="Kaverit" class="<?=active('kaverit',$active);?>">Kaverit</a>
+                    <a href="lisaa_kaveri.php" title="Lisää Kaveri" class="<?=active('lisaa_kaveri',$active);?>">Lisää Kaveri</a>
+                </div>
             </div>
-        </div>
-        <a href="viestit.php" title="Viestit" class="<?=active('viestit',$active);?>"><i class="fa fa-message"></i> <span class="nav_txt">Viestit</span></a>
-        <?php if (is_logged_in()) { 
-            echo "<a href='javascript:void(0);' id='open_user_menu' title='Käyttäjä Valikko'><i class='fa fa-bars'></i><span class='nav_txt'>Lisää</span></a>";
-        } ?>
-    </nav>
-</div>
+            <a href='javascript:void(0);' id='open_user_menu' title='Käyttäjä Valikko'><i class='fa fa-bars'></i><span class='nav_txt'>Lisää</span></a>
+        </nav>
+    </div>
+<?php } else { ?>
+    <div class="top_navi">
+        <nav class="link_container">
+            <a href="julkaisut.php" title="Selaa Kuvia" class="<?=active('julkaisut',$active);?>"><i class="fa fa-hashtag"></i> <span class="nav_txt">Julkaisut</span></a>
+            <a href="tietopankki.php" title="Tietopankki" class="<?=active('tietopankki',$active);?>"><i class="fa fa-circle-info"></i> <span class="nav_txt">Tietopankki</span></a>
+            <a href="ota_yhteytta.php" title="Ota Yhteyttä" class="<?=active('ota_yhteyttä',$active);?>"><i class="fa fa-envelope"></i> <span class="nav_txt">Ota Yhteyttä</span></a>
+            <a href="rekisteroidy.php" title="Rekisteröidy" class="<?=active('rekisteroidy',$active);?>"><i class="fa fa-user-plus"></i> <span class="nav_txt">Rekisteröidy</span></a>
+        </nav>
+    </div>
+<?php } ?>

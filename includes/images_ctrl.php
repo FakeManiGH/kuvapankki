@@ -19,7 +19,7 @@ function check_file_size($file_size) {
 
 // function to check file type is jpg, jpeg or png
 function check_file_type($fileExt) {
-    $allowed = array('jpg', 'jpeg', 'png');
+    $allowed = array('jpg', 'jpeg', 'png', 'webp', 'svg');
     if (in_array($fileExt, $allowed)) {
         return true;
     } else {

@@ -60,13 +60,13 @@
 
                 echo '<div class="friend" data-name="'.$friend['username'].'">';
                 echo '<div class="profile_info">';
-                echo '<img class="profile_picture" src="' . $friend['user_img'] . '" alt="Profiilikuva">';
-                echo '<a href="profiili.php?u=' . $friend['user_id'] . '">' . $friend['username'] . '</a>';
+                    echo '<img class="profile_picture" src="' . $friend['user_img'] . '" alt="Profiilikuva">';
+                    echo '<a class="func_btn" href="profiili.php?u=' . $friend['user_id'] . '">' . $friend['username'] . '</a>';
                 echo '</div>';
                 echo '<nav class="friend_info">';
-                echo '<a href="laheta_viesti.php?u=' . $friend['user_id'] . '" title="Lähetä viesti"><i class="fa-regular fa-message"></i> <span class="small_txt">Viesti</span></a>';
-                echo '|';
-                echo '<a href="includes/friends_remove.php?u=' . $friend['user_id'] . '" title="Poista kaveri"><i class="fa-solid fa-trash"></i> <span class="small_txt">Poista</span></a>';
+                    echo '<a class="func_btn" href="laheta_viesti.php?u=' . $friend['user_id'] . '" title="Lähetä viesti"><i class="fa-regular fa-message"></i> <span class="small_txt">Viesti</span></a>';
+                    echo '|';
+                    echo '<a class="func_btn" href="includes/friends_remove.php?u=' . $friend['user_id'] . '" title="Poista kaveri"><i class="fa-solid fa-trash"></i> <span class="small_txt">Poista</span></a>';
                 echo '</nav>';
                 echo '</div>';
             }

@@ -1,13 +1,16 @@
 <?php
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    include 'config_session.php';
+include 'config_session.php';
 
-    $name = $_POST['name'];
-    $description = $_POST['description'];
-    $visibility = $_POST['visibility'];
-    $cover_img = $_FILES['cover_img'];
-    $tags = $_POST['tags'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && is_logged_in()) {
+
+    // Get values from form and session (clean)
+    $name = htmlspecialchars($_POST['name']);
+    $description = htmlspecialchars($_POST['description']);
+    $category = intval($_POST['category']);
+    $visibility = intval($_POST['visibility']);
+    $type = intval($_POST['type']);
+    $tags = htmlspecialchars($_POST['tags']);
     $owner_id = $_SESSION['user_id'];
 
     try {
@@ -16,23 +19,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         require 'gallery_ctrl.php';
         require 'gallery_model.php';
 
-        // Tarkistetaan onko vaaditut kentät täytetty
-        if (empty($name) || empty($description)) {
-            $_SESSION['gallery_create_err'] = 'Nimi ja kuvaus ovat pakollisia kenttiä.';
-            header('Location: ../lisaa_galleria.php?virhe=tyhjäkenttä');
-            exit();
+        $errors = [];
+        $corr_values = [];
+
+        // Check if inputs are empty or invalid
+        if (empty($name)) {
+            $errors['name'] = 'Anna gallerialle nimi.';
         }
 
-        // Puhdistetaan syötteet
-        $name = trim_input($name);
-        $description = trim_input($description);
-        $tags = trim_input($tags);
+        if (empty($description)) {
+            $errors['description'] = 'Anna gallerialle kuvaus.';
+        }
+
+        if ($category == 0) {
+            $errors['category'] = 'Valitse gallerialle kategoria.';
+        }
+
+        if ($visibility != 1 && $visibility != 2 && $visibility != 3) {
+            $errors['visibility'] = 'Valitse gallerialle näkyvyys.';
+        }
+
+        if ($type != 1 && $type != 2 && $type != 3 && $type != 4) {
+            $errors['type'] = 'Valitse gallerialle tyyppi.';
+        }
+
+        if (empty($tags)) {
+            $errors['tags'] = 'Anna gallerialle tagit.';
+        }
 
         // Tarkistetaan onko nimi oikeanlainen
         if (!preg_match($patternGallery, $name)) {
-            $_SESSION['gallery_create_err'] = 'Virheellinen nimi.';
-            header('Location: ../lisaa_galleria.php?virhe=nimi');
-            exit();
+            $errors['name'] = 'Virheellinen nimi.';
         }
 
         // Tarkistetaan onko kuvaus oikeanlainen
@@ -95,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $cover_img_error = $cover_img['error'];
                 $cover_img_ext = explode('.', $cover_img_name);
                 $cover_img_actual_ext = strtolower(end($cover_img_ext));
-                $cover_img_allowed = ['jpg', 'jpeg', 'png'];
+                $cover_img_allowed = ['jpg', 'jpeg', 'png', 'webp'];
 
                 // Tarkistetaan onko tiedostotyyppi sallittu
                 if (in_array($cover_img_actual_ext, $cover_img_allowed)) {
@@ -146,6 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
 } else {
+
     $_SESSION['404_error'] = "Sivua ei löytynyt tai sinulla ei ole siihen oikeutta.";
     header('Location: ../404.php?virhe');
     exit();

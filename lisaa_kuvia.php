@@ -10,13 +10,6 @@
         die();
     }
 
-    // Haetaan tarvittaessa galleria osoiteriviltä:
-    if (isset($_GET['g'])) {
-        $gallery_id = htmlspecialchars($_GET['g']);
-    } else {
-        $gallery_id = 0;
-    }
-
     require_once 'includes/connections.php';
     require_once 'includes/gallery_model.php';
     $galleries = get_write_access_galleries($pdo, $_SESSION['user_id']);
@@ -60,7 +53,9 @@
             <?php
                 foreach ($galleries as $key => $gallery) {
                     $galleries[$key] = array_map('htmlspecialchars', $gallery);
-                    echo '<option value="' . $gallery['gallery_id'] . '" '. ($gallery_id == $gallery['gallery_id'] ? 'selected' : '') .'>'. $gallery['name'] .' - ';
+                    echo '<option value="' . $gallery['gallery_id'] . '">';
+
+                    echo $gallery['name'] . ' - ';
 
                     if ($gallery['owner_id'] == $_SESSION['user_id']) {
                         echo 'OMA';
@@ -77,7 +72,6 @@
                     } else {
                         echo ' (Julkinen)';
                     }
-
                     '</option>';
                 }
             ?>
@@ -86,7 +80,7 @@
         <p class="red" id="gallery_error"></p>
 
         <label for="images[]" class="hidden"></label>
-        <input type="file" id="fileInput" class="hidden" name="images[]" multiple>
+        <input style="display: none;" type="file" id="fileInput" class="hidden" name="images[]" multiple>
     </form>
     
 

@@ -1,4 +1,11 @@
+.hero_item {
+    min-height: -moz-fit-content;
+    min-height: fit-content;
+}
 
+.buttons{
+    flex-wrap: nowrap;
+}
 
 .friend_list {
     display: flex;
@@ -15,7 +22,7 @@
     padding: 10px 15px;
     color: #e6e6e6;
     background: #111;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .profile_info {
@@ -24,14 +31,6 @@
     gap: 10px;
     align-items: center;
 } 
-
-.profile_info a {
-    color: #e6e6e6;
-}
-
-.profile_info a:hover {
-    color: #ff9900;
-}
 
 .profile_picture {
     width: 1.5rem;
@@ -55,17 +54,19 @@
 
 /* LISÄÄ KAVERI SIVUN TYYLIT */
 
-#user_list {
-    margin-top: -15px;
-    margin-bottom: 10px;
+.result_user {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px dashed #e6e6e6;
 }
 
 
 
-@media screen and (max-width: 480px){
-    .link_text {
-        display: none;
-    }
+@media screen and (max-width: 480px) {
     .friend_info a {
         font-size: 1rem;
     }

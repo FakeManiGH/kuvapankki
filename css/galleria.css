@@ -1,35 +1,27 @@
-
-.hero_container {
-    display: grid;
-    position: relative;
-    grid-template-columns: 1fr 1fr;
-    background: #111;
-    padding: 5px;
-    border-radius: 10px;
-    overflow: hidden;
+main {
+    max-width: 1200px;
 }
 
-.hero_item {
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    justify-content: space-evenly;
-    gap: 10px;
-    padding: 10px;
-    min-width: 50%;
+.hero_container {
+    gap: 0;
+    background: #111;
+    border-radius: 10px;
 }
 
 .cover_img {
+    display: block;
+    box-sizing: border-box;
     width: 100%;
-    height: 100%;
+    min-height: 400px;
+    height: auto;
     object-fit: cover;
     border-radius: 5px;
 }
 
 #change_cover {
     position: absolute;
-    top: 15px;
-    left: 15px;
+    top: 30px;
+    left: 30px;
     padding: 10px;
     border: none;
     color: #111;
@@ -43,35 +35,6 @@
 #change_cover:hover {
     color: #557055;
     background: #ffffff;
-}
-
-.gallery_options {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-}
-
-.gallery_options > a {
-    display: flex;
-    box-sizing: border-box;
-    width: 100%;
-    padding: 14px 16px;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    border-radius: 5px;
-    color: #111;
-    font-size: 1rem;
-    font-weight: 600;
-    background: #ff9900;
-    transition: all 0.3s ease;
-}
-
-.gallery_options > a:hover,
-.gallery_options > a.active {
-    gap: 15px;
-    color: #e6e6e6;
-    background: #993232;
 }
 
 .view_btn {
@@ -96,6 +59,8 @@
     overflow: hidden;
     justify-content: space-between;
     border-radius: 5px;
+    height: -moz-fit-content;
+    height: fit-content;
 }
 
 .image_container {
@@ -104,29 +69,7 @@
     position: relative;
     overflow: hidden;
     width: 100%;
-    height: 150px;
-}
-
-.image_container:hover .view_txt {
-    display: flex;
-}
-
-.image_container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center center;
-}
-
-.image_container a {
-    width: 100%;
-    height: 100%;
-}
-
-.image_container:hover img {
-    filter: brightness(0.6);
-    transition: all 0.3s ease;
-    cursor: pointer;
+    height: auto;
 }
 
 .view_txt {
@@ -144,6 +87,28 @@
     font-weight: 600;
 }
 
+.image_container:hover .view_txt {
+    display: flex;
+}
+
+.image_container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+}
+
+.image_container a {
+    width: 100%;
+    height: 100%;
+}
+
+.image_container:hover img {
+    filter: brightness(0.6);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
 .image_info {
     display: flex;
     flex-direction: column;
@@ -151,6 +116,13 @@
     font-size: .9rem;
     padding: 10px 15px;
     color: #111;
+}
+
+.image_btns {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    gap: 2px;
 }
 
 
@@ -171,19 +143,24 @@
 }
 
 .list_item .image_container {
-    width: 100px;
-    height: 65px;
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    max-width: 125px;
 }
 
 .list_item .image_container img {
     width: 100%;
-    min-height: 100%;
+    height: 100%;
     object-fit: cover;
 }
 
 .list_item > .image_container a {
     width: 100%;
     height: 100%;
+    object-fit: cover;
 }
 
 .list_item > .image_info {
@@ -193,40 +170,10 @@
     width: 100%;
 }
 
-.list_item > .image_info > div,
-.list_item > .image_info > h5,
-.list_item > .image_info > p {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-}
-
 .desc_txt {
     display: none;
 }
 
-
-
-
-/* Editing buttons */
-
-.edit_btns {
-    display: none;
-    flex-direction: row;
-    gap: 5px;
-    align-items: center;
-    justify-content: left;
-}
-
-.edit_btns.active {
-    display: flex;
-}
-
-.list_item .edit_btns {
-    justify-content: center;
-}
 
 
 

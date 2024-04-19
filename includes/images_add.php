@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             move_uploaded_file($fileTmpName, $fileDestination);
 
             // Lisätään kuva tietokantaan
-            add_image($pdo, $fileNameNew, $title, $description, $fileDestDB, $fileSize, $user_id, $gallery_id);
+            add_image($pdo, $fileNameNew, $post_id, $title, $description, $fileDestDB, $fileSize, $user_id, $gallery_id);
 
             // Tarkistetaan onko tiedosto siirretty
             if (!file_exists($fileDestination)) {

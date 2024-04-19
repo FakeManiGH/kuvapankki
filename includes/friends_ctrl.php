@@ -20,8 +20,8 @@ function input_length($input, $min, $max) {
 
 function process_friend_data($friend) {
     return [
-        'username' => $friend['username'],
-        'user_id' => $friend['user_id'],
-        'user_img' => $friend['user_img']
+        'username' => htmlspecialchars($friend['username']),
+        'user_id' => intval($friend['user_id']),
+        'user_img' => htmlspecialchars($friend['user_img']),
     ];
 }

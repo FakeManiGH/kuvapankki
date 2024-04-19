@@ -11,12 +11,21 @@ function trim_input($input) {
 }
 
 // Function to check if input is in range
-function isInRange($input, int $min, int $max) {
+function is_in_range($input, int $min, int $max) {
     if ($input >= $min && $input <= $max) {
         return true;
     } else {
         return false;
     }
+}
+
+// Function to check tag count
+function validateTags($tags) {
+    $tagArray = preg_split('/\s+/', $tags);
+    if (count($tagArray) < 1 || count($tagArray) > 15) {
+        return false;
+    }
+    return true;
 }
 
 // Function to check user role

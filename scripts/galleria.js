@@ -168,6 +168,10 @@ function sortImageList() {
 }
 
 
+
+
+// GRID AND LIST VIEW
+
 // Muutetaan gallerian näkymä listaksi tai ruudukoksi
 const listButton = document.getElementById('list_view');
 const gridButton = document.getElementById('grid_view');
@@ -223,29 +227,10 @@ window.addEventListener('resize', () => {
 });
 
 
-// Editing image information on gallery
-const manageBtn = document.getElementById('manage_images');
-const editButtons = document.querySelectorAll('.edit_btns');
-const infoContainer = document.querySelectorAll('.image_info');
 
-// Show edit buttons
-if (manageBtn) {
-    manageBtn.addEventListener('click', showEditButtons);
-}
 
-function showEditButtons() {
-    manageBtn.classList.toggle('active');
-    if (manageBtn.classList.contains('active')) {
-        manageBtn.innerHTML = `<i class="fa fa-circle-xmark"></i> Lopeta Muokkaus`;
-    } else {
-        manageBtn.innerHTML = `<i class="fa fa-edit"></i> Muokkaa Kuvia`;
-    }
 
-    editButtons.forEach(btns => {
-        btns.classList.toggle('active');
-    });
-}
-
+// EDIT IMAGES
 
 // Edit image information
 const editBtns = document.querySelectorAll('.edit_btn');
@@ -265,7 +250,7 @@ editBtns.forEach(button => {
             <h3>Muokkaa Kuvan teitoja</h3>
             <img class="popup_image" src="../${imageURL}" alt="${title}">
             <button class="popup_close func_btn red"><i class="fa fa-circle-xmark"></i></button>
-            <form action="includes/images_update.php" class="page_form" method="POST">
+            <form id="img_edit_form" method="POST">
                 <input type="hidden" name="gallery_id" value="${gallery}">
                 <input type="hidden" name="image_id" value="${id}">
                 <label for="title">Otsikko:</label>
@@ -273,7 +258,8 @@ editBtns.forEach(button => {
                 <label for="description">Kuvaus:</label>
                 <textarea id="description" name="description">${desc}</textarea>
                 <div class="buttons">
-                    <button type="submit" class="edit_btn">Tallenna</button>
+                    <button type="submit" title="Tallenna tiedot" class="edit_btn">Tallenna</button>
+                    <button type="button" title="Poista kuva" class="func_btn delete_btn"><i class="fa fa-trash"></i></button>
                 </div>
             </form>
         `;
@@ -300,54 +286,10 @@ editBtns.forEach(button => {
 }); 
 
 
-// Deleting images from gallery
-const deleteBtns = document.querySelectorAll('.delete_btn');
 
-deleteBtns.forEach(button => {
-    button.addEventListener('click', () => {
-        let gallery = button.getAttribute('data-gallery');
-        let id = button.getAttribute('data-id');
-        let title = button.getAttribute('data-title');
-        let imageURL = button.getAttribute('data-url');
 
-        let deletePopup = document.createElement('div');
-        deletePopup.classList.add('popup');
-        document.body.style.overflow = 'hidden';    
-        deletePopup.innerHTML = `
-            <h3>Poista kuva</h3>
-            <img class="popup_image" src="../${imageURL}" alt="${title}">
-            <button class="popup_close func_btn red"><i class="fa fa-circle-xmark"></i></button>
-            <form action="includes/images_delete.php" class="page_form" method="POST">
-                <input type="hidden" name="gallery_id" value="${gallery}">
-                <input type="hidden" name="image_id" value="${id}">
-                <p>Haluatko varmasti poistaa kuvan <strong class="red">${title}?</strong></p>
-                <div class="buttons">
-                    <button type="submit" class="delete_btn">Poista</button>
-                </div>
-            </form>
-        `;
-        // activate blurrwd background
-        document.querySelector('.menu_overlay').classList.add('active');
 
-        // Add the popup to the body of the page
-        document.body.appendChild(deletePopup);
-
-        // Close the popup
-        document.querySelector('.popup_close').addEventListener('click', () => {
-            deletePopup.remove();
-            document.querySelector('.menu_overlay').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-
-        // Close the popup when clicking outside of it
-        document.querySelector('.menu_overlay').addEventListener('click', () => {
-            deletePopup.remove();
-            document.querySelector('.menu_overlay').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-    });
-});
-
+// IMAGE DOWNLOAD
 
 // Downloading images from gallery
 const downloadBtns = document.querySelectorAll('.download_btn');
